@@ -1,25 +1,35 @@
+import sys
+from PyQt5 import QtWidgets, uic
 import psycopg2
 
-conn = psycopg2.connect(host="localhost", dbname="MCAV", user="postgres", 
-                        password="1234", port=5432)
+class MainWindow(QtWidgets.QDialog):
+    def __init__(self):
+        super(MainWindow, self).__init__()
+        uic.loadUi('AddCustomerPopUpWindow.ui', self)  # Load the UI file
 
-cur = conn.cursor()
+        # Connect button click event to a function
+        self.AddOrderButton_3.clicked.connect(self.save_data)
 
+        # PostgreSQL connection
+        self.conn = psycopg2.connect(host="localhost", dbname="MCAV", user="postgres", 
+                                     password="1234", port=5432)
+        self.cur = self.conn.cursor()
 
-cur.execute("""CREATE TABLE IF NOT EXISTS USERS (
-            USER_ID INT PRIMARY KEY,
-            USER_FNAME VARCHAR(50) NOT NULL,
-            USER_LNAME VARCHAR(50) NOT NULL,
-            AGE INT NOT NULL,
-            GENDER CHAR NOT NULL        
-            );
-""")
+    def save_data(self):
+        # Get data from UI elements
+        cus_fname = self.cus_fname_lineEdit.text()
+        cus_lname = self.cus_lname_lineEdit.text()
+        cus_email = self.cus_email_lineEdit.text()
+        cus_phone = self.cus_phone_lineEdit.text()
+        cus_address = self.cus_address_lineEdit.text()
 
-conn.commit()
+        sql = "INSERT INTO CUSTOMER (CUS_FNAME, CUS_LNAME, CUS_EMAIL, CUS_PHONE, CUS_ADDRESS) VALUES (%s, %s, %s, %s, %s)"
+        self.cur.execute(sql, (cus_fname, cus_lname, cus_email, cus_phone, cus_address))
+        
+        self.conn.commit()
 
-
-cur.close()
-conn.close()
-
-
-
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())
