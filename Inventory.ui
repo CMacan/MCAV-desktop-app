@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>639</width>
-    <height>480</height>
+    <width>631</width>
+    <height>451</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -157,21 +157,24 @@ QLabel{
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>21</width>
-       <height>31</height>
+       <width>35</width>
+       <height>35</height>
       </rect>
      </property>
      <property name="text">
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="images.qrc">:/static/logo.jpg</pixmap>
+      <pixmap resource="images.qrc">:/static/static/logo.jpg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QLabel" name="tarp">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>50</x>
        <y>0</y>
        <width>201</width>
        <height>51</height>
