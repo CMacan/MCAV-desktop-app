@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="fonts">
+    <file>Newsreader/static/Newsreader_9pt-Regular.ttf</file>
+  </qresource>
+</RCC>
