@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>975</width>
-    <height>493</height>
+    <width>978</width>
+    <height>491</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -157,13 +157,24 @@ color: #CD2E2E;</string>
          </property>
          <property name="styleSheet">
           <string notr="true">font-size:12px;
-color: white;
-border: 2px solid #CD2E2E;
-background-color: #CD2E2E;
+
 </string>
          </property>
          <property name="text">
           <string>Inventory</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Customer">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font-size:12px;</string>
+         </property>
+         <property name="text">
+          <string>Customer</string>
          </property>
         </widget>
        </item>
@@ -173,7 +184,10 @@ background-color: #CD2E2E;
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">font-size:12px;</string>
+          <string notr="true">font-size:12px;
+color: white;
+border: 2px solid #CD2E2E;
+background-color: #CD2E2E;</string>
          </property>
          <property name="text">
           <string>Orders</string>
@@ -203,19 +217,6 @@ background-color: #CD2E2E;
          </property>
          <property name="text">
           <string>Reports</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Customer">
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">font-size:12px;</string>
-         </property>
-         <property name="text">
-          <string>Customer</string>
          </property>
         </widget>
        </item>
@@ -299,7 +300,7 @@ width: 100vw;</string>
                 <string notr="true">font-weight: bold;</string>
                </property>
                <property name="text">
-                <string>Product List</string>
+                <string>Order List</string>
                </property>
               </widget>
              </item>
@@ -311,7 +312,7 @@ width: 100vw;</string>
                 </font>
                </property>
                <property name="text">
-                <string>Manage your products</string>
+                <string>Manage your orders</string>
                </property>
               </widget>
              </item>
@@ -542,7 +543,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Product ID</string>
+              <string>Order ID</string>
              </property>
              <property name="font">
               <font>
@@ -563,29 +564,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Category</string>
-             </property>
-             <property name="font">
-              <font>
-               <family>Bahnschrift SemiBold</family>
-               <pointsize>9</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="foreground">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>71</red>
-                <green>71</green>
-                <blue>71</blue>
-               </color>
-              </brush>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Price</string>
+              <string>Size</string>
              </property>
              <property name="font">
               <font>
@@ -607,7 +586,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Qty</string>
+              <string>Quantity</string>
              </property>
              <property name="font">
               <font>
@@ -629,7 +608,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Thickness</string>
+              <string>Date</string>
              </property>
              <property name="font">
               <font>
@@ -651,7 +630,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Rollsize</string>
+              <string>Due</string>
              </property>
              <property name="font">
               <font>
@@ -673,7 +652,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Last Updated</string>
+              <string>Status</string>
              </property>
              <property name="font">
               <font>
@@ -695,7 +674,29 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Actions</string>
+              <string>Payments</string>
+             </property>
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>9</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="foreground">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>71</red>
+                <green>71</green>
+                <blue>71</blue>
+               </color>
+              </brush>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Acmount Total</string>
              </property>
              <property name="font">
               <font>
