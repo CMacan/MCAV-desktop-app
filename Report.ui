@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>661</width>
     <height>480</height>
    </rect>
   </property>
@@ -164,7 +164,7 @@ QLabel{
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="images.qrc">:/images/mcavlogo.ico</pixmap>
+      <pixmap>:/images/mcavlogo.ico</pixmap>
      </property>
     </widget>
     <widget class="QLabel" name="tarp">

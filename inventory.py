@@ -1,12 +1,16 @@
-from PyQt5 import QtWidgets, uic, QtGui
+import sys
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QWidget, QApplication
+from PyQt5 import QtWidgets, uic
+from PyQt5.QtGui import QPixmap
 
-class MyWindow(QtWidgets.QMainWindow):
+
+class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
-        super(MyWindow, self).__init__()
-        uic.loadUi('Inventory.ui', self)
+        super(MainWindow, self).__init__()
+        uic.loadUi('Inventory_test.ui', self)
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication([])
-    window = MyWindow()
+    app = QtWidgets.QApplication(sys.argv)
+    window = MainWindow()
     window.show()
-    app.exec_()
+    sys.exit(app.exec_())
