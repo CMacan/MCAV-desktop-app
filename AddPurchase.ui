@@ -185,9 +185,7 @@ color: #CD2E2E;</string>
          </property>
          <property name="styleSheet">
           <string notr="true">font-size:12px;
-color: white;
-border: 2px solid #CD2E2E;
-background-color: #CD2E2E;</string>
+</string>
          </property>
          <property name="text">
           <string>Orders</string>
@@ -200,7 +198,10 @@ background-color: #CD2E2E;</string>
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">font-size:12px;</string>
+          <string notr="true">font-size:12px;
+color: white;
+border: 2px solid #CD2E2E;
+background-color: #CD2E2E;</string>
          </property>
          <property name="text">
           <string>Purchases</string>
@@ -300,7 +301,7 @@ width: 100vw;</string>
                 <string notr="true">font-weight: bold;</string>
                </property>
                <property name="text">
-                <string>Order List</string>
+                <string>Purchase List</string>
                </property>
               </widget>
              </item>
@@ -312,7 +313,7 @@ width: 100vw;</string>
                 </font>
                </property>
                <property name="text">
-                <string>Manage your orders</string>
+                <string>Manage your purchase</string>
                </property>
               </widget>
              </item>
@@ -343,6 +344,53 @@ width: 100vw;</string>
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="AddProduct_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>34</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>34</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font-size:12px;
+border: 2px solid #E08028; 
+border-radius: 10px;
+background-color: #E08028; 
+padding: 5px; 
+color: white; 
+font-weight: bold; frf</string>
+               </property>
+               <property name="text">
+                <string>View Suppliers</string>
+               </property>
+               <property name="icon">
+                <iconset resource="images.qrc">
+                 <normaloff>:/static/static/view.png</normaloff>:/static/static/view.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="AddProduct">
@@ -520,7 +568,7 @@ border-radius: 5px;
             </attribute>
             <column>
              <property name="text">
-              <string>Product/Service</string>
+              <string>Supplier ID</string>
              </property>
              <property name="font">
               <font>
@@ -564,7 +612,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Size</string>
+              <string>Quantity</string>
              </property>
              <property name="font">
               <font>
@@ -586,7 +634,29 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Quantity</string>
+              <string>Oz</string>
+             </property>
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>9</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="foreground">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>71</red>
+                <green>71</green>
+                <blue>71</blue>
+               </color>
+              </brush>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Roll Size</string>
              </property>
              <property name="font">
               <font>
@@ -630,28 +700,6 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Due</string>
-             </property>
-             <property name="font">
-              <font>
-               <family>Bahnschrift SemiBold</family>
-               <pointsize>9</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="foreground">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>71</red>
-                <green>71</green>
-                <blue>71</blue>
-               </color>
-              </brush>
-             </property>
-            </column>
-            <column>
-             <property name="text">
               <string>Status</string>
              </property>
              <property name="font">
@@ -674,7 +722,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Payments</string>
+              <string>Amount</string>
              </property>
              <property name="font">
               <font>
@@ -696,7 +744,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Acmount Total</string>
+              <string>Action</string>
              </property>
              <property name="font">
               <font>
