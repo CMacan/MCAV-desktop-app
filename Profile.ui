@@ -353,7 +353,9 @@ width: 100vw;</string>
           <item>
            <widget class="QFrame" name="frame">
             <property name="styleSheet">
-             <string notr="true">	</string>
+             <string notr="true">QPushButton:hover{
+	background-color: rgb(255, 0, 0);
+}	</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::Box</enum>
@@ -400,8 +402,7 @@ width: 100vw;</string>
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
-                <string notr="true">QPushButton{
-font-size:12px;
+                <string notr="true">font-size:12px;
 min-width: 100px; 
 max-width: 150px;
 min-height: 40px;
@@ -413,11 +414,7 @@ min-width: 80px;
 min-height: 30px; 
 padding: 5px; 
 color: black; 
-font-weight: bold; 
-}
-QPushButton:hover{
-	background-color: #CD2E2E;
-}</string>
+font-weight: bold; </string>
                </property>
                <property name="text">
                 <string>Logout</string>
