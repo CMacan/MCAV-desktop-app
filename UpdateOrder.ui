@@ -52,7 +52,7 @@ QPushButton{
      <rect>
       <x>35</x>
       <y>30</y>
-      <width>161</width>
+      <width>156</width>
       <height>26</height>
      </rect>
     </property>
@@ -60,37 +60,11 @@ QPushButton{
      <string>Update Order</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>100</y>
-      <width>81</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Product Name</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>120</y>
-      <width>111</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="maxLength">
-     <number>300</number>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="lineEdit_2">
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>175</y>
+      <y>120</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -100,20 +74,20 @@ QPushButton{
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>155</y>
+      <y>100</y>
       <width>76</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Size</string>
+     <string>Email Address</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_3">
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>230</y>
+      <y>175</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -123,20 +97,20 @@ QPushButton{
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>210</y>
+      <y>155</y>
       <width>81</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Quantity</string>
+     <string>Contact Number</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_4">
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>335</y>
+      <y>280</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -146,7 +120,7 @@ QPushButton{
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>315</y>
+      <y>260</y>
       <width>76</width>
       <height>16</height>
      </rect>
@@ -159,23 +133,13 @@ QPushButton{
     <property name="geometry">
      <rect>
       <x>405</x>
-      <y>105</y>
+      <y>145</y>
       <width>86</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>Completion Date</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_10">
-    <property name="geometry">
-     <rect>
-      <x>405</x>
-      <y>290</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_11">
@@ -186,19 +150,6 @@ QPushButton{
       <width>113</width>
       <height>20</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_11">
-    <property name="geometry">
-     <rect>
-      <x>405</x>
-      <y>270</y>
-      <width>47</width>
-      <height>14</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Size</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_12">
@@ -214,34 +165,11 @@ QPushButton{
      <string>Quantity</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_12">
-    <property name="geometry">
-     <rect>
-      <x>405</x>
-      <y>180</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_13">
-    <property name="geometry">
-     <rect>
-      <x>405</x>
-      <y>160</y>
-      <width>81</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Type of Product</string>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="lineEdit_13">
     <property name="geometry">
      <rect>
       <x>405</x>
-      <y>125</y>
+      <y>165</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -270,20 +198,30 @@ QPushButton{
      </rect>
     </property>
     <property name="text">
-     <string>Add Order</string>
+     <string>Update Order</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_14">
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>260</y>
+      <y>205</y>
       <width>76</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Date</string>
+     <string>Address</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_14">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>225</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
     </property>
    </widget>
   </widget>
