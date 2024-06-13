@@ -296,10 +296,11 @@ width: 100vw;</string>
              <item>
               <widget class="QLabel" name="ProductLabel">
                <property name="styleSheet">
-                <string notr="true">font-weight: bold;</string>
+                <string notr="true">font-weight: bold;
+font-size: 13px;</string>
                </property>
                <property name="text">
-                <string>Product List</string>
+                <string>Customer List</string>
                </property>
               </widget>
              </item>
@@ -307,11 +308,14 @@ width: 100vw;</string>
               <widget class="QLabel" name="manageLabel">
                <property name="font">
                 <font>
-                 <pointsize>7</pointsize>
+                 <pointsize>-1</pointsize>
                 </font>
                </property>
+               <property name="styleSheet">
+                <string notr="true">font-size: 10px;</string>
+               </property>
                <property name="text">
-                <string>Manage your products</string>
+                <string>Manage your customers</string>
                </property>
               </widget>
              </item>
@@ -512,14 +516,20 @@ border-radius: 5px;
           <item>
            <widget class="QTableWidget" name="tableWidget">
             <property name="columnCount">
-             <number>9</number>
+             <number>7</number>
             </property>
+            <attribute name="horizontalHeaderCascadingSectionResizes">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+             <bool>false</bool>
+            </attribute>
             <attribute name="horizontalHeaderStretchLastSection">
              <bool>true</bool>
             </attribute>
             <column>
              <property name="text">
-              <string>Product/Service</string>
+              <string>Code</string>
              </property>
              <property name="font">
               <font>
@@ -542,7 +552,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Product ID</string>
+              <string>First Name</string>
              </property>
              <property name="font">
               <font>
@@ -563,29 +573,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Category</string>
-             </property>
-             <property name="font">
-              <font>
-               <family>Bahnschrift SemiBold</family>
-               <pointsize>9</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="foreground">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>71</red>
-                <green>71</green>
-                <blue>71</blue>
-               </color>
-              </brush>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Price</string>
+              <string>Last Name</string>
              </property>
              <property name="font">
               <font>
@@ -607,7 +595,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Qty</string>
+              <string>Email</string>
              </property>
              <property name="font">
               <font>
@@ -629,7 +617,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Thickness</string>
+              <string>Phone</string>
              </property>
              <property name="font">
               <font>
@@ -651,29 +639,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Rollsize</string>
-             </property>
-             <property name="font">
-              <font>
-               <family>Bahnschrift SemiBold</family>
-               <pointsize>9</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="foreground">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>71</red>
-                <green>71</green>
-                <blue>71</blue>
-               </color>
-              </brush>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Last Updated</string>
+              <string>Address</string>
              </property>
              <property name="font">
               <font>
