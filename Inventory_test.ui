@@ -35,6 +35,9 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="cursor">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
     min-width: 100px; 
@@ -61,7 +64,7 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="leftMargin">
-        <number>0</number>
+        <number>5</number>
        </property>
        <property name="rightMargin">
         <number>0</number>
@@ -145,8 +148,8 @@ color: #CD2E2E;</string>
         <widget class="QPushButton" name="Inventory">
          <property name="minimumSize">
           <size>
-           <width>90</width>
-           <height>40</height>
+           <width>94</width>
+           <height>44</height>
           </size>
          </property>
          <property name="cursor">
@@ -155,8 +158,9 @@ color: #CD2E2E;</string>
          <property name="styleSheet">
           <string notr="true">font-size:12px;
 color: white;
-border: #CD2E2E;
-background-color: #CD2E2E;</string>
+border: 2px solid #CD2E2E;
+background-color: #CD2E2E;
+</string>
          </property>
          <property name="text">
           <string>Inventory</string>
@@ -315,7 +319,7 @@ width: 100vw;</string>
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frame_3">
+           <widget class="QFrame" name="BtnContainer">
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
@@ -340,7 +344,7 @@ width: 100vw;</string>
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="Customer_2">
+              <widget class="QPushButton" name="AddProduct">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -358,6 +362,9 @@ width: 100vw;</string>
                  <width>150</width>
                  <height>34</height>
                 </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
                 <string notr="true">font-size:12px;
@@ -408,7 +415,7 @@ font-weight: bold; frf</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="QFrame" name="frame">
+           <widget class="QFrame" name="SearchFrame">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -718,7 +725,7 @@ border-radius: 5px;
  </widget>
  <resources>
   <include location="images.qrc"/>
-  <include location="static/fonts/font.qrc"/>
+  <include location="font.qrc"/>
  </resources>
  <connections/>
 </ui>
