@@ -57,7 +57,7 @@ QPushButton{
      </rect>
     </property>
     <property name="text">
-     <string>Add Purchase</string>
+     <string>Update Order</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -70,7 +70,7 @@ QPushButton{
      </rect>
     </property>
     <property name="text">
-     <string>Supplier ID</string>
+     <string>Product Name</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit">
@@ -106,7 +106,7 @@ QPushButton{
      </rect>
     </property>
     <property name="text">
-     <string>Email Address</string>
+     <string>Size</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_3">
@@ -129,7 +129,7 @@ QPushButton{
      </rect>
     </property>
     <property name="text">
-     <string>Contact Number</string>
+     <string>Quantity</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_4">
@@ -155,40 +155,17 @@ QPushButton{
      <string>Total Amount</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_9">
-    <property name="geometry">
-     <rect>
-      <x>405</x>
-      <y>70</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_9">
-    <property name="geometry">
-     <rect>
-      <x>405</x>
-      <y>50</y>
-      <width>66</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ordered Date</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
       <x>405</x>
       <y>105</y>
-      <width>81</width>
+      <width>86</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Type of Product</string>
+     <string>Completion Date</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_10">
@@ -221,7 +198,7 @@ QPushButton{
      </rect>
     </property>
     <property name="text">
-     <string>Roll Size</string>
+     <string>Size</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_12">
@@ -229,12 +206,12 @@ QPushButton{
      <rect>
       <x>405</x>
       <y>215</y>
-      <width>86</width>
-      <height>16</height>
+      <width>47</width>
+      <height>14</height>
      </rect>
     </property>
     <property name="text">
-     <string>Quantity per roll</string>
+     <string>Quantity</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_12">
@@ -257,7 +234,7 @@ QPushButton{
      </rect>
     </property>
     <property name="text">
-     <string>Thickness</string>
+     <string>Type of Product</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_13">
@@ -293,7 +270,7 @@ QPushButton{
      </rect>
     </property>
     <property name="text">
-     <string>Add Purchase</string>
+     <string>Add Order</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_14">
@@ -306,17 +283,7 @@ QPushButton{
      </rect>
     </property>
     <property name="text">
-     <string>Address</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_14">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>280</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
+     <string>Date</string>
     </property>
    </widget>
   </widget>
