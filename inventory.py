@@ -7,7 +7,7 @@ from PyQt5.QtGui import QPixmap
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        uic.loadUi('Inventory_test.ui', self)
+        uic.loadUi('Inventory.ui', self)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
