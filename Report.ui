@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>978</width>
-    <height>491</height>
+    <width>1170</width>
+    <height>493</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -216,9 +216,7 @@ color: #CD2E2E;</string>
          </property>
          <property name="styleSheet">
           <string notr="true">font-size:12px;
-color: white;
-border: 2px solid #CD2E2E;
-background-color: #CD2E2E;</string>
+</string>
          </property>
          <property name="text">
           <string>Orders</string>
@@ -238,7 +236,8 @@ background-color: #CD2E2E;</string>
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">font-size:12px;</string>
+          <string notr="true">font-size:12px;
+</string>
          </property>
          <property name="text">
           <string>Purchases</string>
@@ -258,7 +257,10 @@ background-color: #CD2E2E;</string>
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">font-size:12px;</string>
+          <string notr="true">font-size:12px;
+color: white;
+border: 2px solid #CD2E2E;
+background-color: #CD2E2E;</string>
          </property>
          <property name="text">
           <string>Reports</string>
@@ -374,7 +376,7 @@ width: 100vw;</string>
                 <string notr="true">font-weight: bold;</string>
                </property>
                <property name="text">
-                <string>Order List</string>
+                <string>Profit &amp; Loss</string>
                </property>
               </widget>
              </item>
@@ -386,7 +388,7 @@ width: 100vw;</string>
                 </font>
                </property>
                <property name="text">
-                <string>Manage your orders</string>
+                <string>Manage your profit &amp; loss</string>
                </property>
               </widget>
              </item>
@@ -427,60 +429,6 @@ width: 100vw;</string>
                 </size>
                </property>
               </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="AddProduct">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>150</width>
-                 <height>34</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>34</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>-1</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="cursor">
-                <cursorShape>PointingHandCursor</cursorShape>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">font-size:12px;
-border: 2px solid #E08028; 
-border-radius: 10px;
-background-color: #E08028; 
-padding: 5px; 
-color: white; 
-font-weight: bold; frf</string>
-               </property>
-               <property name="text">
-                <string>Add New Order</string>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>static/add.png</normaloff>static/add.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </widget>
              </item>
             </layout>
            </widget>
@@ -532,87 +480,6 @@ font-weight: bold; frf</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <widget class="QLabel" name="Search">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">font-weight: bold;
-</string>
-               </property>
-               <property name="text">
-                <string>Search</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="SearchInput">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>200</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: #D9D9D9;
-border-radius: 5px;
-
-</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="Filter">
-               <property name="minimumSize">
-                <size>
-                 <width>25</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>25</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="cursor">
-                <cursorShape>PointingHandCursor</cursorShape>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap>static/filter.png</pixmap>
-               </property>
-               <property name="scaledContents">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
               <spacer name="horizontalSpacer_2">
                <property name="font">
                 <font>
@@ -638,17 +505,50 @@ border-radius: 5px;
             <property name="font">
              <font>
               <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
              </font>
             </property>
             <property name="columnCount">
-             <number>9</number>
+             <number>12</number>
             </property>
             <attribute name="horizontalHeaderStretchLastSection">
              <bool>true</bool>
             </attribute>
+            <row>
+             <property name="text">
+              <string>Sales</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>Service</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>Gross Profit</string>
+             </property>
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>Purchase</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>Total Expenses</string>
+             </property>
+            </row>
             <column>
              <property name="text">
-              <string>Product/Service</string>
+              <string>January</string>
              </property>
              <property name="font">
               <font>
@@ -671,7 +571,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Order ID</string>
+              <string>February</string>
              </property>
              <property name="font">
               <font>
@@ -692,7 +592,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Size</string>
+              <string>March</string>
              </property>
              <property name="font">
               <font>
@@ -714,7 +614,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Quantity</string>
+              <string>April</string>
              </property>
              <property name="font">
               <font>
@@ -736,7 +636,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Date</string>
+              <string>May</string>
              </property>
              <property name="font">
               <font>
@@ -758,7 +658,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Due</string>
+              <string>June</string>
              </property>
              <property name="font">
               <font>
@@ -780,7 +680,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Status</string>
+              <string>July</string>
              </property>
              <property name="font">
               <font>
@@ -802,7 +702,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Payments</string>
+              <string>August</string>
              </property>
              <property name="font">
               <font>
@@ -824,7 +724,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Acmount Total</string>
+              <string>September</string>
              </property>
              <property name="font">
               <font>
@@ -842,6 +742,42 @@ border-radius: 5px;
                 <blue>71</blue>
                </color>
               </brush>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>October</string>
+             </property>
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>November</string>
+             </property>
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>December</string>
+             </property>
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
              </property>
             </column>
            </widget>

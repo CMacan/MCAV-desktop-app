@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>978</width>
+    <width>1130</width>
     <height>493</height>
    </rect>
   </property>
@@ -34,6 +34,11 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="cursor">
        <cursorShape>ArrowCursor</cursorShape>
@@ -91,6 +96,11 @@
            <width>55</width>
            <height>55</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
@@ -152,6 +162,13 @@ color: #CD2E2E;</string>
            <height>44</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
@@ -167,6 +184,13 @@ color: #CD2E2E;</string>
        </item>
        <item>
         <widget class="QPushButton" name="Customer">
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
@@ -180,6 +204,34 @@ color: #CD2E2E;</string>
        </item>
        <item>
         <widget class="QPushButton" name="Order">
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font-size:12px;
+</string>
+         </property>
+         <property name="text">
+          <string>Orders</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Purchase">
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
@@ -190,25 +242,19 @@ border: 2px solid #CD2E2E;
 background-color: #CD2E2E;</string>
          </property>
          <property name="text">
-          <string>Orders</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Purchase">
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">font-size:12px;</string>
-         </property>
-         <property name="text">
           <string>Purchases</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="Report">
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
@@ -222,6 +268,13 @@ background-color: #CD2E2E;</string>
        </item>
        <item>
         <widget class="QPushButton" name="Profile">
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
@@ -250,6 +303,11 @@ background-color: #CD2E2E;</string>
         <height>2</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="layoutDirection">
        <enum>Qt::LeftToRight</enum>
       </property>
@@ -275,6 +333,11 @@ width: 100vw;</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -287,6 +350,11 @@ width: 100vw;</string>
           </property>
           <item>
            <widget class="QFrame" name="ProductList">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
@@ -296,11 +364,18 @@ width: 100vw;</string>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
               <widget class="QLabel" name="ProductLabel">
+               <property name="font">
+                <font>
+                 <pointsize>13</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="styleSheet">
                 <string notr="true">font-weight: bold;</string>
                </property>
                <property name="text">
-                <string>Order List</string>
+                <string>Purchase List</string>
                </property>
               </widget>
              </item>
@@ -308,11 +383,11 @@ width: 100vw;</string>
               <widget class="QLabel" name="manageLabel">
                <property name="font">
                 <font>
-                 <pointsize>7</pointsize>
+                 <pointsize>10</pointsize>
                 </font>
                </property>
                <property name="text">
-                <string>Manage your orders</string>
+                <string>Manage your purchase</string>
                </property>
               </widget>
              </item>
@@ -321,6 +396,11 @@ width: 100vw;</string>
           </item>
           <item>
            <widget class="QFrame" name="BtnContainer">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
@@ -333,6 +413,11 @@ width: 100vw;</string>
              </property>
              <item>
               <spacer name="horizontalSpacer">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -343,6 +428,60 @@ width: 100vw;</string>
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="AddProduct_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>34</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>34</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>-1</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font-size:12px;
+border: 2px solid #E08028; 
+border-radius: 10px;
+background-color: #E08028; 
+padding: 5px; 
+color: white; 
+font-weight: bold; frf</string>
+               </property>
+               <property name="text">
+                <string>View Suppliers</string>
+               </property>
+               <property name="icon">
+                <iconset resource="images.qrc">
+                 <normaloff>:/static/static/view.png</normaloff>:/static/static/view.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="AddProduct">
@@ -363,6 +502,13 @@ width: 100vw;</string>
                  <width>150</width>
                  <height>34</height>
                 </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>-1</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
                </property>
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
@@ -405,6 +551,11 @@ font-weight: bold; frf</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">background-color: white;</string>
          </property>
@@ -423,6 +574,11 @@ font-weight: bold; frf</string>
               <height>41</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
@@ -432,6 +588,13 @@ font-weight: bold; frf</string>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
               <widget class="QLabel" name="Search">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="styleSheet">
                 <string notr="true">font-weight: bold;
 </string>
@@ -458,6 +621,11 @@ font-weight: bold; frf</string>
                  <height>25</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: #D9D9D9;
 border-radius: 5px;
@@ -480,6 +648,11 @@ border-radius: 5px;
                  <height>25</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
@@ -496,6 +669,11 @@ border-radius: 5px;
              </item>
              <item>
               <spacer name="horizontalSpacer_2">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -512,6 +690,11 @@ border-radius: 5px;
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidget">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
             <property name="columnCount">
              <number>9</number>
             </property>
@@ -520,7 +703,7 @@ border-radius: 5px;
             </attribute>
             <column>
              <property name="text">
-              <string>Product/Service</string>
+              <string>Supplier ID</string>
              </property>
              <property name="font">
               <font>
@@ -564,7 +747,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Size</string>
+              <string>Quantity</string>
              </property>
              <property name="font">
               <font>
@@ -586,7 +769,29 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Quantity</string>
+              <string>Oz</string>
+             </property>
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>9</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="foreground">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>71</red>
+                <green>71</green>
+                <blue>71</blue>
+               </color>
+              </brush>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Roll Size</string>
              </property>
              <property name="font">
               <font>
@@ -630,28 +835,6 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Due</string>
-             </property>
-             <property name="font">
-              <font>
-               <family>Bahnschrift SemiBold</family>
-               <pointsize>9</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="foreground">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>71</red>
-                <green>71</green>
-                <blue>71</blue>
-               </color>
-              </brush>
-             </property>
-            </column>
-            <column>
-             <property name="text">
               <string>Status</string>
              </property>
              <property name="font">
@@ -674,7 +857,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Payments</string>
+              <string>Amount</string>
              </property>
              <property name="font">
               <font>
@@ -696,7 +879,7 @@ border-radius: 5px;
             </column>
             <column>
              <property name="text">
-              <string>Acmount Total</string>
+              <string>Action</string>
              </property>
              <property name="font">
               <font>
