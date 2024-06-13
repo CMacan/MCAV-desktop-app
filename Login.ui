@@ -198,8 +198,18 @@ color: black;</string>
                     <height>30</height>
                    </size>
                   </property>
+                  <property name="font">
+                   <font>
+                    <family>Arial</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: rgb(223, 223, 223)</string>
+                   <string notr="true">background-color: rgb(223, 223, 223)
+</string>
+                  </property>
+                  <property name="placeholderText">
+                   <string>Enter your username</string>
                   </property>
                  </widget>
                 </item>
@@ -257,8 +267,17 @@ color: black;</string>
                     <height>30</height>
                    </size>
                   </property>
+                  <property name="font">
+                   <font>
+                    <family>Arial</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(223, 223, 223)</string>
+                  </property>
+                  <property name="placeholderText">
+                   <string>Password</string>
                   </property>
                  </widget>
                 </item>
