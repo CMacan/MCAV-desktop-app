@@ -6,38 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>763</width>
-    <height>566</height>
+    <width>695</width>
+    <height>509</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton{
+   <string notr="true">background-color: white;
+
+QPushButton{
 	font-size:12px;
 	border: none;
 	border-radius: 5px;
 }
-QPushButton:hover {
-    background-color: #CD2E2E;
+
+QLabel#logoimage {
+    width: 100px;
+    height: 100px;
 }
 
-
-QLabel#tarp{
-	font: 75 9pt &quot;Segoe Print&quot;;
-	background-color: none;
-}
-QLabel#logo{
-	background-image:: /images/mcavlogo.ico;
-}
 QFrame#NavbarFrame{
 	border-radius: 0px;
 	background-color: #92a8d1;
 }
-QFrame{
- 	background-color: #d6e0f5;
-}
+
 QLabel{
 	background-color:none;
 }
@@ -48,9 +42,9 @@ QLabel{
     <property name="geometry">
      <rect>
       <x>-20</x>
-      <y>50</y>
+      <y>260</y>
       <width>651</width>
-      <height>411</height>
+      <height>431</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -79,7 +73,7 @@ QLabel{
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>20</y>
+       <y>30</y>
        <width>111</width>
        <height>16</height>
       </rect>
@@ -109,8 +103,8 @@ QLabel{
     <widget class="QTableWidget" name="tableWidget">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>70</y>
+       <x>10</x>
+       <y>110</y>
        <width>651</width>
        <height>351</height>
       </rect>
@@ -165,7 +159,7 @@ QLabel{
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>40</y>
+       <y>60</y>
        <width>113</width>
        <height>16</height>
       </rect>
@@ -175,7 +169,7 @@ QLabel{
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>40</y>
+       <y>60</y>
        <width>41</width>
        <height>16</height>
       </rect>
@@ -185,171 +179,127 @@ QLabel{
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="NavbarFrame">
+   <widget class="QFrame" name="frame_3">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>641</width>
+      <x>20</x>
+      <y>60</y>
+      <width>671</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="tarp">
+       <property name="font">
+        <font>
+         <family>:/fonts/Newsreader/static/Newsreader_9pt-Regular.ttf</family>
+         <pointsize>9</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-family: url(:/fonts/Newsreader/static/Newsreader_9pt-Regular.ttf)</string>
+       </property>
+       <property name="text">
+        <string>TARPAULIN PRINTING SERVICES</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Inventory">
+       <property name="styleSheet">
+        <string notr="true">font-size:12px;
+</string>
+       </property>
+       <property name="text">
+        <string>Inventory</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Customer">
+       <property name="styleSheet">
+        <string notr="true">font-size:12px;</string>
+       </property>
+       <property name="text">
+        <string>Customer</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Order">
+       <property name="styleSheet">
+        <string notr="true">font-size:12px;</string>
+       </property>
+       <property name="text">
+        <string>Orders</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Purchase">
+       <property name="styleSheet">
+        <string notr="true">font-size:12px;</string>
+       </property>
+       <property name="text">
+        <string>Purchases</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Report">
+       <property name="styleSheet">
+        <string notr="true">font-size:12px;</string>
+       </property>
+       <property name="text">
+        <string>Reports</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Profile">
+       <property name="styleSheet">
+        <string notr="true">font-size:12px;</string>
+       </property>
+       <property name="text">
+        <string>Profile</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="logoimage">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>150</y>
+      <width>80</width>
       <height>51</height>
      </rect>
     </property>
-    <property name="focusPolicy">
-     <enum>Qt::NoFocus</enum>
-    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: white;</string>
+     <string notr="true"/>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+    <property name="text">
+     <string/>
     </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+    <property name="pixmap">
+     <pixmap resource="images.qrc">:/static/static/logo.jpg</pixmap>
     </property>
-    <widget class="QPushButton" name="Purchase">
-     <property name="geometry">
-      <rect>
-       <x>450</x>
-       <y>10</y>
-       <width>61</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font-size:12px;</string>
-     </property>
-     <property name="text">
-      <string>Purchases</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Inventory">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>10</y>
-       <width>61</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font-size:12px;
-</string>
-     </property>
-     <property name="text">
-      <string>Inventory</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Order">
-     <property name="geometry">
-      <rect>
-       <x>390</x>
-       <y>10</y>
-       <width>51</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font-size:12px;</string>
-     </property>
-     <property name="text">
-      <string>Orders</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Report">
-     <property name="geometry">
-      <rect>
-       <x>520</x>
-       <y>10</y>
-       <width>51</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font-size:12px;</string>
-     </property>
-     <property name="text">
-      <string>Reports</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Profile">
-     <property name="geometry">
-      <rect>
-       <x>580</x>
-       <y>10</y>
-       <width>51</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font-size:12px;</string>
-     </property>
-     <property name="text">
-      <string>Profile</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Customer">
-     <property name="geometry">
-      <rect>
-       <x>330</x>
-       <y>10</y>
-       <width>61</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font-size:12px;</string>
-     </property>
-     <property name="text">
-      <string>Customer</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="logoimage">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>35</width>
-       <height>35</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="images.qrc">:/static/static/logo.jpg</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="tarp">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>0</y>
-       <width>201</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>:/fonts/Newsreader/static/Newsreader_9pt-Regular.ttf</family>
-       <pointsize>9</pointsize>
-       <weight>9</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font-family: url(:/fonts/Newsreader/static/Newsreader_9pt-Regular.ttf)</string>
-     </property>
-     <property name="text">
-      <string>TARPULIN PRINTING SERVICES</string>
-     </property>
-    </widget>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
   <include location="images.qrc"/>
