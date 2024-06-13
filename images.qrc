@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="static">
     <file>static/logo.png</file>
+    <file>static/back.png</file>
     <file>static/view.png</file>
     <file>static/view.png</file>
     <file>static/add.png</file>
