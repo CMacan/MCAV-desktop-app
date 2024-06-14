@@ -1,3 +1,4 @@
+
 import psycopg2
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -36,9 +37,11 @@ class Ui_Dialog(object):
         self.AddOrder.setObjectName("AddOrder")
         self.Cancel = QtWidgets.QPushButton(self.frame)
         self.Cancel.setGeometry(QtCore.QRect(360, 420, 96, 31))
+        self.Cancel.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Cancel.setObjectName("Cancel")
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
         self.AddOrder_3.setGeometry(QtCore.QRect(470, 420, 91, 31))
+        self.AddOrder_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.AddOrder_3.setObjectName("AddOrder_3")
         self.frame_2 = QtWidgets.QFrame(self.frame)
         self.frame_2.setGeometry(QtCore.QRect(50, 50, 521, 361))
