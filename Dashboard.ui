@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>Dasboard</class>
+ <widget class="QMainWindow" name="Dasboard">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>975</width>
-    <height>608</height>
+    <height>614</height>
    </rect>
   </property>
   <property name="sizePolicy">
