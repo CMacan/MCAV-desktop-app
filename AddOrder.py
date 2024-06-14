@@ -190,6 +190,10 @@ class Ui_Dialog(object):
         self.AddOrder.raise_()
         self.Cancel.raise_()
         self.AddOrder_3.raise_()
+        self.required_label = QtWidgets.QLabel(self.frame)
+        self.required_label.setGeometry(QtCore.QRect(240, 460, 160, 16))
+        self.required_label.setStyleSheet("color: red;")
+        self.required_label.setObjectName("required_label")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -242,19 +246,36 @@ class Ui_Dialog(object):
             return
 
         # Extract data from fields
-        first_name = self.lineEdit.text()
-        last_name = self.lineEdit_5.text()
+        first_name = self.lineEdit.text().upper()  
+        last_name = self.lineEdit_5.text().upper()  
         email = self.lineEdit_2.text()
         contact_number = self.lineEdit_3.text()
-        address = self.lineEdit_14.text()
-        price = self.lineEdit_4.text()
-        size = self.lineEdit_10.text()
-        quantity = self.lineEdit_11.text()
-        order_date = self.lineEdit_9.text()
-        due_date = self.lineEdit_13.text()
-        product_type = self.comboBox.currentText()
-        category = self.comboBox_2.currentText()
-        total_amount = self.lineEdit_15.text()
+        address = self.lineEdit_14.text().upper() 
+
+        if not first_name:
+            self.lineEdit.setStyleSheet("border: 1px solid red;")
+        else:
+            self.lineEdit.setStyleSheet("")
+        if not last_name:
+            self.lineEdit_5.setStyleSheet("border: 1px solid red;")
+        else:
+            self.lineEdit_5.setStyleSheet("")
+        if not email:
+            self.lineEdit_2.setStyleSheet("border: 1px solid red;")
+        else:
+            self.lineEdit_2.setStyleSheet("")
+        if not contact_number:
+            self.lineEdit_3.setStyleSheet("border: 1px solid red;")
+        else:
+            self.lineEdit_3.setStyleSheet("")
+        if not address:
+            self.lineEdit_14.setStyleSheet("border: 1px solid red;")
+        else:
+            self.lineEdit_14.setStyleSheet("")
+
+        # Check if any required field is empty
+        if not first_name or not last_name or not email or not contact_number or not address:
+            return
 
         # Insert data into the database
         try:
@@ -268,7 +289,6 @@ class Ui_Dialog(object):
             print("Error inserting data into PostgreSQL database:", e)
             conn.rollback()
         finally:
-            # Close the cursor and connection
             cursor.close()
             conn.close()
 
