@@ -392,10 +392,8 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Last Updated"))
         item = self.tableWidget.horizontalHeaderItem(8)
         item.setText(_translate("MainWindow", "Actions"))
-        
 import font_rc
 import images_rc
-
 
 if __name__ == "__main__":
     import sys
