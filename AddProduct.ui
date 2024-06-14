@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>642</width>
     <height>480</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -21,6 +27,18 @@
      <width>641</width>
      <height>481</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>641</width>
+     <height>481</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>641</width>
+     <height>481</height>
+    </size>
    </property>
    <property name="styleSheet">
     <string notr="true">QFrame{
