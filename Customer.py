@@ -20,6 +20,13 @@ class Ui_Customer_2(object):
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)
         self.window2.show()
+
+    def back_dashboard(self):
+        from Dashboard import Ui_Dasboard
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Dasboard()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
     
     
     def profile(self):
@@ -147,6 +154,7 @@ class Ui_Customer_2(object):
         self.tarp.setObjectName("tarp")
         self.horizontalLayout.addWidget(self.tarp)
         self.tarp.clicked.connect(self.back_dashboard)
+        self.tarp.clicked.connect(Customer_2.close)
         self.Inventory = QtWidgets.QPushButton(self.NavbarFrame)
         self.Inventory.clicked.connect(self.inventory)
         self.Inventory.clicked.connect(Customer_2.close)
