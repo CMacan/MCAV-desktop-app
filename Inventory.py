@@ -11,17 +11,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(975, 493)
+class Ui_Inventory_2(object):
+    def setupUi(self, Inventory_2):
+        Inventory_2.setObjectName("Inventory_2")
+        Inventory_2.resize(975, 493)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
-        MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setStyleSheet("background-color: white;")
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        sizePolicy.setHeightForWidth(Inventory_2.sizePolicy().hasHeightForWidth())
+        Inventory_2.setSizePolicy(sizePolicy)
+        Inventory_2.setStyleSheet("background-color: white;")
+        self.centralwidget = QtWidgets.QWidget(Inventory_2)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -355,51 +355,53 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addWidget(self.tableWidget)
         self.verticalLayout_2.addWidget(self.DataFrame)
         self.verticalLayout.addWidget(self.TableContainer)
-        MainWindow.setCentralWidget(self.centralwidget)
+        Inventory_2.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(Inventory_2)
+        QtCore.QMetaObject.connectSlotsByName(Inventory_2)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, Inventory_2):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.tarp.setText(_translate("MainWindow", "TARPAULIN PRINTING SERVICES"))
-        self.Inventory.setText(_translate("MainWindow", "Inventory"))
-        self.Order.setText(_translate("MainWindow", "Orders"))
-        self.Purchase.setText(_translate("MainWindow", "Purchases"))
-        self.Report.setText(_translate("MainWindow", "Reports"))
-        self.Customer.setText(_translate("MainWindow", "Customer"))
-        self.Profile.setText(_translate("MainWindow", "Profile"))
-        self.ProductLabel.setText(_translate("MainWindow", "Product List"))
-        self.manageLabel.setText(_translate("MainWindow", "Manage your products"))
-        self.AddProduct.setText(_translate("MainWindow", "Add New Product"))
-        self.Search.setText(_translate("MainWindow", "Search"))
+        Inventory_2.setWindowTitle(_translate("Inventory_2", "MainWindow"))
+        self.tarp.setText(_translate("Inventory_2", "TARPAULIN PRINTING SERVICES"))
+        self.Inventory.setText(_translate("Inventory_2", "Inventory"))
+        self.Order.setText(_translate("Inventory_2", "Orders"))
+        self.Purchase.setText(_translate("Inventory_2", "Purchases"))
+        self.Report.setText(_translate("Inventory_2", "Reports"))
+        self.Customer.setText(_translate("Inventory_2", "Customer"))
+        self.Profile.setText(_translate("Inventory_2", "Profile"))
+        self.ProductLabel.setText(_translate("Inventory_2", "Product List"))
+        self.manageLabel.setText(_translate("Inventory_2", "Manage your products"))
+        self.AddProduct.setText(_translate("Inventory_2", "Add New Product"))
+        self.Search.setText(_translate("Inventory_2", "Search"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "Product/Service"))
+        item.setText(_translate("Inventory_2", "Product/Service"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "Product ID"))
+        item.setText(_translate("Inventory_2", "Product ID"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "Category"))
+        item.setText(_translate("Inventory_2", "Category"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("MainWindow", "Price"))
+        item.setText(_translate("Inventory_2", "Price"))
         item = self.tableWidget.horizontalHeaderItem(4)
-        item.setText(_translate("MainWindow", "Qty"))
+        item.setText(_translate("Inventory_2", "Qty"))
         item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("MainWindow", "Thickness"))
+        item.setText(_translate("Inventory_2", "Thickness"))
         item = self.tableWidget.horizontalHeaderItem(6)
-        item.setText(_translate("MainWindow", "Rollsize"))
+        item.setText(_translate("Inventory_2", "Rollsize"))
         item = self.tableWidget.horizontalHeaderItem(7)
-        item.setText(_translate("MainWindow", "Last Updated"))
+        item.setText(_translate("Inventory_2", "Last Updated"))
         item = self.tableWidget.horizontalHeaderItem(8)
         item.setText(_translate("MainWindow", "Actions"))
+
 import font_rc
 import images_rc
+
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    Inventory_2 = QtWidgets.QMainWindow()
+    ui = Ui_Inventory_2()
+    ui.setupUi(Inventory_2)
+    Inventory_2.show()
     sys.exit(app.exec_())

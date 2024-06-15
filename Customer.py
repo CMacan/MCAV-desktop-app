@@ -11,17 +11,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(975, 493)
+class Ui_Customer_2(object):
+    def setupUi(self, Customer_2):
+        Customer_2.setObjectName("Customer_2")
+        Customer_2.resize(975, 495)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
-        MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setStyleSheet("background-color: white;")
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        sizePolicy.setHeightForWidth(Customer_2.sizePolicy().hasHeightForWidth())
+        Customer_2.setSizePolicy(sizePolicy)
+        Customer_2.setStyleSheet("background-color: white;")
+        self.centralwidget = QtWidgets.QWidget(Customer_2)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -91,8 +91,7 @@ class Ui_MainWindow(object):
         self.Inventory = QtWidgets.QPushButton(self.NavbarFrame)
         self.Inventory.setMinimumSize(QtCore.QSize(94, 44))
         self.Inventory.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Inventory.setStyleSheet("\n"
-"")
+        self.Inventory.setStyleSheet("")
         self.Inventory.setObjectName("Inventory")
         self.horizontalLayout.addWidget(self.Inventory)
         self.Order = QtWidgets.QPushButton(self.NavbarFrame)
@@ -321,38 +320,38 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addWidget(self.tableWidget)
         self.verticalLayout_2.addWidget(self.DataFrame)
         self.verticalLayout.addWidget(self.TableContainer)
-        MainWindow.setCentralWidget(self.centralwidget)
+        Customer_2.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(Customer_2)
+        QtCore.QMetaObject.connectSlotsByName(Customer_2)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, Customer_2):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.tarp.setText(_translate("MainWindow", "TARPAULIN PRINTING SERVICES"))
-        self.Inventory.setText(_translate("MainWindow", "Inventory"))
-        self.Order.setText(_translate("MainWindow", "Orders"))
-        self.Purchase.setText(_translate("MainWindow", "Purchases"))
-        self.Report.setText(_translate("MainWindow", "Reports"))
-        self.Customer.setText(_translate("MainWindow", "Customer"))
-        self.Profile.setText(_translate("MainWindow", "Profile"))
-        self.ProductLabel.setText(_translate("MainWindow", "Customer List"))
-        self.manageLabel.setText(_translate("MainWindow", "Manage your customers"))
-        self.Search.setText(_translate("MainWindow", "Search"))
+        Customer_2.setWindowTitle(_translate("Customer_2", "MainWindow"))
+        self.tarp.setText(_translate("Customer_2", "TARPAULIN PRINTING SERVICES"))
+        self.Inventory.setText(_translate("Customer_2", "Inventory"))
+        self.Order.setText(_translate("Customer_2", "Orders"))
+        self.Purchase.setText(_translate("Customer_2", "Purchases"))
+        self.Report.setText(_translate("Customer_2", "Reports"))
+        self.Customer.setText(_translate("Customer_2", "Customer"))
+        self.Profile.setText(_translate("Customer_2", "Profile"))
+        self.ProductLabel.setText(_translate("Customer_2", "Customer List"))
+        self.manageLabel.setText(_translate("Customer_2", "Manage your customers"))
+        self.Search.setText(_translate("Customer_2", "Search"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "Code"))
+        item.setText(_translate("Customer_2", "Code"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "First Name"))
+        item.setText(_translate("Customer_2", "First Name"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "Last Name"))
+        item.setText(_translate("Customer_2", "Last Name"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("MainWindow", "Email"))
+        item.setText(_translate("Customer_2", "Email"))
         item = self.tableWidget.horizontalHeaderItem(4)
-        item.setText(_translate("MainWindow", "Phone"))
+        item.setText(_translate("Customer_2", "Phone"))
         item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("MainWindow", "Address"))
+        item.setText(_translate("Customer_2", "Address"))
         item = self.tableWidget.horizontalHeaderItem(6)
-        item.setText(_translate("MainWindow", "Actions"))
+        item.setText(_translate("Customer_2", "Actions"))
 import font_rc
 import images_rc
 
@@ -360,8 +359,8 @@ import images_rc
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    Customer_2 = QtWidgets.QMainWindow()
+    ui = Ui_Customer_2()
+    ui.setupUi(Customer_2)
+    Customer_2.show()
     sys.exit(app.exec_())

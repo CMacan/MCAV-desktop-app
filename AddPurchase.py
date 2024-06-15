@@ -11,11 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(640, 480)
-        self.frame = QtWidgets.QFrame(Dialog)
+class Ui_AddPurchase(object):
+    def setupUi(self, AddPurchase):
+        AddPurchase.setObjectName("AddPurchase")
+        AddPurchase.resize(640, 480)
+        self.frame = QtWidgets.QFrame(AddPurchase)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("QFrame{\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -108,32 +108,32 @@ class Ui_Dialog(object):
         self.lineEdit_14.setGeometry(QtCore.QRect(80, 280, 113, 20))
         self.lineEdit_14.setObjectName("lineEdit_14")
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(AddPurchase)
+        QtCore.QMetaObject.connectSlotsByName(AddPurchase)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, AddPurchase):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.AddOrder.setText(_translate("Dialog", "Add Purchase"))
-        self.label.setText(_translate("Dialog", "Supplier ID"))
-        self.label_2.setText(_translate("Dialog", "Email Address"))
-        self.label_3.setText(_translate("Dialog", "Contact Number"))
-        self.label_4.setText(_translate("Dialog", "Total Amount"))
-        self.label_9.setText(_translate("Dialog", "Ordered Date"))
-        self.label_10.setText(_translate("Dialog", "Type of Product"))
-        self.label_11.setText(_translate("Dialog", "Roll Size"))
-        self.label_12.setText(_translate("Dialog", "Quantity per roll"))
-        self.label_13.setText(_translate("Dialog", "Thickness"))
-        self.Cancel.setText(_translate("Dialog", "Cancel"))
-        self.AddOrder_3.setText(_translate("Dialog", "Add Purchase"))
-        self.label_14.setText(_translate("Dialog", "Address"))
+        AddPurchase.setWindowTitle(_translate("AddPurchase", "Dialog"))
+        self.AddOrder.setText(_translate("AddPurchase", "Add Purchase"))
+        self.label.setText(_translate("AddPurchase", "Supplier ID"))
+        self.label_2.setText(_translate("AddPurchase", "Email Address"))
+        self.label_3.setText(_translate("AddPurchase", "Contact Number"))
+        self.label_4.setText(_translate("AddPurchase", "Total Amount"))
+        self.label_9.setText(_translate("AddPurchase", "Ordered Date"))
+        self.label_10.setText(_translate("AddPurchase", "Type of Product"))
+        self.label_11.setText(_translate("AddPurchase", "Roll Size"))
+        self.label_12.setText(_translate("AddPurchase", "Quantity per roll"))
+        self.label_13.setText(_translate("AddPurchase", "Thickness"))
+        self.Cancel.setText(_translate("AddPurchase", "Cancel"))
+        self.AddOrder_3.setText(_translate("AddPurchase", "Add Purchase"))
+        self.label_14.setText(_translate("AddPurchase", "Address"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
+    AddPurchase = QtWidgets.QDialog()
+    ui = Ui_AddPurchase()
+    ui.setupUi(AddPurchase)
+    AddPurchase.show()
     sys.exit(app.exec_())

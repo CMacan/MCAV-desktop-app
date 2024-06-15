@@ -11,17 +11,17 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(941, 437)
+class Ui_Profile_2(object):
+    def setupUi(self, Profile_2):
+        Profile_2.setObjectName("Profile_2")
+        Profile_2.resize(946, 469)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
-        MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setStyleSheet("background-color: white;")
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        sizePolicy.setHeightForWidth(Profile_2.sizePolicy().hasHeightForWidth())
+        Profile_2.setSizePolicy(sizePolicy)
+        Profile_2.setStyleSheet("background-color: white;")
+        self.centralwidget = QtWidgets.QWidget(Profile_2)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -364,12 +364,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.frame_2)
         self.verticalLayout_2.addWidget(self.DataFrame)
         self.verticalLayout.addWidget(self.TableContainer)
-        MainWindow.setCentralWidget(self.centralwidget)
+        Profile_2.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(Profile_2)
+        QtCore.QMetaObject.connectSlotsByName(Profile_2)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, Profile_2):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.tarp.setText(_translate("MainWindow", "TARPAULIN PRINTING SERVICES"))
@@ -390,7 +390,6 @@ class Ui_MainWindow(object):
         self.label_15.setText(_translate("MainWindow", "City"))
         self.label_6.setText(_translate("MainWindow", "Postal Code"))
         self.label_16.setText(_translate("MainWindow", "Country"))
-        
 import font_rc
 import images_rc
 
@@ -398,8 +397,8 @@ import images_rc
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    Profile_2 = QtWidgets.QMainWindow()
+    ui = Ui_Profile_2()
+    ui.setupUi(Profile_2)
+    Profile_2.show()
     sys.exit(app.exec_())
