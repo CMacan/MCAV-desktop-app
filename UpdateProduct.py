@@ -11,11 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(640, 480)
-        self.frame = QtWidgets.QFrame(Dialog)
+class Ui_UpdateProduct(object):
+    def setupUi(self, UpdateProduct):
+        UpdateProduct.setObjectName("UpdateProduct")
+        UpdateProduct.resize(640, 480)
+        self.frame = QtWidgets.QFrame(UpdateProduct)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("QFrame{\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -117,36 +117,36 @@ class Ui_Dialog(object):
         self.Image.setIconSize(QtCore.QSize(20, 20))
         self.Image.setObjectName("Image")
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(UpdateProduct)
+        QtCore.QMetaObject.connectSlotsByName(UpdateProduct)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, UpdateProduct):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.AddOrder.setText(_translate("Dialog", "Update Product"))
-        self.label.setText(_translate("Dialog", "Product Name"))
-        self.label_2.setText(_translate("Dialog", "Price"))
-        self.label_3.setText(_translate("Dialog", "Quantity"))
-        self.label_4.setText(_translate("Dialog", "Roll Size"))
-        self.label_9.setText(_translate("Dialog", "Category"))
-        self.label_10.setText(_translate("Dialog", "Type of Product"))
-        self.label_12.setText(_translate("Dialog", "Quantity per roll"))
-        self.label_13.setText(_translate("Dialog", "Thickness"))
-        self.Cancel.setText(_translate("Dialog", "Cancel"))
-        self.AddOrder_3.setText(_translate("Dialog", "Update Product"))
-        self.label_14.setText(_translate("Dialog", "Thickness"))
-        self.comboBox.setItemText(0, _translate("Dialog", "Large Format Tarpulin "))
-        self.comboBox.setItemText(1, _translate("Dialog", "Vinyl Sticker Printin"))
-        self.comboBox.setItemText(2, _translate("Dialog", "Laser Printing for papers and Stickers"))
-        self.comboBox.setItemText(3, _translate("Dialog", "T-shirt printing "))
-        self.Image.setText(_translate("Dialog", "Image"))
+        UpdateProduct.setWindowTitle(_translate("UpdateProduct", "Dialog"))
+        self.AddOrder.setText(_translate("UpdateProduct", "Update Product"))
+        self.label.setText(_translate("UpdateProduct", "Product Name"))
+        self.label_2.setText(_translate("UpdateProduct", "Price"))
+        self.label_3.setText(_translate("UpdateProduct", "Quantity"))
+        self.label_4.setText(_translate("UpdateProduct", "Roll Size"))
+        self.label_9.setText(_translate("UpdateProduct", "Category"))
+        self.label_10.setText(_translate("UpdateProduct", "Type of Product"))
+        self.label_12.setText(_translate("UpdateProduct", "Quantity per roll"))
+        self.label_13.setText(_translate("UpdateProduct", "Thickness"))
+        self.Cancel.setText(_translate("UpdateProduct", "Cancel"))
+        self.AddOrder_3.setText(_translate("UpdateProduct", "Update Product"))
+        self.label_14.setText(_translate("UpdateProduct", "Thickness"))
+        self.comboBox.setItemText(0, _translate("UpdateProduct", "Large Format Tarpulin "))
+        self.comboBox.setItemText(1, _translate("UpdateProduct", "Vinyl Sticker Printin"))
+        self.comboBox.setItemText(2, _translate("UpdateProduct", "Laser Printing for papers and Stickers"))
+        self.comboBox.setItemText(3, _translate("UpdateProduct", "T-shirt printing "))
+        self.Image.setText(_translate("UpdateProduct", "Image"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
+    UpdateProduct = QtWidgets.QDialog()
+    ui = Ui_UpdateProduct()
+    ui.setupUi(UpdateProduct)
+    UpdateProduct.show()
     sys.exit(app.exec_())

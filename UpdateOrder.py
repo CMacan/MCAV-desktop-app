@@ -11,11 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(640, 480)
-        self.frame = QtWidgets.QFrame(Dialog)
+class Ui_UpdateOrder(object):
+    def setupUi(self, UpdateOrder):
+        UpdateOrder.setObjectName("UpdateOrder")
+        UpdateOrder.resize(640, 480)
+        self.frame = QtWidgets.QFrame(UpdateOrder)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("QFrame{\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -83,28 +83,28 @@ class Ui_Dialog(object):
         self.lineEdit_14.setGeometry(QtCore.QRect(80, 225, 113, 20))
         self.lineEdit_14.setObjectName("lineEdit_14")
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(UpdateOrder)
+        QtCore.QMetaObject.connectSlotsByName(UpdateOrder)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, UpdateOrder):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.AddOrder.setText(_translate("Dialog", "Update Order"))
-        self.label_2.setText(_translate("Dialog", "Email Address"))
-        self.label_3.setText(_translate("Dialog", "Contact Number"))
-        self.label_4.setText(_translate("Dialog", "Total Amount"))
-        self.label_10.setText(_translate("Dialog", "Completion Date"))
-        self.label_12.setText(_translate("Dialog", "Quantity"))
-        self.Cancel.setText(_translate("Dialog", "Cancel"))
-        self.AddOrder_3.setText(_translate("Dialog", "Update Order"))
-        self.label_14.setText(_translate("Dialog", "Address"))
+        UpdateOrder.setWindowTitle(_translate("UpdateOrder", "Dialog"))
+        self.AddOrder.setText(_translate("UpdateOrder", "Update Order"))
+        self.label_2.setText(_translate("UpdateOrder", "Email Address"))
+        self.label_3.setText(_translate("UpdateOrder", "Contact Number"))
+        self.label_4.setText(_translate("UpdateOrder", "Total Amount"))
+        self.label_10.setText(_translate("UpdateOrder", "Completion Date"))
+        self.label_12.setText(_translate("UpdateOrder", "Quantity"))
+        self.Cancel.setText(_translate("UpdateOrder", "Cancel"))
+        self.AddOrder_3.setText(_translate("UpdateOrder", "Update Order"))
+        self.label_14.setText(_translate("UpdateOrder", "Address"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
+    UpdateOrder = QtWidgets.QDialog()
+    ui = Ui_UpdateOrder()
+    ui.setupUi(UpdateOrder)
+    UpdateOrder.show()
     sys.exit(app.exec_())

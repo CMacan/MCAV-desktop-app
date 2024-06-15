@@ -11,17 +11,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(941, 437)
+class Ui_Profile_2(object):
+    def setupUi(self, Profile_2):
+        Profile_2.setObjectName("Profile_2")
+        Profile_2.resize(946, 469)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
-        MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setStyleSheet("background-color: white;")
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        sizePolicy.setHeightForWidth(Profile_2.sizePolicy().hasHeightForWidth())
+        Profile_2.setSizePolicy(sizePolicy)
+        Profile_2.setStyleSheet("background-color: white;")
+        self.centralwidget = QtWidgets.QWidget(Profile_2)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -364,32 +364,32 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.frame_2)
         self.verticalLayout_2.addWidget(self.DataFrame)
         self.verticalLayout.addWidget(self.TableContainer)
-        MainWindow.setCentralWidget(self.centralwidget)
+        Profile_2.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(Profile_2)
+        QtCore.QMetaObject.connectSlotsByName(Profile_2)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, Profile_2):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.tarp.setText(_translate("MainWindow", "TARPAULIN PRINTING SERVICES"))
-        self.Inventory.setText(_translate("MainWindow", "Inventory"))
-        self.Customer.setText(_translate("MainWindow", "Customer"))
-        self.Order.setText(_translate("MainWindow", "Orders"))
-        self.Purchase.setText(_translate("MainWindow", "Purchases"))
-        self.Report.setText(_translate("MainWindow", "Reports"))
-        self.Profile.setText(_translate("MainWindow", "Profile"))
-        self.Inventory_2.setText(_translate("MainWindow", "Logout"))
-        self.label_17.setText(_translate("MainWindow", "Name"))
-        self.label_4.setText(_translate("MainWindow", "Username"))
-        self.label_2.setText(_translate("MainWindow", "Email"))
-        self.label_7.setText(_translate("MainWindow", "Password"))
-        self.label_3.setText(_translate("MainWindow", "Date of Birth"))
-        self.label_14.setText(_translate("MainWindow", "Present Address"))
-        self.label_5.setText(_translate("MainWindow", "Permanent Address"))
-        self.label_15.setText(_translate("MainWindow", "City"))
-        self.label_6.setText(_translate("MainWindow", "Postal Code"))
-        self.label_16.setText(_translate("MainWindow", "Country"))
+        Profile_2.setWindowTitle(_translate("Profile_2", "MainWindow"))
+        self.tarp.setText(_translate("Profile_2", "TARPAULIN PRINTING SERVICES"))
+        self.Inventory.setText(_translate("Profile_2", "Inventory"))
+        self.Customer.setText(_translate("Profile_2", "Customer"))
+        self.Order.setText(_translate("Profile_2", "Orders"))
+        self.Purchase.setText(_translate("Profile_2", "Purchases"))
+        self.Report.setText(_translate("Profile_2", "Reports"))
+        self.Profile.setText(_translate("Profile_2", "Profile"))
+        self.Inventory_2.setText(_translate("Profile_2", "Logout"))
+        self.label_17.setText(_translate("Profile_2", "Name"))
+        self.label_4.setText(_translate("Profile_2", "Username"))
+        self.label_2.setText(_translate("Profile_2", "Email"))
+        self.label_7.setText(_translate("Profile_2", "Password"))
+        self.label_3.setText(_translate("Profile_2", "Date of Birth"))
+        self.label_14.setText(_translate("Profile_2", "Present Address"))
+        self.label_5.setText(_translate("Profile_2", "Permanent Address"))
+        self.label_15.setText(_translate("Profile_2", "City"))
+        self.label_6.setText(_translate("Profile_2", "Postal Code"))
+        self.label_16.setText(_translate("Profile_2", "Country"))
 import font_rc
 import images_rc
 
@@ -397,8 +397,8 @@ import images_rc
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    Profile_2 = QtWidgets.QMainWindow()
+    ui = Ui_Profile_2()
+    ui.setupUi(Profile_2)
+    Profile_2.show()
     sys.exit(app.exec_())

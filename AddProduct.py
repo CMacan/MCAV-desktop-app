@@ -11,11 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(640, 480)
-        self.frame = QtWidgets.QFrame(Dialog)
+class Ui_AddProduct(object):
+    def setupUi(self, AddProduct):
+        AddProduct.setObjectName("AddProduct")
+        AddProduct.resize(640, 480)
+        self.frame = QtWidgets.QFrame(AddProduct)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("QFrame{\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -117,36 +117,36 @@ class Ui_Dialog(object):
         self.Image.setIconSize(QtCore.QSize(20, 20))
         self.Image.setObjectName("Image")
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(AddProduct)
+        QtCore.QMetaObject.connectSlotsByName(AddProduct)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, AddProduct):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.AddOrder.setText(_translate("Dialog", "Add Product"))
-        self.label.setText(_translate("Dialog", "Product Name"))
-        self.label_2.setText(_translate("Dialog", "Price"))
-        self.label_3.setText(_translate("Dialog", "Quantity"))
-        self.label_4.setText(_translate("Dialog", "Roll Size"))
-        self.label_9.setText(_translate("Dialog", "Category"))
-        self.label_10.setText(_translate("Dialog", "Type of Product"))
-        self.label_12.setText(_translate("Dialog", "Quantity per roll"))
-        self.label_13.setText(_translate("Dialog", "Thickness"))
-        self.Cancel.setText(_translate("Dialog", "Cancel"))
-        self.AddOrder_3.setText(_translate("Dialog", "Add Product"))
-        self.label_14.setText(_translate("Dialog", "Thickness"))
-        self.comboBox.setItemText(0, _translate("Dialog", "Large Format Tarpulin "))
-        self.comboBox.setItemText(1, _translate("Dialog", "Vinyl Sticker Printin"))
-        self.comboBox.setItemText(2, _translate("Dialog", "Laser Printing for papers and Stickers"))
-        self.comboBox.setItemText(3, _translate("Dialog", "T-shirt printing "))
-        self.Image.setText(_translate("Dialog", "Image"))
+        AddProduct.setWindowTitle(_translate("AddProduct", "Dialog"))
+        self.AddOrder.setText(_translate("AddProduct", "Add Product"))
+        self.label.setText(_translate("AddProduct", "Product Name"))
+        self.label_2.setText(_translate("AddProduct", "Price"))
+        self.label_3.setText(_translate("AddProduct", "Quantity"))
+        self.label_4.setText(_translate("AddProduct", "Roll Size"))
+        self.label_9.setText(_translate("AddProduct", "Category"))
+        self.label_10.setText(_translate("AddProduct", "Type of Product"))
+        self.label_12.setText(_translate("AddProduct", "Quantity per roll"))
+        self.label_13.setText(_translate("AddProduct", "Thickness"))
+        self.Cancel.setText(_translate("AddProduct", "Cancel"))
+        self.AddOrder_3.setText(_translate("AddProduct", "Add Product"))
+        self.label_14.setText(_translate("AddProduct", "Thickness"))
+        self.comboBox.setItemText(0, _translate("AddProduct", "Large Format Tarpulin "))
+        self.comboBox.setItemText(1, _translate("AddProduct", "Vinyl Sticker Printin"))
+        self.comboBox.setItemText(2, _translate("AddProduct", "Laser Printing for papers and Stickers"))
+        self.comboBox.setItemText(3, _translate("AddProduct", "T-shirt printing "))
+        self.Image.setText(_translate("AddProduct", "Image"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
+    AddProduct = QtWidgets.QDialog()
+    ui = Ui_AddProduct()
+    ui.setupUi(AddProduct)
+    AddProduct.show()
     sys.exit(app.exec_())
