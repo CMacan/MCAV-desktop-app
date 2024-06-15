@@ -394,8 +394,17 @@ QPushButton{
        <height>20</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
      <property name="maxLength">
       <number>300</number>
+     </property>
+     <property name="placeholderText">
+      <string/>
      </property>
     </widget>
     <widget class="QLabel" name="label">
