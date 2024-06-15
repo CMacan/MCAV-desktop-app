@@ -9,9 +9,51 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from Order import Ui_Order_2
+from Inventory import Ui_Inventory_2
+from Profile import Ui_Profile_2
+from Report import Ui_Report_2
+from Customer import Ui_Customer_2
+from PurchaseView import Ui_PurchaseView
 
 
-class Ui_Dasboard(object):
+class Ui_Dasboard(object):    
+    def order(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Order_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def inventory(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Inventory_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def report(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Report_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def purchase(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_PurchaseView()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def customer(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Customer_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def profile(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Profile_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
     def setupUi(self, Dasboard):
         Dasboard.setObjectName("Dasboard")
         Dasboard.resize(975, 614)
@@ -89,6 +131,8 @@ class Ui_Dasboard(object):
         self.tarp.setObjectName("tarp")
         self.horizontalLayout.addWidget(self.tarp)
         self.Inventory = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Inventory.clicked.connect(self.inventory)
+        self.Inventory.clicked.connect(Dasboard.close)
         self.Inventory.setMinimumSize(QtCore.QSize(94, 44))
         self.Inventory.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Inventory.setStyleSheet("font-size:12px;\n"
@@ -100,26 +144,36 @@ class Ui_Dasboard(object):
         self.Inventory.setObjectName("Inventory")
         self.horizontalLayout.addWidget(self.Inventory)
         self.Order = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Order.clicked.connect(self.order)
+        self.Order.clicked.connect(Dasboard.close)
         self.Order.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Order.setStyleSheet("font-size:12px;")
         self.Order.setObjectName("Order")
         self.horizontalLayout.addWidget(self.Order)
         self.Purchase = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Order.clicked.connect(self.purchase)
+        self.Order.clicked.connect(Dasboard.close)
         self.Purchase.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Purchase.setStyleSheet("font-size:12px;")
         self.Purchase.setObjectName("Purchase")
         self.horizontalLayout.addWidget(self.Purchase)
         self.Report = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Order.clicked.connect(self.report)
+        self.Order.clicked.connect(Dasboard.close)
         self.Report.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Report.setStyleSheet("font-size:12px;")
         self.Report.setObjectName("Report")
         self.horizontalLayout.addWidget(self.Report)
         self.Customer = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Order.clicked.connect(self.customer)
+        self.Order.clicked.connect(Dasboard.close)
         self.Customer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Customer.setStyleSheet("font-size:12px;")
         self.Customer.setObjectName("Customer")
         self.horizontalLayout.addWidget(self.Customer)
         self.Profile = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Order.clicked.connect(self.profile)
+        self.Order.clicked.connect(Dasboard.close)
         self.Profile.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Profile.setStyleSheet("font-size:12px;")
         self.Profile.setObjectName("Profile")
