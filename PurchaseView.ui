@@ -183,26 +183,6 @@ color: #CD2E2E;</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="Customer">
-         <property name="font">
-          <font>
-           <pointsize>-1</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">font-size:12px;</string>
-         </property>
-         <property name="text">
-          <string>Customer</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="Order">
          <property name="font">
           <font>
@@ -263,6 +243,26 @@ background-color: #CD2E2E;</string>
          </property>
          <property name="text">
           <string>Reports</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Customer">
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font-size:12px;</string>
+         </property>
+         <property name="text">
+          <string>Customers</string>
          </property>
         </widget>
        </item>
