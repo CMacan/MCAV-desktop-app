@@ -672,7 +672,7 @@ class Ui_Dasboard(object):
         self.Order.setText(_translate("Dasboard", "Orders"))
         self.Purchase.setText(_translate("Dasboard", "Purchases"))
         self.Report.setText(_translate("Dasboard", "Reports"))
-        self.Customer.setText(_translate("Dasboard", "Customer"))
+        self.Customer.setText(_translate("Dasboard", "Customers"))
         self.Profile.setText(_translate("Dasboard", "Profile"))
         self.label.setText(_translate("Dasboard", "100"))
         self.label_2.setText(_translate("Dasboard", "Customers"))
