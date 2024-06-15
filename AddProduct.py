@@ -12,6 +12,24 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_AddProduct(object):
+
+    def add_new_product(self):
+        from Inventory import Ui_Inventory_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Inventory_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+    
+    def add_new_image(self):
+        pass
+
+    def cancel(self):
+        from Inventory import Ui_Inventory_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Inventory_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
     def setupUi(self, AddProduct):
         AddProduct.setObjectName("AddProduct")
         AddProduct.resize(640, 480)
@@ -91,9 +109,13 @@ class Ui_AddProduct(object):
         self.lineEdit_13.setGeometry(QtCore.QRect(400, 95, 113, 20))
         self.lineEdit_13.setObjectName("lineEdit_13")
         self.Cancel = QtWidgets.QPushButton(self.frame)
+        self.Cancel.clicked.connect(self.cancel)
+        self.Cancel.clicked.connect(AddProduct.close)
         self.Cancel.setGeometry(QtCore.QRect(354, 360, 96, 31))
         self.Cancel.setObjectName("Cancel")
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
+        self.AddOrder_3.clicked.connect(self.add_new_product)
+        self.AddOrder_3.clicked.connect(AddProduct.close)
         self.AddOrder_3.setGeometry(QtCore.QRect(475, 360, 91, 31))
         self.AddOrder_3.setObjectName("AddOrder_3")
         self.label_14 = QtWidgets.QLabel(self.frame)
@@ -110,6 +132,8 @@ class Ui_AddProduct(object):
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.Image = QtWidgets.QPushButton(self.frame)
+        self.Image.clicked.connect(self.add_new_image)
+        self.Image.clicked.connect(AddProduct.close)
         self.Image.setGeometry(QtCore.QRect(365, 240, 191, 96))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("static/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)

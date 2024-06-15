@@ -9,46 +9,53 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from Order import Ui_Order_2
-from Inventory import Ui_Inventory_2
-from Profile import Ui_Profile_2
-from Report import Ui_Report_2
-from Customer import Ui_Customer_2
-from PurchaseView import Ui_PurchaseView
 
-
-class Ui_Dasboard(object):    
+class Ui_Dasboard(object): 
+    
+    def show_purchase(self):
+        from PurchaseView import Ui_PurchaseView
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_PurchaseView()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+       
     def order(self):
+        from Order import Ui_Order_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Order_2()
         self.ui.setupUi(self.window2)
         self.window2.show()
 
     def inventory(self):
+        from Inventory import Ui_Inventory_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Inventory_2()
         self.ui.setupUi(self.window2)
         self.window2.show()
 
     def report(self):
+        from Report import Ui_Report_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Report_2()
         self.ui.setupUi(self.window2)
         self.window2.show()
 
     def purchase(self):
+        from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_PurchaseView()
         self.ui.setupUi(self.window2)
         self.window2.show()
 
     def customer(self):
+        from Customer import Ui_Customer_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Customer_2()
         self.ui.setupUi(self.window2)
         self.window2.show()
 
     def profile(self):
+        from Profile import Ui_Profile_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Profile_2()
         self.ui.setupUi(self.window2)
@@ -151,29 +158,29 @@ class Ui_Dasboard(object):
         self.Order.setObjectName("Order")
         self.horizontalLayout.addWidget(self.Order)
         self.Purchase = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Order.clicked.connect(self.purchase)
-        self.Order.clicked.connect(Dasboard.close)
+        self.Purchase.clicked.connect(self.purchase)
+        self.Purchase.clicked.connect(Dasboard.close)
         self.Purchase.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Purchase.setStyleSheet("font-size:12px;")
         self.Purchase.setObjectName("Purchase")
         self.horizontalLayout.addWidget(self.Purchase)
         self.Report = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Order.clicked.connect(self.report)
-        self.Order.clicked.connect(Dasboard.close)
+        self.Report.clicked.connect(self.report)
+        self.Report.clicked.connect(Dasboard.close)
         self.Report.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Report.setStyleSheet("font-size:12px;")
         self.Report.setObjectName("Report")
         self.horizontalLayout.addWidget(self.Report)
         self.Customer = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Order.clicked.connect(self.customer)
-        self.Order.clicked.connect(Dasboard.close)
+        self.Customer.clicked.connect(self.customer)
+        self.Customer.clicked.connect(Dasboard.close)
         self.Customer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Customer.setStyleSheet("font-size:12px;")
         self.Customer.setObjectName("Customer")
         self.horizontalLayout.addWidget(self.Customer)
         self.Profile = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Order.clicked.connect(self.profile)
-        self.Order.clicked.connect(Dasboard.close)
+        self.Profile.clicked.connect(self.profile)
+        self.Profile.clicked.connect(Dasboard.close)
         self.Profile.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Profile.setStyleSheet("font-size:12px;")
         self.Profile.setObjectName("Profile")
@@ -600,6 +607,8 @@ class Ui_Dasboard(object):
         self.label_16.setObjectName("label_16")
         self.horizontalLayout_7.addWidget(self.label_16)
         self.AddProduct = QtWidgets.QPushButton(self.frame_7)
+        self.AddProduct.clicked.connect(self.show_purchase)
+        self.AddProduct.clicked.connect(Dasboard.close)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

@@ -12,6 +12,14 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_AddOder(object):
+
+    def order(self):
+        from Order import Ui_Order_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Order_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
     def setupUi(self, AddOder):
         AddOder.setObjectName("AddOder")
         AddOder.resize(641, 481)
@@ -44,10 +52,14 @@ class Ui_AddOder(object):
         self.AddOrder.setGeometry(QtCore.QRect(240, 10, 126, 26))
         self.AddOrder.setObjectName("AddOrder")
         self.Cancel = QtWidgets.QPushButton(self.frame)
+        self.Cancel.clicked.connect(self.order)
+        self.Cancel.clicked.connect(AddOder.close)
         self.Cancel.setGeometry(QtCore.QRect(360, 420, 96, 31))
         self.Cancel.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Cancel.setObjectName("Cancel")
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
+        self.AddOrder_3.clicked.connect(self.order)
+        self.AddOrder_3.clicked.connect(AddOder.close)
         self.AddOrder_3.setGeometry(QtCore.QRect(470, 420, 91, 31))
         self.AddOrder_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.AddOrder_3.setObjectName("AddOrder_3")

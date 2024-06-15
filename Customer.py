@@ -12,6 +12,56 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Customer_2(object):
+    
+    def profile(self):
+        from Profile import Ui_Profile_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Profile_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+    
+    def add_new_customer(self):
+        from AddCustomer import MainWindow
+        self.window2 = QtWidgets.QDialog()
+        self.ui = MainWindow()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+        
+    def order(self):
+        from Order import Ui_Order_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Order_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def inventory(self):
+        from Inventory import Ui_Inventory_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Inventory_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def report(self):
+        from Report import Ui_Report_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Report_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def purchase(self):
+        from PurchaseView import Ui_PurchaseView
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_PurchaseView()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def customer(self):
+        from Customer import Ui_Customer_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Customer_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
     def setupUi(self, Customer_2):
         Customer_2.setObjectName("Customer_2")
         Customer_2.resize(975, 495)
@@ -89,27 +139,37 @@ class Ui_Customer_2(object):
         self.tarp.setObjectName("tarp")
         self.horizontalLayout.addWidget(self.tarp)
         self.Inventory = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Inventory.clicked.connect(self.inventory)
+        self.Inventory.clicked.connect(Customer_2.close)
         self.Inventory.setMinimumSize(QtCore.QSize(94, 44))
         self.Inventory.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Inventory.setStyleSheet("")
         self.Inventory.setObjectName("Inventory")
         self.horizontalLayout.addWidget(self.Inventory)
         self.Order = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Order.clicked.connect(self.order)
+        self.Order.clicked.connect(Customer_2.close)
         self.Order.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Order.setStyleSheet("font-size:12px;")
         self.Order.setObjectName("Order")
         self.horizontalLayout.addWidget(self.Order)
         self.Purchase = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Purchase.clicked.connect(self.purchase)
+        self.Purchase.clicked.connect(Customer_2.close)
         self.Purchase.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Purchase.setStyleSheet("font-size:12px;")
         self.Purchase.setObjectName("Purchase")
         self.horizontalLayout.addWidget(self.Purchase)
         self.Report = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Report.clicked.connect(self.report)
+        self.Report.clicked.connect(Customer_2.close)
         self.Report.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Report.setStyleSheet("font-size:12px;")
         self.Report.setObjectName("Report")
         self.horizontalLayout.addWidget(self.Report)
         self.Customer = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Customer.clicked.connect(self.customer)
+        self.Customer.clicked.connect(Customer_2.close)
         self.Customer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Customer.setStyleSheet("font-size:12px;\n"
 "color: white;\n"
@@ -118,6 +178,8 @@ class Ui_Customer_2(object):
         self.Customer.setObjectName("Customer")
         self.horizontalLayout.addWidget(self.Customer)
         self.Profile = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Profile.clicked.connect(self.profile)
+        self.Profile.clicked.connect(Customer_2.close)
         self.Profile.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Profile.setStyleSheet("font-size:12px;")
         self.Profile.setObjectName("Profile")

@@ -12,6 +12,49 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Report_2(object):
+    
+    def order(self):
+        from Order import Ui_Order_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Order_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def inventory(self):
+        from Inventory import Ui_Inventory_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Inventory_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def report(self):
+        from Report import Ui_Report_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Report_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def purchase(self):
+        from PurchaseView import Ui_PurchaseView
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_PurchaseView()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def customer(self):
+        from Customer import Ui_Customer_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Customer_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def profile(self):
+        from Profile import Ui_Profile_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Profile_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+        
     def setupUi(self, Report_2):
         Report_2.setObjectName("Report_2")
         Report_2.resize(1170, 535)
@@ -95,6 +138,8 @@ class Ui_Report_2(object):
         self.tarp.setObjectName("tarp")
         self.horizontalLayout.addWidget(self.tarp)
         self.Inventory = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Inventory.clicked.connect(self.inventory)
+        self.Inventory.clicked.connect(Report_2.close)
         self.Inventory.setMinimumSize(QtCore.QSize(94, 44))
         font = QtGui.QFont()
         font.setPointSize(-1)
@@ -108,6 +153,8 @@ class Ui_Report_2(object):
         self.Inventory.setObjectName("Inventory")
         self.horizontalLayout.addWidget(self.Inventory)
         self.Order = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Order.clicked.connect(self.order)
+        self.Order.clicked.connect(Report_2.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -119,6 +166,8 @@ class Ui_Report_2(object):
         self.Order.setObjectName("Order")
         self.horizontalLayout.addWidget(self.Order)
         self.Purchase = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Purchase.clicked.connect(self.purchase)
+        self.Purchase.clicked.connect(Report_2.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -130,6 +179,8 @@ class Ui_Report_2(object):
         self.Purchase.setObjectName("Purchase")
         self.horizontalLayout.addWidget(self.Purchase)
         self.Report = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Report.clicked.connect(self.report)
+        self.Report.clicked.connect(Report_2.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -143,6 +194,8 @@ class Ui_Report_2(object):
         self.Report.setObjectName("Report")
         self.horizontalLayout.addWidget(self.Report)
         self.Customer = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Customer.clicked.connect(self.customer)
+        self.Customer.clicked.connect(Report_2.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -153,6 +206,8 @@ class Ui_Report_2(object):
         self.Customer.setObjectName("Customer")
         self.horizontalLayout.addWidget(self.Customer)
         self.Profile = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Profile.clicked.connect(self.profile)
+        self.Profile.clicked.connect(Report_2.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)

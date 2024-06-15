@@ -9,23 +9,19 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from Order import Ui_Order_2
-from Profile import Ui_Profile_2
-from Report import Ui_Report_2
-from Customer import Ui_Customer_2
-from PurchaseView import Ui_PurchaseView
-from AddProduct import Ui_AddProduct
-
 
 
 class Ui_Inventory_2(object):
+
     def add_product(self):
+        from AddProduct import Ui_AddProduct
         self.window2 = QtWidgets.QDialog()
         self.ui = Ui_AddProduct()
         self.ui.setupUi(self.window2)
         self.window2.show()
 
     def order(self):
+        from Order import Ui_Order_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Order_2()
         self.ui.setupUi(self.window2)
@@ -38,24 +34,28 @@ class Ui_Inventory_2(object):
         self.window2.show()
 
     def report(self):
+        from Report import Ui_Report_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Report_2()
         self.ui.setupUi(self.window2)
         self.window2.show()
 
     def purchase(self):
+        from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_PurchaseView()
         self.ui.setupUi(self.window2)
         self.window2.show()
 
     def customer(self):
+        from Customer import Ui_Customer_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Customer_2()
         self.ui.setupUi(self.window2)
         self.window2.show()
 
     def profile(self):
+        from Profile import Ui_Profile_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Profile_2()
         self.ui.setupUi(self.window2)

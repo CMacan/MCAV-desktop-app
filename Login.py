@@ -13,6 +13,7 @@ from Dashboard import Ui_Dasboard
 
 
 class Ui_Login(object):
+    
     def dashboard(self):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Dasboard()
