@@ -395,7 +395,7 @@ class Ui_Customer_2(object):
         self.Order.setText(_translate("Customer_2", "Orders"))
         self.Purchase.setText(_translate("Customer_2", "Purchases"))
         self.Report.setText(_translate("Customer_2", "Reports"))
-        self.Customer.setText(_translate("Customer_2", "Customer"))
+        self.Customer.setText(_translate("Customer_2", "Customers"))
         self.Profile.setText(_translate("Customer_2", "Profile"))
         self.ProductLabel.setText(_translate("Customer_2", "Customer List"))
         self.manageLabel.setText(_translate("Customer_2", "Manage your customers"))
