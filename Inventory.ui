@@ -215,7 +215,7 @@ background-color: #CD2E2E;
           <string notr="true">font-size:12px;</string>
          </property>
          <property name="text">
-          <string>Customer</string>
+          <string>Customers</string>
          </property>
         </widget>
        </item>
