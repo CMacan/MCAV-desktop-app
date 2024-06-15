@@ -12,6 +12,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_AddPurchase(object):
+    def back_to_purchase_view(self):
+        from PurchaseView import Ui_PurchaseView
+        self.window2 = QtWidgets.QMainWindow
+        self.ui = Ui_PurchaseView
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
     def setupUi(self, AddPurchase):
         AddPurchase.setObjectName("AddPurchase")
         AddPurchase.resize(640, 480)
@@ -96,9 +103,13 @@ class Ui_AddPurchase(object):
         self.lineEdit_13.setGeometry(QtCore.QRect(405, 125, 113, 20))
         self.lineEdit_13.setObjectName("lineEdit_13")
         self.Cancel = QtWidgets.QPushButton(self.frame)
+        self.Cancel.clicked.connect(self.back_to_purchase_view)
+        self.Cancel.clicked.connect(AddPurchase.close)
         self.Cancel.setGeometry(QtCore.QRect(354, 360, 96, 31))
         self.Cancel.setObjectName("Cancel")
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
+        self.AddOrder_3.clicked.connect(self.back_to_purchase_view)
+        self.AddOrder_3.clicked.connect(AddPurchase.close)
         self.AddOrder_3.setGeometry(QtCore.QRect(475, 360, 91, 31))
         self.AddOrder_3.setObjectName("AddOrder_3")
         self.label_14 = QtWidgets.QLabel(self.frame)

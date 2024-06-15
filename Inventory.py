@@ -9,9 +9,58 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from Order import Ui_Order_2
+from Profile import Ui_Profile_2
+from Report import Ui_Report_2
+from Customer import Ui_Customer_2
+from PurchaseView import Ui_PurchaseView
+from AddProduct import Ui_AddProduct
+
 
 
 class Ui_Inventory_2(object):
+    def add_product(self):
+        self.window2 = QtWidgets.QDialog()
+        self.ui = Ui_AddProduct()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def order(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Order_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def inventory(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Inventory_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def report(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Report_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def purchase(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_PurchaseView()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def customer(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Customer_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def profile(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Profile_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
     def setupUi(self, Inventory_2):
         Inventory_2.setObjectName("Inventory_2")
         Inventory_2.resize(975, 493)
@@ -89,6 +138,8 @@ class Ui_Inventory_2(object):
         self.tarp.setObjectName("tarp")
         self.horizontalLayout.addWidget(self.tarp)
         self.Inventory = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Inventory.clicked.connect(self.inventory)
+        self.Inventory.clicked.connect(Inventory_2.close)
         self.Inventory.setMinimumSize(QtCore.QSize(94, 44))
         self.Inventory.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Inventory.setStyleSheet("font-size:12px;\n"
@@ -99,26 +150,36 @@ class Ui_Inventory_2(object):
         self.Inventory.setObjectName("Inventory")
         self.horizontalLayout.addWidget(self.Inventory)
         self.Order = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Order.clicked.connect(self.order)
+        self.Order.clicked.connect(Inventory_2.close)
         self.Order.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Order.setStyleSheet("font-size:12px;")
         self.Order.setObjectName("Order")
         self.horizontalLayout.addWidget(self.Order)
         self.Purchase = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Purchase.clicked.connect(self.purchase)
+        self.Purchase.clicked.connect(Inventory_2.close)
         self.Purchase.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Purchase.setStyleSheet("font-size:12px;")
         self.Purchase.setObjectName("Purchase")
         self.horizontalLayout.addWidget(self.Purchase)
         self.Report = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Report.clicked.connect(self.report)
+        self.Report.clicked.connect(Inventory_2.close)
         self.Report.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Report.setStyleSheet("font-size:12px;")
         self.Report.setObjectName("Report")
         self.horizontalLayout.addWidget(self.Report)
         self.Customer = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Customer.clicked.connect(self.customer)
+        self.Customer.clicked.connect(Inventory_2.close)
         self.Customer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Customer.setStyleSheet("font-size:12px;")
         self.Customer.setObjectName("Customer")
         self.horizontalLayout.addWidget(self.Customer)
         self.Profile = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Profile.clicked.connect(self.profile)
+        self.Profile.clicked.connect(Inventory_2.close)
         self.Profile.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Profile.setStyleSheet("font-size:12px;")
         self.Profile.setObjectName("Profile")
@@ -179,6 +240,8 @@ class Ui_Inventory_2(object):
         spacerItem = QtWidgets.QSpacerItem(649, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem)
         self.AddProduct = QtWidgets.QPushButton(self.BtnContainer)
+        self.AddProduct.clicked.connect(self.add_product)
+                
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

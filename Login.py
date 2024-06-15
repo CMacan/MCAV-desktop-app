@@ -9,9 +9,16 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from Dashboard import Ui_Dasboard
 
 
 class Ui_Login(object):
+    def dashboard(self):
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Dasboard()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
     def setupUi(self, Login):
         Login.setObjectName("Login")
         Login.resize(732, 579)
@@ -160,6 +167,8 @@ class Ui_Login(object):
         self.pushButton = QtWidgets.QPushButton(self.frame_4)
         self.pushButton.setMinimumSize(QtCore.QSize(0, 65))
         self.pushButton.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.pushButton.clicked.connect(self.dashboard)
+        self.pushButton.clicked.connect(Login.close)
         font = QtGui.QFont()
         font.setFamily("Bahnschrift SemiBold")
         font.setPointSize(14)

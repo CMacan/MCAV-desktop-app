@@ -371,7 +371,7 @@ class Ui_Profile_2(object):
 
     def retranslateUi(self, Profile_2):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        Profile_2.setWindowTitle(_translate("Profile_2", "MainWindow"))
         self.tarp.setText(_translate("MainWindow", "TARPAULIN PRINTING SERVICES"))
         self.Inventory.setText(_translate("MainWindow", "Inventory"))
         self.Customer.setText(_translate("MainWindow", "Customer"))

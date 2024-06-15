@@ -12,6 +12,63 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_PurchaseView(object):
+    
+    def view_supplier(self):
+        from Supplier import Ui_Supplier
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Supplier()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+    
+    def add_purchase(self):
+        from AddPurchase import Ui_AddPurchase
+        self.window2 = QtWidgets.QDialog()
+        self.ui = Ui_AddPurchase()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+        
+    def order(self):
+        from Order import Ui_Order_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Order_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def inventory(self):
+        from Inventory import Ui_Inventory_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Inventory_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def report(self):
+        from Report import Ui_Report_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Report_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def purchase(self):
+        from PurchaseView import Ui_PurchaseView
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_PurchaseView()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def customer(self):
+        from Customer import Ui_Customer_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Customer_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
+    def profile(self):
+        from Profile import Ui_Profile_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Profile_2()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
+
     def setupUi(self, PurchaseView):
         PurchaseView.setObjectName("PurchaseView")
         PurchaseView.resize(1169, 493)
@@ -95,6 +152,8 @@ class Ui_PurchaseView(object):
         self.tarp.setObjectName("tarp")
         self.horizontalLayout.addWidget(self.tarp)
         self.Inventory = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Inventory.clicked.connect(self.inventory)
+        self.Inventory.clicked.connect(PurchaseView.close)
         self.Inventory.setMinimumSize(QtCore.QSize(94, 44))
         font = QtGui.QFont()
         font.setPointSize(-1)
@@ -108,6 +167,8 @@ class Ui_PurchaseView(object):
         self.Inventory.setObjectName("Inventory")
         self.horizontalLayout.addWidget(self.Inventory)
         self.Customer = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Customer.clicked.connect(self.customer)
+        self.Customer.clicked.connect(PurchaseView.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -118,6 +179,8 @@ class Ui_PurchaseView(object):
         self.Customer.setObjectName("Customer")
         self.horizontalLayout.addWidget(self.Customer)
         self.Order = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Order.clicked.connect(self.order)
+        self.Order.clicked.connect(PurchaseView.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -129,6 +192,8 @@ class Ui_PurchaseView(object):
         self.Order.setObjectName("Order")
         self.horizontalLayout.addWidget(self.Order)
         self.Purchase = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Purchase.clicked.connect(self.purchase)
+        self.Purchase.clicked.connect(PurchaseView.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -142,6 +207,8 @@ class Ui_PurchaseView(object):
         self.Purchase.setObjectName("Purchase")
         self.horizontalLayout.addWidget(self.Purchase)
         self.Report = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Report.clicked.connect(self.report)
+        self.Report.clicked.connect(PurchaseView.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -152,6 +219,8 @@ class Ui_PurchaseView(object):
         self.Report.setObjectName("Report")
         self.horizontalLayout.addWidget(self.Report)
         self.Profile = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Profile.clicked.connect(self.profile)
+        self.Profile.clicked.connect(PurchaseView.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -234,6 +303,8 @@ class Ui_PurchaseView(object):
         spacerItem = QtWidgets.QSpacerItem(649, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem)
         self.AddProduct_2 = QtWidgets.QPushButton(self.BtnContainer)
+        self.AddProduct_2.clicked.connect(self.view_supplier)
+        self.AddProduct_2.clicked.connect(PurchaseView.close)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -261,6 +332,8 @@ class Ui_PurchaseView(object):
         self.AddProduct_2.setObjectName("AddProduct_2")
         self.horizontalLayout_3.addWidget(self.AddProduct_2)
         self.AddProduct = QtWidgets.QPushButton(self.BtnContainer)
+        self.AddProduct.clicked.connect(self.add_purchase)
+        self.AddProduct.clicked.connect(PurchaseView.close)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
