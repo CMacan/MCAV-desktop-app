@@ -13,6 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_AddOder(object):
 
+
     def order(self):
         from Order import Ui_Order_2
         self.window2 = QtWidgets.QMainWindow()
