@@ -72,7 +72,7 @@ class Ui_Supplier(object):
 
     def setupUi(self, Supplier):
         Supplier.setObjectName("Supplier")
-        Supplier.resize(1013, 491)
+        Supplier.resize(975, 495)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

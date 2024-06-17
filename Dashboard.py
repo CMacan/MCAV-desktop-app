@@ -63,7 +63,7 @@ class Ui_Dasboard(object):
 
     def setupUi(self, Dasboard):
         Dasboard.setObjectName("Dasboard")
-        Dasboard.resize(975, 614)
+        Dasboard.resize(975, 495)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

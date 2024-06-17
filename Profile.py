@@ -71,7 +71,7 @@ class Ui_Profile_2(object):
 
     def setupUi(self, Profile_2):
         Profile_2.setObjectName("Profile_2")
-        Profile_2.resize(946, 523)
+        Profile_2.resize(975, 495)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

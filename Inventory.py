@@ -70,7 +70,7 @@ class Ui_Inventory_2(object):
 
     def setupUi(self, Inventory_2):
         Inventory_2.setObjectName("Inventory_2")
-        Inventory_2.resize(975, 493)
+        Inventory_2.resize(975, 495)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

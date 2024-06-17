@@ -64,7 +64,7 @@ class Ui_Report_2(object):
         
     def setupUi(self, Report_2):
         Report_2.setObjectName("Report_2")
-        Report_2.resize(1170, 535)
+        Report_2.resize(975, 495)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
