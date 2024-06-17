@@ -14,6 +14,12 @@ import psycopg2
 
 class Ui_AddPurchase(object):
 
+    def __init__(self):
+        # PostgreSQL connection
+        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
+                                     password="Milliondollarbaby123", port=6543)
+        self.cur = self.conn.cursor()
+
     def cancel(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
