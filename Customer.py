@@ -35,13 +35,6 @@ class Ui_Customer_2(object):
         self.ui = Ui_Profile_2()
         self.ui.setupUi(self.window2)
         self.window2.show()
-    
-    def add_new_customer(self):
-        from AddCustomer import MainWindow
-        self.window2 = QtWidgets.QDialog()
-        self.ui = MainWindow()
-        self.ui.setupUi(self.window2)
-        self.window2.show()
         
     def order(self):
         from Order import Ui_Order_2
