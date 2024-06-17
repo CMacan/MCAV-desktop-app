@@ -550,7 +550,7 @@ class Ui_Order_2(object):
         item = self.tableWidget.horizontalHeaderItem(7)
         item.setText(_translate("Order_2", "Payments"))
         item = self.tableWidget.horizontalHeaderItem(8)
-        item.setText(_translate("Order_2", "Acmount Total"))
+        item.setText(_translate("Order_2", "Amount Total"))
 import font_rc
 import images_rc
 
