@@ -1,3 +1,5 @@
+# Navbar Global
+
     def show_purchase(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
@@ -47,6 +49,41 @@
         self.ui.setupUi(self.window2)
         self.window2.show()
 
-// insert below QPushButton
+    # insert below QPushButton
         self.Inventory.clicked.connect(self.inventory)
         self.Inventory.clicked.connect(Dasboard.close)
+
+
+    # PostgreSQL connection
+    def __init__(self):
+        
+        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
+                                     password="Milliondollarbaby123", port=6543)
+        self.cur = self.conn.cursor()
+
+
+
+# AddOrder.py
+
+    def save_data(self):
+        # Get data from UI elements
+        cus_fname = self.lineEdit.text()
+        cus_lname = self.lineEdit_5.text()
+        cus_email = self.lineEdit_2.text()
+        cus_phone = self.lineEdit_3.text()
+        cus_address = self.lineEdit_14.text()
+
+        sql = """
+        CREATE TABLE IF NOT EXISTS CUSTOMER (
+            CUS_FNAME VARCHAR(255),
+            CUS_LNAME VARCHAR(255),
+            CUS_EMAIL VARCHAR(255),
+            CUS_PHONE VARCHAR(20),
+            CUS_ADDRESS TEXT
+        );
+
+        INSERT INTO CUSTOMER (CUS_FNAME, CUS_LNAME, CUS_EMAIL, CUS_PHONE, CUS_ADDRESS) VALUES (%s, %s, %s, %s, %s)
+        """
+        self.cur.execute(sql, (cus_fname, cus_lname, cus_email, cus_phone, cus_address))
+        
+        self.conn.commit()
