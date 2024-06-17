@@ -533,7 +533,7 @@ class Ui_Customer_2(object):
         self.manageLabel.setText(_translate("Customer_2", "Manage your customers"))
         self.Search.setText(_translate("Customer_2", "Search"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("Customer_2", "Code"))
+        item.setText(_translate("Customer_2", "Customer ID"))
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("Customer_2", "First Name"))
         item = self.tableWidget.horizontalHeaderItem(2)
