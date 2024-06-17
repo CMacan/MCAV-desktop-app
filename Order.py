@@ -15,6 +15,12 @@ import psycopg2
 
 class Ui_Order_2(object):
 
+    def __init__(self):
+        # PostgreSQL connection
+        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
+                                     password="Milliondollarbaby123", port=6543)
+        self.cur = self.conn.cursor()
+
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
         self.window2 = QtWidgets.QMainWindow()
@@ -175,10 +181,8 @@ class Ui_Order_2(object):
         self.Inventory.setObjectName("Inventory")
         self.horizontalLayout.addWidget(self.Inventory)
         self.Order = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Order.clicked.connect(self.order)
-        self.Order.clicked.connect(Order_2.close)
         font = QtGui.QFont()
-        font.setPointSize(-1)
+        font.setPointSize(0)
         font.setBold(True)
         font.setWeight(75)
         self.Order.setFont(font)
