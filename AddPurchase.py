@@ -30,6 +30,10 @@ class Ui_AddPurchase(object):
     def setupUi(self, AddPurchase):
         AddPurchase.setObjectName("AddPurchase")
         AddPurchase.resize(640, 480)
+        AddPurchase.setFixedSize(640, 480)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        AddPurchase.setSizePolicy(sizePolicy)
+
         self.frame = QtWidgets.QFrame(AddPurchase)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("QFrame{\n"

@@ -23,8 +23,9 @@ class Ui_AddOder(object):
     def setupUi(self, AddOder):
         AddOder.setObjectName("AddOder")
         AddOder.resize(641, 481)
-        AddOder.setMinimumSize(QtCore.QSize(641, 481))
-        AddOder.setMaximumSize(QtCore.QSize(641, 481))
+        AddOder.setFixedSize(640, 480)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        AddOder.setSizePolicy(sizePolicy)
         self.frame = QtWidgets.QFrame(AddOder)
         self.frame.setEnabled(True)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
