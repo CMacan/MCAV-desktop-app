@@ -20,14 +20,6 @@ class Ui_Customer_2(object):
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)
         self.window2.show()
-
-    def back_dashboard(self):
-        from Dashboard import Ui_Dasboard
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Dasboard()
-        self.ui.setupUi(self.window2)
-        self.window2.show()
-    
     
     def profile(self):
         from Profile import Ui_Profile_2
