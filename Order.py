@@ -28,7 +28,6 @@ class Ui_Order_2(object):
         self.window2 = QtWidgets.QDialog()
         self.ui = Ui_AddOder()
         self.ui.setupUi(self.window2)
-        # self.window2.show()
         self.window2.setModal(True)  # Ensure the dialog is modal
         self.window2.exec_() 
         
