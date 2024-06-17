@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QDialog
 from clickable import ClickableLabel 
 import psycopg2
 
@@ -49,7 +50,7 @@ class Ui_Customer_2(object):
             layout.setSpacing(10)  # Adjust spacing between buttons if needed
 
             edit_button = QtWidgets.QPushButton('Edit')
-            edit_button.clicked.connect(lambda checked, row=row_number: self.edit_customer(row))
+            edit_button.clicked.connect(lambda checked, row=row_number: self.update_customer(row))
             layout.addWidget(edit_button)
 
             delete_button = QtWidgets.QPushButton('Delete')
@@ -75,6 +76,32 @@ class Ui_Customer_2(object):
             self.display_customers(customers)
         except psycopg2.Error as e:
             QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
+    
+    def update_customer(self, row):
+        from UpdateCustomer import Ui_UpdateCustomer
+        # Get data from the selected row
+        customer_data = []
+        for column_number in range(6):  # Assuming there are 6 columns in the table
+            item = self.tableWidget.item(row, column_number)
+            if item is not None:
+                customer_data.append(item.text())
+            else:
+                customer_data.append("")  # Handle empty cells if needed
+        
+
+        # Open the UpdateCustomer dialog window
+        self.dialog = QDialog()
+        self.update_customer_ui = Ui_UpdateCustomer()
+        self.update_customer_ui.setupUi(self.dialog)
+
+        # Populate the QLineEdit fields with data from the database
+        self.update_customer_ui.lineEdit_2.setText(customer_data[1])  # First Name
+        self.update_customer_ui.lineEdit_3.setText(customer_data[2])  # Last Name
+        self.update_customer_ui.lineEdit_4.setText(customer_data[4])  # Phone #
+        self.update_customer_ui.lineEdit_13.setText(customer_data[5])  # Address
+        self.update_customer_ui.lineEdit_14.setText(customer_data[3])  # Email Address
+
+        self.dialog.exec_()
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
@@ -126,6 +153,7 @@ class Ui_Customer_2(object):
         self.window2.showMaximized()
 
     def setupUi(self, Customer_2):
+        from UpdateCustomer import Ui_UpdateCustomer
         Customer_2.setObjectName("Customer_2")
         Customer_2.resize(975, 495)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
