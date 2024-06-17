@@ -718,6 +718,7 @@ class Ui_Dasboard(object):
         item.setText(_translate("Dasboard", "Products"))
         item = self.tableWidget_2.horizontalHeaderItem(1)
         item.setText(_translate("Dasboard", "Price"))
+        
 import font_rc
 import images_rc
 
