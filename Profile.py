@@ -25,7 +25,7 @@ class Ui_Profile_2(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Login()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
     
     def order(self):
         from Order import Ui_Order_2
