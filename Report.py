@@ -9,9 +9,16 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from clickable import ClickableLabel 
 
 class Ui_Report_2(object):
+
+    def back_dashboard(self):
+        from Dashboard import Ui_Dasboard
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Dasboard()
+        self.ui.setupUi(self.window2)
+        self.window2.show()
     
     def order(self):
         from Order import Ui_Order_2
@@ -123,7 +130,7 @@ class Ui_Report_2(object):
         self.Logo.setWordWrap(False)
         self.Logo.setObjectName("Logo")
         self.horizontalLayout.addWidget(self.Logo)
-        self.tarp = QtWidgets.QLabel(self.NavbarFrame)
+        self.tarp = ClickableLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("Georgia")
         font.setPointSize(12)
@@ -131,12 +138,13 @@ class Ui_Report_2(object):
         font.setItalic(False)
         font.setWeight(9)
         self.tarp.setFont(font)
-        self.tarp.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.tarp.setAutoFillBackground(False)
-        self.tarp.setStyleSheet("font: 75 12pt \"Georgia\";\n"
-"color: #CD2E2E;")
+        self.tarp.setStyleSheet("font: 75 12pt 'Georgia';\n"
+                                "color: #CD2E2E;")
         self.tarp.setObjectName("tarp")
         self.horizontalLayout.addWidget(self.tarp)
+        self.tarp.clicked.connect(self.back_dashboard)
+        self.tarp.clicked.connect(Report_2.close)
         self.Inventory = QtWidgets.QPushButton(self.NavbarFrame)
         self.Inventory.clicked.connect(self.inventory)
         self.Inventory.clicked.connect(Report_2.close)
