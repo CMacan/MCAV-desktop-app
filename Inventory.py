@@ -270,7 +270,6 @@ class Ui_Inventory_2(object):
         self.horizontalLayout_3.addItem(spacerItem)
         self.AddProduct = QtWidgets.QPushButton(self.BtnContainer)
         self.AddProduct.clicked.connect(self.add_product)
-        self.AddProduct.clicked.connect(Inventory_2.close)
                 
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
