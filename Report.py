@@ -471,11 +471,15 @@ class Ui_Report_2(object):
         item.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(11, item)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
+        self.tableWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.tableWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.verticalLayout_4.addWidget(self.tableWidget)
         self.verticalLayout_2.addWidget(self.DataFrame)
         self.verticalLayout.addWidget(self.TableContainer)
         Report_2.setCentralWidget(self.centralwidget)
-
+        self.tableWidget.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.tableWidget.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+                
         self.retranslateUi(Report_2)
         QtCore.QMetaObject.connectSlotsByName(Report_2)
 
