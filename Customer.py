@@ -41,6 +41,7 @@ class Ui_Customer_2(object):
                 item.setTextAlignment(QtCore.Qt.AlignCenter)
                 item.setText(str(data))
                 self.tableWidget.setItem(row_number, column_number, item)
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
@@ -354,6 +355,7 @@ class Ui_Customer_2(object):
         font.setPointSize(10)
         self.tableWidget.setFont(font)
         self.tableWidget.setColumnCount(7)
+        self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
