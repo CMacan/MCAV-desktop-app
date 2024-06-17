@@ -18,7 +18,7 @@ class Ui_AddProduct(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Inventory_2()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
     
     def add_new_image(self):
         pass
@@ -28,7 +28,7 @@ class Ui_AddProduct(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Inventory_2()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
 
     def setupUi(self, AddProduct):
         AddProduct.setObjectName("AddProduct")

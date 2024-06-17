@@ -18,14 +18,14 @@ class Ui_AddPurchase(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_PurchaseView()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
 
     def add_purchase(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_PurchaseView()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
 
     def setupUi(self, AddPurchase):
         AddPurchase.setObjectName("AddPurchase")
