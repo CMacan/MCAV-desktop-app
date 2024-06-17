@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_PurchaseView(object):
     def setupUi(self, PurchaseView):
         PurchaseView.setObjectName("PurchaseView")
-        PurchaseView.resize(1169, 493)
+        PurchaseView.resize(975, 495)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
