@@ -85,10 +85,12 @@ class Ui_AddProduct(object):
         self.lineEdit_13.setGeometry(QtCore.QRect(400, 95, 113, 20))
         self.lineEdit_13.setObjectName("lineEdit_13")
         self.Cancel = QtWidgets.QPushButton(self.frame)
+        self.Cancel.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Cancel.clicked.connect(AddProduct.close)
         self.Cancel.setGeometry(QtCore.QRect(354, 360, 96, 31))
         self.Cancel.setObjectName("Cancel")
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
+        self.AddOrder_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.AddOrder_3.clicked.connect(self.add_new_product)
         self.AddOrder_3.clicked.connect(AddProduct.close)
         self.AddOrder_3.setGeometry(QtCore.QRect(475, 360, 91, 31))
@@ -125,7 +127,6 @@ class Ui_AddProduct(object):
         self.Image.setIcon(icon)
         self.Image.setIconSize(QtCore.QSize(20, 20))
         self.Image.setObjectName("Image")
-
         self.retranslateUi(AddProduct)
         QtCore.QMetaObject.connectSlotsByName(AddProduct)
 
