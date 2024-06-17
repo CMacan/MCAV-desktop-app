@@ -15,6 +15,12 @@ import psycopg2
 
 class Ui_Login(object):
     
+    def __init__(self):
+        # PostgreSQL connection
+        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
+                                     password="Milliondollarbaby123", port=6543)
+        self.cur = self.conn.cursor()
+    
     def dashboard(self):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Dasboard()
