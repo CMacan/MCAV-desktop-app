@@ -15,6 +15,34 @@ import psycopg2
 
 class Ui_Customer_2(object):
 
+    def __init__(self):
+        # PostgreSQL connection
+        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
+                                     password="Milliondollarbaby123", port=6543)
+        self.cur = self.conn.cursor()
+
+    def fetch_customers(self):
+        try:
+            sql = """
+            SELECT CUS_CODE, CUS_FNAME, CUS_LNAME, CUS_EMAIL, CUS_PHONE, CUS_ADDRESS
+            FROM CUSTOMER
+            """
+            self.cur.execute(sql)
+            return self.cur.fetchall()
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching data from database: {e}")
+            return []
+
+    def display_customers(self, customers):
+        for row_number, customer in enumerate(customers):
+            self.tableWidget.insertRow(row_number)
+            for column_number, data in enumerate(customer):
+                item = QtWidgets.QTableWidgetItem()
+                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                item.setText(str(data))
+                self.tableWidget.setItem(row_number, column_number, item)
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
         self.window2 = QtWidgets.QMainWindow()
@@ -321,11 +349,13 @@ class Ui_Customer_2(object):
         spacerItem1 = QtWidgets.QSpacerItem(610, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout_4.addWidget(self.SearchFrame)
+        
         self.tableWidget = QtWidgets.QTableWidget(self.DataFrame)
         font = QtGui.QFont()
         font.setPointSize(10)
         self.tableWidget.setFont(font)
         self.tableWidget.setColumnCount(7)
+        self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
@@ -413,6 +443,9 @@ class Ui_Customer_2(object):
         self.verticalLayout_2.addWidget(self.DataFrame)
         self.verticalLayout.addWidget(self.TableContainer)
         Customer_2.setCentralWidget(self.centralwidget)
+
+        customers = self.fetch_customers()
+        self.display_customers(customers)
 
         self.retranslateUi(Customer_2)
         QtCore.QMetaObject.connectSlotsByName(Customer_2)

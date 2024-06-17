@@ -15,6 +15,12 @@ import psycopg2
 
 class Ui_Inventory_2(object):
 
+    def __init__(self):
+        # PostgreSQL connection
+        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
+                                     password="Milliondollarbaby123", port=6543)
+        self.cur = self.conn.cursor()
+
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
         self.window2 = QtWidgets.QMainWindow()
