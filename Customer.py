@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from clickable import ClickableLabel 
+from PyQt5.QtCore import Qt
 
 
 class Ui_Customer_2(object):
@@ -19,14 +20,7 @@ class Ui_Customer_2(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)
-        self.window2.show()
-
-    def back_dashboard(self):
-        from Dashboard import Ui_Dasboard
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Dasboard()
-        self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
     
     
     def profile(self):
@@ -34,49 +28,50 @@ class Ui_Customer_2(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Profile_2()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
     
     def add_new_customer(self):
         from AddCustomer import MainWindow
         self.window2 = QtWidgets.QDialog()
         self.ui = MainWindow()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
         
     def order(self):
         from Order import Ui_Order_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Order_2()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
 
     def inventory(self):
         from Inventory import Ui_Inventory_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Inventory_2()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.isMaximized
+        self.window2.showMaximized()
 
     def report(self):
         from Report import Ui_Report_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Report_2()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
 
     def purchase(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_PurchaseView()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
 
     def customer(self):
         from Customer import Ui_Customer_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Customer_2()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
 
     def setupUi(self, Customer_2):
         Customer_2.setObjectName("Customer_2")
