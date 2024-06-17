@@ -515,7 +515,7 @@ class Ui_Supplier(object):
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("Supplier", "Supplier Name"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("Supplier", "Supplier Code"))
+        item.setText(_translate("Supplier", "Supplier ID"))
         item = self.tableWidget.horizontalHeaderItem(2)
         item.setText(_translate("Supplier", "Email"))
         item = self.tableWidget.horizontalHeaderItem(3)
