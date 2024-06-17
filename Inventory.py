@@ -10,7 +10,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from clickable import ClickableLabel 
-from PyQt5.QtCore import Qt
+import psycopg2
+
 
 class Ui_Inventory_2(object):
 
@@ -19,7 +20,7 @@ class Ui_Inventory_2(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def add_product(self):
         from AddProduct import Ui_AddProduct
@@ -34,41 +35,41 @@ class Ui_Inventory_2(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Order_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def inventory(self):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Inventory_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def report(self):
         from Report import Ui_Report_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Report_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def purchase(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_PurchaseView()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def customer(self):
         from Customer import Ui_Customer_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Customer_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def profile(self):
         from Profile import Ui_Profile_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Profile_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def setupUi(self, Inventory_2):
         Inventory_2.setObjectName("Inventory_2")

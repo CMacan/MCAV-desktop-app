@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from Dashboard import Ui_Dasboard
+import psycopg2
 
 
 class Ui_Login(object):
@@ -18,7 +19,7 @@ class Ui_Login(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def setupUi(self, Login):
         Login.setObjectName("Login")

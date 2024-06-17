@@ -10,6 +10,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from clickable import ClickableLabel 
+import psycopg2
+
 
 class Ui_Order_2(object):
 
@@ -18,7 +20,7 @@ class Ui_Order_2(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
     
     def search(self):
         pass
@@ -28,6 +30,7 @@ class Ui_Order_2(object):
         self.window2 = QtWidgets.QDialog()
         self.ui = Ui_AddOder()
         self.ui.setupUi(self.window2)
+        # self.window2.show()
         self.window2.setModal(True)  # Ensure the dialog is modal
         self.window2.exec_() 
         
@@ -36,42 +39,42 @@ class Ui_Order_2(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Order_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def inventory(self):
         from Inventory import Ui_Inventory_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Inventory_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def report(self):
         from Report import Ui_Report_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Report_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def purchase(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_PurchaseView()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def customer(self):
         from Customer import Ui_Customer_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Customer_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def profile(self):
         from Profile import Ui_Profile_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Profile_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def setupUi(self, Order_2):
         Order_2.setObjectName("Order_2")
