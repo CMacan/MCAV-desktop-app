@@ -110,7 +110,7 @@ class Ui_AddOder(object):
 
         self.AddOrder.setObjectName("AddOrder")
         self.Cancel = QtWidgets.QPushButton(self.frame)
-        self.Cancel.clicked.connect(self.order)
+        # self.Cancel.clicked.connect(self.order)
         self.Cancel.clicked.connect(AddOder.close)
         self.Cancel.setGeometry(QtCore.QRect(360, 420, 96, 31))
         self.Cancel.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -118,7 +118,6 @@ class Ui_AddOder(object):
         
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
         self.AddOrder_3.clicked.connect(self.save_data)
-        self.AddOrder_3.clicked.connect(AddOder.close)
         self.AddOrder_3.setGeometry(QtCore.QRect(470, 420, 91, 31))
         self.AddOrder_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.AddOrder_3.setObjectName("AddOrder_3")
