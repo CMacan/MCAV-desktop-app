@@ -328,7 +328,7 @@ class Ui_PurchaseView(object):
 "color: white; \n"
 "font-weight: bold; frf")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/static/static/view.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/static/static/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.AddProduct_2.setIcon(icon)
         self.AddProduct_2.setIconSize(QtCore.QSize(20, 20))
         self.AddProduct_2.setObjectName("AddProduct_2")
@@ -357,7 +357,7 @@ class Ui_PurchaseView(object):
 "color: white; \n"
 "font-weight: bold; frf")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("static/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("static/view.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.AddProduct.setIcon(icon1)
         self.AddProduct.setIconSize(QtCore.QSize(20, 20))
         self.AddProduct.setObjectName("AddProduct")
@@ -554,8 +554,8 @@ class Ui_PurchaseView(object):
         self.Profile.setText(_translate("PurchaseView", "Profile"))
         self.ProductLabel.setText(_translate("PurchaseView", "Purchase List"))
         self.manageLabel.setText(_translate("PurchaseView", "Manage your purchase"))
-        self.AddProduct_2.setText(_translate("PurchaseView", "View Suppliers"))
-        self.AddProduct.setText(_translate("PurchaseView", "Add New Product"))
+        self.AddProduct_2.setText(_translate("PurchaseView", "Add New Product"))
+        self.AddProduct.setText(_translate("PurchaseView", "View Suppliers"))
         self.Search.setText(_translate("PurchaseView", "Search"))
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("PurchaseView", "Supplier ID"))
