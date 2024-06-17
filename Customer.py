@@ -41,9 +41,9 @@ class Ui_Customer_2(object):
                 item.setTextAlignment(QtCore.Qt.AlignCenter)
                 item.setText(str(data))
                 self.tableWidget.setItem(row_number, column_number, item)
-        self.tableWidget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+            self.tableWidget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
 
-            # Create a widget to hold both edit and delete buttons
+                # Create a widget to hold both edit and delete buttons
             button_widget = QtWidgets.QWidget()
             layout = QtWidgets.QHBoxLayout(button_widget)
             layout.setContentsMargins(0, 0, 0, 0)
@@ -57,10 +57,25 @@ class Ui_Customer_2(object):
             delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
             layout.addWidget(delete_button)
 
-            # Set the widget containing the buttons into the table cell
+                # Set the widget containing the buttons into the table cell
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
             self.tableWidget.setCellWidget(row_number, 6, cell_widget)
+    
+    def delete_customer(self, row):
+        # Implement delete logic here
+        # Example of deleting the selected row's data
+        customer_code = self.tableWidget.item(row, 0).text()
+        try:
+            sql = "DELETE FROM CUSTOMER WHERE CUS_CODE = %s"
+            self.cur.execute(sql, (customer_code,))
+            self.conn.commit()
+            QtWidgets.QMessageBox.information(None, 'Success', 'Customer deleted successfully!')
+            # Refresh table after deletion
+            customers = self.fetch_customers()
+            self.display_customers(customers)
+        except psycopg2.Error as e:
+            QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
