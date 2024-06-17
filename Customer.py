@@ -34,14 +34,47 @@ class Ui_Customer_2(object):
             return []
 
     def display_customers(self, customers):
+        self.tableWidget.setRowCount(len(customers))
         for row_number, customer in enumerate(customers):
-            self.tableWidget.insertRow(row_number)
             for column_number, data in enumerate(customer):
                 item = QtWidgets.QTableWidgetItem()
                 item.setTextAlignment(QtCore.Qt.AlignCenter)
                 item.setText(str(data))
                 self.tableWidget.setItem(row_number, column_number, item)
-        self.tableWidget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+
+                # Create a widget to hold both edit and delete buttons
+            button_widget = QtWidgets.QWidget()
+            layout = QtWidgets.QHBoxLayout(button_widget)
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.setSpacing(10)  # Adjust spacing between buttons if needed
+
+            edit_button = QtWidgets.QPushButton('Edit')
+            edit_button.clicked.connect(lambda checked, row=row_number: self.edit_customer(row))
+            layout.addWidget(edit_button)
+
+            delete_button = QtWidgets.QPushButton('Delete')
+            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
+            layout.addWidget(delete_button)
+
+                # Set the widget containing the buttons into the table cell
+            cell_widget = QtWidgets.QWidget()
+            cell_widget.setLayout(layout)
+            self.tableWidget.setCellWidget(row_number, 6, cell_widget)
+    
+    def delete_customer(self, row):
+        # Implement delete logic here
+        # Example of deleting the selected row's data
+        customer_code = self.tableWidget.item(row, 0).text()
+        try:
+            sql = "DELETE FROM CUSTOMER WHERE CUS_CODE = %s"
+            self.cur.execute(sql, (customer_code,))
+            self.conn.commit()
+            QtWidgets.QMessageBox.information(None, 'Success', 'Customer deleted successfully!')
+            # Refresh table after deletion
+            customers = self.fetch_customers()
+            self.display_customers(customers)
+        except psycopg2.Error as e:
+            QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
@@ -355,6 +388,7 @@ class Ui_Customer_2(object):
         font.setPointSize(10)
         self.tableWidget.setFont(font)
         self.tableWidget.setColumnCount(7)
+        
         self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
@@ -436,6 +470,15 @@ class Ui_Customer_2(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         item.setForeground(brush)
         self.tableWidget.setHorizontalHeaderItem(6, item)
+        # Set specific column widths
+        self.tableWidget.setColumnWidth(0, 100)  # Set the width of column 0 to 100 pixels
+        self.tableWidget.setColumnWidth(1, 300)  # Set the width of column 1 to 150 pixels
+        self.tableWidget.setColumnWidth(2, 300)  # Set the width of column 2 to 120 pixels
+        self.tableWidget.setColumnWidth(3, 300)  # Set the width of column 3 to 200 pixels
+        self.tableWidget.setColumnWidth(4, 200)  # Set the width of column 4 to 120 pixels
+        self.tableWidget.setColumnWidth(5, 300)  # Set the width of column 5 to 250 pixels
+        self.tableWidget.setColumnWidth(6, 20)  # Set the width of column 6 to 150 pixels
+
         self.tableWidget.horizontalHeader().setCascadingSectionResizes(False)
         self.tableWidget.horizontalHeader().setSortIndicatorShown(False)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
