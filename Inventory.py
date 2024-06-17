@@ -481,7 +481,7 @@ class Ui_Inventory_2(object):
         self.Order.setText(_translate("Inventory_2", "Orders"))
         self.Purchase.setText(_translate("Inventory_2", "Purchases"))
         self.Report.setText(_translate("Inventory_2", "Reports"))
-        self.Customer.setText(_translate("Inventory_2", "Customer"))
+        self.Customer.setText(_translate("Inventory_2", "Customers"))
         self.Profile.setText(_translate("Inventory_2", "Profile"))
         self.ProductLabel.setText(_translate("Inventory_2", "Product List"))
         self.manageLabel.setText(_translate("Inventory_2", "Manage your products"))

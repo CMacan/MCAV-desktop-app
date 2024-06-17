@@ -29,14 +29,6 @@ class Ui_AddOder(object):
 
         try: 
             sql = """
-            CREATE TABLE IF NOT EXISTS CUSTOMER (
-                CUS_FNAME VARCHAR(255),
-                CUS_LNAME VARCHAR(255),
-                CUS_EMAIL VARCHAR(255),
-                CUS_PHONE VARCHAR(20),
-                CUS_ADDRESS TEXT
-            );
-
             INSERT INTO CUSTOMER (CUS_FNAME, CUS_LNAME, CUS_EMAIL, CUS_PHONE, CUS_ADDRESS) VALUES (%s, %s, %s, %s, %s)
             """
             self.cur.execute(sql, (cus_fname, cus_lname, cus_email, cus_phone, cus_address))        
