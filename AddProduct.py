@@ -29,13 +29,6 @@ class Ui_AddProduct(object):
     def add_new_image(self):
         pass
 
-    def cancel(self):
-        from Inventory import Ui_Inventory_2
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Inventory_2()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
-
     def setupUi(self, AddProduct):
         AddProduct.setObjectName("AddProduct")
         AddProduct.resize(640, 480)
@@ -109,7 +102,6 @@ class Ui_AddProduct(object):
         self.lineEdit_13.setGeometry(QtCore.QRect(400, 95, 113, 20))
         self.lineEdit_13.setObjectName("lineEdit_13")
         self.Cancel = QtWidgets.QPushButton(self.frame)
-        self.Cancel.clicked.connect(self.cancel)
         self.Cancel.clicked.connect(AddProduct.close)
         self.Cancel.setGeometry(QtCore.QRect(354, 360, 96, 31))
         self.Cancel.setObjectName("Cancel")
