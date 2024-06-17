@@ -32,7 +32,7 @@ class Ui_Profile_2(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Order_2()
         self.ui.setupUi(self.window2)
-        self.window2.show()
+        self.window2.showMaximized()
 
     def inventory(self):
         from Inventory import Ui_Inventory_2
