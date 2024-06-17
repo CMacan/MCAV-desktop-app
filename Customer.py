@@ -34,14 +34,33 @@ class Ui_Customer_2(object):
             return []
 
     def display_customers(self, customers):
+        self.tableWidget.setRowCount(len(customers))
         for row_number, customer in enumerate(customers):
-            self.tableWidget.insertRow(row_number)
             for column_number, data in enumerate(customer):
                 item = QtWidgets.QTableWidgetItem()
                 item.setTextAlignment(QtCore.Qt.AlignCenter)
                 item.setText(str(data))
                 self.tableWidget.setItem(row_number, column_number, item)
         self.tableWidget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+
+            # Create a widget to hold both edit and delete buttons
+            button_widget = QtWidgets.QWidget()
+            layout = QtWidgets.QHBoxLayout(button_widget)
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.setSpacing(10)  # Adjust spacing between buttons if needed
+
+            edit_button = QtWidgets.QPushButton('Edit')
+            edit_button.clicked.connect(lambda checked, row=row_number: self.edit_customer(row))
+            layout.addWidget(edit_button)
+
+            delete_button = QtWidgets.QPushButton('Delete')
+            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
+            layout.addWidget(delete_button)
+
+            # Set the widget containing the buttons into the table cell
+            cell_widget = QtWidgets.QWidget()
+            cell_widget.setLayout(layout)
+            self.tableWidget.setCellWidget(row_number, 6, cell_widget)
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
