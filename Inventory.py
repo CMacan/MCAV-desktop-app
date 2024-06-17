@@ -155,8 +155,6 @@ class Ui_Inventory_2(object):
         self.tarp.clicked.connect(self.back_dashboard)
         self.tarp.clicked.connect(Inventory_2.close)
         self.Inventory = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Inventory.clicked.connect(self.inventory)
-        self.Inventory.clicked.connect(Inventory_2.close)
         self.Inventory.setMinimumSize(QtCore.QSize(94, 44))
         self.Inventory.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Inventory.setStyleSheet("font-size:12px;\n"
@@ -272,7 +270,6 @@ class Ui_Inventory_2(object):
         self.horizontalLayout_3.addItem(spacerItem)
         self.AddProduct = QtWidgets.QPushButton(self.BtnContainer)
         self.AddProduct.clicked.connect(self.add_product)
-        self.AddProduct.clicked.connect(Inventory_2.close)
                 
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
