@@ -544,7 +544,7 @@ class Ui_Order_2(object):
         item = self.tableWidget.horizontalHeaderItem(4)
         item.setText(_translate("Order_2", "Date"))
         item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("Order_2", "Due"))
+        item.setText(_translate("Order_2", "Completion"))
         item = self.tableWidget.horizontalHeaderItem(6)
         item.setText(_translate("Order_2", "Status"))
         item = self.tableWidget.horizontalHeaderItem(7)
