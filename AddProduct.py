@@ -9,16 +9,22 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import psycopg2
 
 class Ui_AddProduct(object):
+
+    def __init__(self):
+        # PostgreSQL connection
+        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
+                                     password="Milliondollarbaby123", port=6543)
+        self.cur = self.conn.cursor()
 
     def add_new_product(self):
         from Inventory import Ui_Inventory_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Inventory_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
     
     def add_new_image(self):
         pass
@@ -28,15 +34,11 @@ class Ui_AddProduct(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Inventory_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def setupUi(self, AddProduct):
         AddProduct.setObjectName("AddProduct")
         AddProduct.resize(640, 480)
-        AddProduct.setFixedSize(640, 480)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        AddProduct.setSizePolicy(sizePolicy)
-
         self.frame = QtWidgets.QFrame(AddProduct)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("QFrame{\n"

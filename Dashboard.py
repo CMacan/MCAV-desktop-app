@@ -9,6 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import psycopg2
+
 
 class Ui_Dasboard(object): 
     
@@ -17,49 +19,49 @@ class Ui_Dasboard(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_PurchaseView()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
        
     def order(self):
         from Order import Ui_Order_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Order_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def inventory(self):
         from Inventory import Ui_Inventory_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Inventory_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def report(self):
         from Report import Ui_Report_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Report_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def purchase(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_PurchaseView()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def customer(self):
         from Customer import Ui_Customer_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Customer_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def profile(self):
         from Profile import Ui_Profile_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Profile_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def setupUi(self, Dasboard):
         Dasboard.setObjectName("Dasboard")

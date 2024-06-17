@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from clickable import ClickableLabel 
+import psycopg2
 
 
 class Ui_Customer_2(object):
@@ -443,6 +444,8 @@ class Ui_Customer_2(object):
         item.setText(_translate("Customer_2", "Address"))
         item = self.tableWidget.horizontalHeaderItem(6)
         item.setText(_translate("Customer_2", "Actions"))
+
+        
 import font_rc
 import images_rc
 
