@@ -325,7 +325,7 @@ class Ui_Customer_2(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.tableWidget.setFont(font)
-        self.tableWidget.setColumnCount(9)
+        self.tableWidget.setColumnCount(7)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
