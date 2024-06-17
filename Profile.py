@@ -219,8 +219,6 @@ class Ui_Profile_2(object):
         self.Customer.setObjectName("Customer")
         self.horizontalLayout.addWidget(self.Customer)
         self.Profile = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Profile.clicked.connect(self.profile)
-        self.Profile.clicked.connect(Profile_2.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
