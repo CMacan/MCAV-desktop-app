@@ -32,8 +32,7 @@ class Ui_PurchaseView(object):
         self.window2 = QtWidgets.QDialog()
         self.ui = Ui_AddPurchase()
         self.ui.setupUi(self.window2)
-        # self.window2.show()
-        self.window2.setModal(True)  # Ensure the dialog is modal
+        self.window2.setModal(True)
         self.window2.exec_() 
         
     def order(self):

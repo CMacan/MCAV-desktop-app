@@ -10,7 +10,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from clickable import ClickableLabel 
-from PyQt5.QtCore import Qt
 
 
 class Ui_Customer_2(object):
@@ -20,58 +19,49 @@ class Ui_Customer_2(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
-    
+        self.window2.show()
     
     def profile(self):
         from Profile import Ui_Profile_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Profile_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
-    
-    def add_new_customer(self):
-        from AddCustomer import MainWindow
-        self.window2 = QtWidgets.QDialog()
-        self.ui = MainWindow()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
         
     def order(self):
         from Order import Ui_Order_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Order_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def inventory(self):
         from Inventory import Ui_Inventory_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Inventory_2()
         self.ui.setupUi(self.window2)
-        self.window2.isMaximized
-        self.window2.showMaximized()
+        self.window2.show()
 
     def report(self):
         from Report import Ui_Report_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Report_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def purchase(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_PurchaseView()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def customer(self):
         from Customer import Ui_Customer_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Customer_2()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        self.window2.show()
 
     def setupUi(self, Customer_2):
         Customer_2.setObjectName("Customer_2")
@@ -204,6 +194,9 @@ class Ui_Customer_2(object):
         sizePolicy.setHeightForWidth(self.TableContainer.sizePolicy().hasHeightForWidth())
         self.TableContainer.setSizePolicy(sizePolicy)
         self.TableContainer.setMinimumSize(QtCore.QSize(0, 2))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.TableContainer.setFont(font)
         self.TableContainer.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.TableContainer.setAutoFillBackground(False)
         self.TableContainer.setStyleSheet("background-color: #FAFAFA;\n"
@@ -219,6 +212,9 @@ class Ui_Customer_2(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Label.sizePolicy().hasHeightForWidth())
         self.Label.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.Label.setFont(font)
         self.Label.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.Label.setFrameShadow(QtWidgets.QFrame.Raised)
         self.Label.setObjectName("Label")
@@ -226,25 +222,34 @@ class Ui_Customer_2(object):
         self.horizontalLayout_4.setContentsMargins(-1, -1, 0, -1)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.ProductList = QtWidgets.QFrame(self.Label)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.ProductList.setFont(font)
         self.ProductList.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.ProductList.setFrameShadow(QtWidgets.QFrame.Raised)
         self.ProductList.setObjectName("ProductList")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.ProductList)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.ProductLabel = QtWidgets.QLabel(self.ProductList)
-        self.ProductLabel.setStyleSheet("font-weight: bold;\n"
-"font-size: 13px;")
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ProductLabel.setFont(font)
+        self.ProductLabel.setStyleSheet("font-weight: bold;")
         self.ProductLabel.setObjectName("ProductLabel")
         self.verticalLayout_3.addWidget(self.ProductLabel)
         self.manageLabel = QtWidgets.QLabel(self.ProductList)
         font = QtGui.QFont()
-        font.setPointSize(-1)
+        font.setPointSize(13)
         self.manageLabel.setFont(font)
-        self.manageLabel.setStyleSheet("font-size: 10px;")
         self.manageLabel.setObjectName("manageLabel")
         self.verticalLayout_3.addWidget(self.manageLabel)
         self.horizontalLayout_4.addWidget(self.ProductList)
         self.BtnContainer = QtWidgets.QFrame(self.Label)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.BtnContainer.setFont(font)
         self.BtnContainer.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.BtnContainer.setFrameShadow(QtWidgets.QFrame.Raised)
         self.BtnContainer.setObjectName("BtnContainer")
@@ -256,6 +261,7 @@ class Ui_Customer_2(object):
         self.horizontalLayout_4.addWidget(self.BtnContainer)
         self.verticalLayout_2.addWidget(self.Label)
         self.DataFrame = QtWidgets.QFrame(self.TableContainer)
+
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -269,6 +275,9 @@ class Ui_Customer_2(object):
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.SearchFrame = QtWidgets.QFrame(self.DataFrame)
         self.SearchFrame.setMinimumSize(QtCore.QSize(0, 41))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.SearchFrame.setFont(font)
         self.SearchFrame.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.SearchFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.SearchFrame.setObjectName("SearchFrame")
@@ -288,6 +297,9 @@ class Ui_Customer_2(object):
         self.SearchInput = QtWidgets.QLineEdit(self.SearchFrame)
         self.SearchInput.setMinimumSize(QtCore.QSize(0, 25))
         self.SearchInput.setMaximumSize(QtCore.QSize(200, 25))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.SearchInput.setFont(font)
         self.SearchInput.setStyleSheet("background-color: #D9D9D9;\n"
 "border-radius: 5px;\n"
 "\n"
@@ -298,7 +310,9 @@ class Ui_Customer_2(object):
         self.Filter.setMinimumSize(QtCore.QSize(25, 25))
         self.Filter.setMaximumSize(QtCore.QSize(25, 25))
         self.Filter.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Filter.setText("")
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.Filter.setFont(font)
         self.Filter.setPixmap(QtGui.QPixmap("static/filter.png"))
         self.Filter.setScaledContents(True)
         self.Filter.setObjectName("Filter")
@@ -307,7 +321,10 @@ class Ui_Customer_2(object):
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout_4.addWidget(self.SearchFrame)
         self.tableWidget = QtWidgets.QTableWidget(self.DataFrame)
-        self.tableWidget.setColumnCount(7)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.tableWidget.setFont(font)
+        self.tableWidget.setColumnCount(9)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()

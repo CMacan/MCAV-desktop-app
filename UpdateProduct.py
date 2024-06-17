@@ -15,6 +15,10 @@ class Ui_UpdateProduct(object):
     def setupUi(self, UpdateProduct):
         UpdateProduct.setObjectName("UpdateProduct")
         UpdateProduct.resize(640, 480)
+        UpdateProduct.setFixedSize(640, 480)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        UpdateProduct.setSizePolicy(sizePolicy)
+
         self.frame = QtWidgets.QFrame(UpdateProduct)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("QFrame{\n"

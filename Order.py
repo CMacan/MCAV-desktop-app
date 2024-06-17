@@ -28,7 +28,6 @@ class Ui_Order_2(object):
         self.window2 = QtWidgets.QDialog()
         self.ui = Ui_AddOder()
         self.ui.setupUi(self.window2)
-        # self.window2.show()
         self.window2.setModal(True)  # Ensure the dialog is modal
         self.window2.exec_() 
         
@@ -290,7 +289,7 @@ class Ui_Order_2(object):
         self.verticalLayout_3.addWidget(self.ProductLabel)
         self.manageLabel = QtWidgets.QLabel(self.ProductList)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(13)
         self.manageLabel.setFont(font)
         self.manageLabel.setObjectName("manageLabel")
         self.verticalLayout_3.addWidget(self.manageLabel)
@@ -309,6 +308,8 @@ class Ui_Order_2(object):
         self.horizontalLayout_3.addItem(spacerItem)
         self.AddProduct = QtWidgets.QPushButton(self.BtnContainer)
         self.AddProduct.clicked.connect(self.add_new_order)
+        self.AddProduct.clicked.connect(Order_2.close)
+        
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
