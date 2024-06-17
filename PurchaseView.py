@@ -189,8 +189,6 @@ class Ui_PurchaseView(object):
         self.Order.setObjectName("Order")
         self.horizontalLayout.addWidget(self.Order)
         self.Purchase = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Purchase.clicked.connect(self.purchase)
-        self.Purchase.clicked.connect(PurchaseView.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)

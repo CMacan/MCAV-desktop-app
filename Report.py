@@ -187,8 +187,6 @@ class Ui_Report_2(object):
         self.Purchase.setObjectName("Purchase")
         self.horizontalLayout.addWidget(self.Purchase)
         self.Report = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Report.clicked.connect(self.report)
-        self.Report.clicked.connect(Report_2.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)

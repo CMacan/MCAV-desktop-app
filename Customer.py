@@ -218,8 +218,6 @@ class Ui_Customer_2(object):
         self.Report.setObjectName("Report")
         self.horizontalLayout.addWidget(self.Report)
         self.Customer = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Customer.clicked.connect(self.customer)
-        self.Customer.clicked.connect(Customer_2.close)
         self.Customer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Customer.setStyleSheet("font-size:12px;\n"
 "color: white;\n"

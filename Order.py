@@ -315,7 +315,6 @@ class Ui_Order_2(object):
         self.horizontalLayout_3.addItem(spacerItem)
         self.AddProduct = QtWidgets.QPushButton(self.BtnContainer)
         self.AddProduct.clicked.connect(self.add_new_order)
-        self.AddProduct.clicked.connect(Order_2.close)
         
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
