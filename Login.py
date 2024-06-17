@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from Dashboard import Ui_Dasboard
+import psycopg2
 
 
 class Ui_Login(object):

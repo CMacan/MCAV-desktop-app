@@ -9,6 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import psycopg2
+
 
 class Ui_Dasboard(object): 
     

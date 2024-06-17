@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import psycopg2
 
 
 class Ui_AddPurchase(object):
@@ -20,7 +21,7 @@ class Ui_AddPurchase(object):
         self.ui.setupUi(self.window2)
         self.window2.show()
 
-    def add_purchase(self):
+    def add_puchase(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_PurchaseView()
@@ -30,9 +31,6 @@ class Ui_AddPurchase(object):
     def setupUi(self, AddPurchase):
         AddPurchase.setObjectName("AddPurchase")
         AddPurchase.resize(640, 480)
-        AddPurchase.setFixedSize(640, 480)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        AddPurchase.setSizePolicy(sizePolicy)
         self.frame = QtWidgets.QFrame(AddPurchase)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("QFrame{\n"
@@ -119,7 +117,7 @@ class Ui_AddPurchase(object):
         self.Cancel.setGeometry(QtCore.QRect(354, 360, 96, 31))
         self.Cancel.setObjectName("Cancel")
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
-        self.AddOrder_3.clicked.connect(self.add_purchase)
+        self.AddOrder_3.clicked.connect(self.add_puchase)
         self.AddOrder_3.clicked.connect(AddPurchase.close)
         self.AddOrder_3.setGeometry(QtCore.QRect(475, 360, 91, 31))
         self.AddOrder_3.setObjectName("AddOrder_3")
