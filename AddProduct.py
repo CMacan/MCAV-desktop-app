@@ -20,11 +20,7 @@ class Ui_AddProduct(object):
         self.cur = self.conn.cursor()
 
     def add_new_product(self):
-        from Inventory import Ui_Inventory_2
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Inventory_2()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+        pass
     
     def add_new_image(self):
         pass
