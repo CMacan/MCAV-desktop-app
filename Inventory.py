@@ -580,13 +580,13 @@ class Ui_Inventory_2(object):
         self.tableWidget.setHorizontalHeaderItem(9, item)
         self.tableWidget.setColumnWidth(0, 100)  # Set the width of column 0 to 100 pixels
         self.tableWidget.setColumnWidth(1, 250)  # Set the width of column 1 to 150 pixels
-        self.tableWidget.setColumnWidth(2, 250)  # Set the width of column 2 to 120 pixels
-        self.tableWidget.setColumnWidth(3, 200)  # Set the width of column 3 to 200 pixels
+        self.tableWidget.setColumnWidth(2, 100)  # Set the width of column 2 to 120 pixels
+        self.tableWidget.setColumnWidth(3, 100)  # Set the width of column 3 to 200 pixels
         self.tableWidget.setColumnWidth(4, 100)  # Set the width of column 4 to 120 pixels
         self.tableWidget.setColumnWidth(5, 100)  # Set the width of column 5 to 250 pixels
         self.tableWidget.setColumnWidth(6, 100)
-        self.tableWidget.setColumnWidth(7, 250)
-        self.tableWidget.setColumnWidth(8, 20)  # Set the width of column 6 to 150 pixels
+        self.tableWidget.setColumnWidth(7, 100)
+        self.tableWidget.setColumnWidth(8, 100)  # Set the width of column 6 to 150 pixels
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.verticalLayout_4.addWidget(self.tableWidget)
         self.verticalLayout_2.addWidget(self.DataFrame)
