@@ -10,6 +10,7 @@
 import psycopg2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
+from datetime import date
 
 class Ui_AddOder(object):
 
@@ -21,25 +22,55 @@ class Ui_AddOder(object):
 
     def save_data(self):
         # Get data from UI elements
-        cus_fname = self.lineEdit.text()
-        cus_lname = self.lineEdit_5.text()
-        cus_email = self.lineEdit_2.text()
-        cus_phone = self.lineEdit_3.text()
-        cus_address = self.lineEdit_14.text()
+        cus_fname = self.lineEdit.text().strip()
+        cus_lname = self.lineEdit_5.text().strip()
+        cus_email = self.lineEdit_2.text().strip()
+        cus_phone = self.lineEdit_3.text().strip()
+        cus_address = self.lineEdit_14.text().strip()
+        order_date = date.today()
+        due_date = self.lineEdit_13.text().strip()
+        product_name = self.comboBox.currentText().strip()
+        quantity = self.lineEdit_11.text().strip()
+        total_amount = self.lineEdit_15.text().strip()
 
-        try: 
-            sql = """
-            INSERT INTO CUSTOMER (CUS_FNAME, CUS_LNAME, CUS_EMAIL, CUS_PHONE, CUS_ADDRESS) VALUES (%s, %s, %s, %s, %s)
+        # Validate input data
+        if not (cus_fname and cus_lname and cus_email and cus_phone and cus_address and due_date and product_name and quantity and total_amount):
+            self.show_message("Error", "Please fill all the fields.")
+            return
+
+        try:
+            # Check if product exists and get its ID
+            sql_get_product_id = "SELECT PROD_ID FROM PRODUCT WHERE PROD_NAME = %s"
+            self.cur.execute(sql_get_product_id, (product_name,))
+            product_id_result = self.cur.fetchone()
+
+            if product_id_result is None:
+                self.show_message("Error", "Selected product does not exist.")
+                return
+
+            product_id = product_id_result[0]
+
+            # Insert into CUSTOMER table
+            sql_customer = """
+            INSERT INTO CUSTOMER (CUS_FNAME, CUS_LNAME, CUS_EMAIL, CUS_PHONE, CUS_ADDRESS) 
+            VALUES (%s, %s, %s, %s, %s) RETURNING CUS_ID
             """
-            self.cur.execute(sql, (cus_fname, cus_lname, cus_email, cus_phone, cus_address))        
-            self.conn.commit()
+            self.cur.execute(sql_customer, (cus_fname, cus_lname, cus_email, cus_phone, cus_address))
+            customer_id = self.cur.fetchone()[0]  # Get the newly inserted customer ID
 
+            # Insert into ORDERS table
+            sql_orders = """
+            INSERT INTO ORDERS (CUS_ID, ORDER_DATE, DUE_DATE, PROD_ID, QUANTITY, TOTAL_AMOUNT) 
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """
+            self.cur.execute(sql_orders, (customer_id, order_date, due_date, product_id, quantity, total_amount))
+
+            self.conn.commit()
             self.show_message("Success", "Data saved successfully.")
-            self.order()
         except psycopg2.Error as e:
-            error_message = f"Error saving data: {e}"
-            self.show_message("Error", error_message)
-            self.order()
+            self.conn.rollback()  # Roll back transaction on error
+            error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
+            self.show_message("Error", error_message) 
 
     def show_message(self, title, message):
         msg = QMessageBox()
@@ -131,12 +162,6 @@ class Ui_AddOder(object):
         self.lineEdit_13 = QtWidgets.QLineEdit(self.frame_2)
         self.lineEdit_13.setGeometry(QtCore.QRect(330, 80, 113, 20))
         self.lineEdit_13.setObjectName("lineEdit_13")
-        self.label_9 = QtWidgets.QLabel(self.frame_2)
-        self.label_9.setGeometry(QtCore.QRect(330, 10, 61, 16))
-        self.label_9.setObjectName("label_9")
-        self.lineEdit_9 = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit_9.setGeometry(QtCore.QRect(330, 30, 113, 20))
-        self.lineEdit_9.setObjectName("lineEdit_9")
         self.comboBox = QtWidgets.QComboBox(self.frame_2)
         self.comboBox.setGeometry(QtCore.QRect(330, 130, 151, 22))
         self.comboBox.setObjectName("comboBox")
@@ -213,8 +238,6 @@ class Ui_AddOder(object):
         self.label_13.raise_()
         self.label_10.raise_()
         self.lineEdit_13.raise_()
-        self.label_9.raise_()
-        self.lineEdit_9.raise_()
         self.comboBox.raise_()
         self.lineEdit_m.raise_()
         self.label_15.raise_()
@@ -250,7 +273,6 @@ class Ui_AddOder(object):
         self.label_12.setText(_translate("AddOder", "Quantity"))
         self.label_13.setText(_translate("AddOder", "Category"))
         self.label_10.setText(_translate("AddOder", "Due Date"))
-        self.label_9.setText(_translate("AddOder", "Order Date"))
         self.comboBox.setItemText(0, _translate("AddOder", "Large Format Tarpaulin"))
         self.comboBox.setItemText(1, _translate("AddOder", "Vinyl Sticker Printing"))
         self.comboBox.setItemText(2, _translate("AddOder", "Laser Printing Stickers"))
