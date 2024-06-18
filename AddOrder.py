@@ -27,25 +27,7 @@ class Ui_AddOder(object):
         cus_phone = self.lineEdit_3.text()
         cus_address = self.lineEdit_14.text()
 
-        # Validate inputs
-        if not cus_fname or not cus_lname or not cus_email or not cus_phone or not cus_address:
-            self.show_message("Error", "All fields are required. Please input data.")
-            return
-
         try: 
-            # Check for unique email
-            self.cur.execute("SELECT COUNT(*) FROM CUSTOMER WHERE CUS_EMAIL = %s", (cus_email,))
-            if self.cur.fetchone()[0] > 0:
-                self.show_message("Error", "This email address is already in use. Please use a different email.")
-                return
-
-            # Check for unique phone number
-            self.cur.execute("SELECT COUNT(*) FROM CUSTOMER WHERE CUS_PHONE = %s", (cus_phone,))
-            if self.cur.fetchone()[0] > 0:
-                self.show_message("Error", "This phone number is already in use. Please use a different phone number.")
-                return
-            
-            # Insert new customer data
             sql = """
             INSERT INTO CUSTOMER (CUS_FNAME, CUS_LNAME, CUS_EMAIL, CUS_PHONE, CUS_ADDRESS) VALUES (%s, %s, %s, %s, %s)
             """
@@ -57,24 +39,14 @@ class Ui_AddOder(object):
         except psycopg2.Error as e:
             error_message = f"Error saving data: {e}"
             self.show_message("Error", error_message)
+            self.order()
 
     def show_message(self, title, message):
         msg = QMessageBox()
         msg.setWindowTitle(title)
         msg.setText(message)
-        if title == "Success":
-            msg.setIcon(QMessageBox.Information)
-        else:
-            msg.setIcon(QMessageBox.Critical)
+        msg.setIcon(QMessageBox.Information)
         msg.exec_()
-
-
-    def order(self):
-        from Order import Ui_Order_2
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Order_2()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
 
     def setupUi(self, AddOder):
         AddOder.setObjectName("AddOder")
@@ -107,17 +79,15 @@ class Ui_AddOder(object):
         self.frame.setObjectName("frame")
         self.AddOrder = QtWidgets.QLabel(self.frame)
         self.AddOrder.setGeometry(QtCore.QRect(240, 10, 126, 26))
-
         self.AddOrder.setObjectName("AddOrder")
         self.Cancel = QtWidgets.QPushButton(self.frame)
-        # self.Cancel.clicked.connect(self.order)
         self.Cancel.clicked.connect(AddOder.close)
         self.Cancel.setGeometry(QtCore.QRect(360, 420, 96, 31))
         self.Cancel.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Cancel.setObjectName("Cancel")
-        
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
         self.AddOrder_3.clicked.connect(self.save_data)
+        self.AddOrder_3.clicked.connect(AddOder.close)
         self.AddOrder_3.setGeometry(QtCore.QRect(470, 420, 91, 31))
         self.AddOrder_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.AddOrder_3.setObjectName("AddOrder_3")
