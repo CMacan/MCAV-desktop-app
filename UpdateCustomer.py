@@ -63,6 +63,10 @@ class Ui_UpdateCustomer(QObject):
         from Customer import Ui_Customer_2
         UpdateCustomer.setObjectName("UpdateCustomer")
         UpdateCustomer.resize(640, 480)
+        UpdateCustomer.setFixedSize(640, 480)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        UpdateCustomer.setSizePolicy(sizePolicy)
+
         self.frame = QtWidgets.QFrame(UpdateCustomer)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("QFrame{\n"
@@ -86,7 +90,7 @@ class Ui_UpdateCustomer(QObject):
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.AddOrder = QtWidgets.QLabel(self.frame)
-        self.AddOrder.setGeometry(QtCore.QRect(35, 30, 156, 26))
+        self.AddOrder.setGeometry(QtCore.QRect(35, 30, 191, 26))
         self.AddOrder.setObjectName("AddOrder")
         self.lineEdit_2 = QtWidgets.QLineEdit(self.frame)
         self.lineEdit_2.setGeometry(QtCore.QRect(80, 120, 113, 20))
@@ -138,7 +142,7 @@ class Ui_UpdateCustomer(QObject):
         self.AddOrder.setText(_translate("UpdateCustomer", "Update Customer"))
         self.label_2.setText(_translate("UpdateCustomer", "First Name"))
         self.label_3.setText(_translate("UpdateCustomer", "Last Name"))
-        self.label_4.setText(_translate("UpdateCustomer", "Phone #"))
+        self.label_4.setText(_translate("UpdateCustomer", "Phone Numer"))
         self.label_10.setText(_translate("UpdateCustomer", "Address"))
         self.Cancel.setText(_translate("UpdateCustomer", "Cancel"))
         self.AddOrder_3.setText(_translate("UpdateCustomer", "Update Order"))
