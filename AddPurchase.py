@@ -141,7 +141,7 @@ class Ui_AddPurchase(object):
         _translate = QtCore.QCoreApplication.translate
         AddPurchase.setWindowTitle(_translate("AddPurchase", "Dialog"))
         self.AddOrder.setText(_translate("AddPurchase", "Add Purchase"))
-        self.label.setText(_translate("AddPurchase", "Supplier ID"))
+        self.label.setText(_translate("AddPurchase", "Supplier Name"))
         self.label_2.setText(_translate("AddPurchase", "Email Address"))
         self.label_3.setText(_translate("AddPurchase", "Contact Number"))
         self.label_4.setText(_translate("AddPurchase", "Total Amount"))

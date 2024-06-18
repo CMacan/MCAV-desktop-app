@@ -565,7 +565,7 @@ class Ui_PurchaseView(object):
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("PurchaseView", "Supplier ID"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("PurchaseView", "Product ID"))
+        item.setText(_translate("PurchaseView", "Supplier Name"))
         item = self.tableWidget.horizontalHeaderItem(2)
         item.setText(_translate("PurchaseView", "Quantity"))
         item = self.tableWidget.horizontalHeaderItem(3)
