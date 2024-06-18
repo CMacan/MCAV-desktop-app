@@ -173,7 +173,6 @@ class Ui_AddProduct(QDialog):
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
         self.AddOrder_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.AddOrder_3.clicked.connect(self.add_new_product)
-        self.AddOrder_3.clicked.connect(AddProduct.close)
         self.AddOrder_3.setGeometry(QtCore.QRect(470, 370, 91, 31))
         self.AddOrder_3.setObjectName("AddOrder_3")
         font_add_product = QtGui.QFont()
