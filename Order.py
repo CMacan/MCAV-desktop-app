@@ -636,7 +636,7 @@ class Ui_Order_2(object):
         self.tableWidget.setColumnWidth(6, 100) 
         self.tableWidget.setColumnWidth(7, 100)  
         self.tableWidget.setColumnWidth(8, 100)  
-        self.tableWidget.setColumnWidth(9, 100)
+        self.tableWidget.setColumnWidth(9, 20)
         self.tableWidget.horizontalHeader().setCascadingSectionResizes(False)
         self.tableWidget.horizontalHeader().setSortIndicatorShown(False)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)

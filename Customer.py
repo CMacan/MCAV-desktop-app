@@ -57,7 +57,7 @@ class Ui_Customer_2(object):
             delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
             layout.addWidget(delete_button)
 
-                # Set the widget containing the buttons into the table cell
+            # Set the widget containing the buttons into the table cell
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
             self.tableWidget.setCellWidget(row_number, 6, cell_widget)
@@ -81,7 +81,7 @@ class Ui_Customer_2(object):
         from UpdateCustomer import Ui_UpdateCustomer
         # Get data from the selected row
         customer_data = []
-        for column_number in range(6):  # Assuming there are 6 columns in the table
+        for column_number in range(6):
             item = self.tableWidget.item(row, column_number)
             if item is not None:
                 customer_data.append(item.text())
@@ -498,11 +498,11 @@ class Ui_Customer_2(object):
         self.tableWidget.setHorizontalHeaderItem(6, item)
         # Set specific column widths
         self.tableWidget.setColumnWidth(0, 100)  # Set the width of column 0 to 100 pixels
-        self.tableWidget.setColumnWidth(1, 300)  # Set the width of column 1 to 150 pixels
-        self.tableWidget.setColumnWidth(2, 300)  # Set the width of column 2 to 120 pixels
-        self.tableWidget.setColumnWidth(3, 300)  # Set the width of column 3 to 200 pixels
-        self.tableWidget.setColumnWidth(4, 200)  # Set the width of column 4 to 120 pixels
-        self.tableWidget.setColumnWidth(5, 300)  # Set the width of column 5 to 250 pixels
+        self.tableWidget.setColumnWidth(1, 100)  # Set the width of column 1 to 150 pixels
+        self.tableWidget.setColumnWidth(2, 100)  # Set the width of column 2 to 120 pixels
+        self.tableWidget.setColumnWidth(3, 100)  # Set the width of column 3 to 200 pixels
+        self.tableWidget.setColumnWidth(4, 100)  # Set the width of column 4 to 120 pixels
+        self.tableWidget.setColumnWidth(5, 100)  # Set the width of column 5 to 250 pixels
         self.tableWidget.setColumnWidth(6, 20)  # Set the width of column 6 to 150 pixels
         self.tableWidget.horizontalHeader().setCascadingSectionResizes(False)
         self.tableWidget.horizontalHeader().setSortIndicatorShown(False)
