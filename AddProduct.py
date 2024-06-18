@@ -23,13 +23,20 @@ class Ui_AddProduct(QDialog):
         price = self.lineEdit_2.text()
         quantity = self.lineEdit_3.text()
         category = self.comboBox.currentText()
-        thickness = self.thickness_lineEdit.text()
+        thickness = self.thickness_lineEdit.text().strip()
         rollsize_width = self.rollsize_input_width.text()
         rollsize_length = self.rollsize_input_length.text()
         product_image = self.image_data
 
         roll_size = f"{rollsize_width} x {rollsize_length}"
-
+        
+        price = float(price)  
+        quantity = int(quantity)
+        if thickness:
+            thickness = int(thickness)  # Convert thickness to int if it's not empty
+        else:
+            thickness = None
+            
         if not all([product_name, price, quantity, category, product_image]):
             missing_fields = []
             if not product_name:
@@ -75,6 +82,14 @@ class Ui_AddProduct(QDialog):
                 self.cur.execute(sql, (product_name, price, quantity, category, thickness, roll_size, self.image_data))
                 self.conn.commit()
                 print("Product added successfully!")
+
+                self.lineEdit.clear()
+                self.lineEdit_2.clear()
+                self.lineEdit_3.clear()
+                self.thickness_lineEdit.clear()
+                self.rollsize_input_width.clear()
+                self.rollsize_input_length.clear()
+                self.image_label.clear()
             except psycopg2.Error as e:
                 print(f"Error inserting product: {e}")
                 self.conn.rollback()
@@ -85,7 +100,7 @@ class Ui_AddProduct(QDialog):
         
         if file_name:
             pixmap = QPixmap(file_name)
-            self.image_label.setPixmap(pixmap.scaledToWidth(191))  # Display image in QLabel
+            self.image_label.setPixmap(pixmap.scaledToWidth(200))  # Display image in QLabel
 
             with open(file_name, "rb") as image_file:
                 self.image_data = image_file.read()
