@@ -24,7 +24,7 @@ class Ui_Inventory_2(object):
     def fetch_products(self):
         try:
             sql = """
-            SELECT PROD_ID, CONCAT(PROD_IMAGE::text, ' ', PROD_NAME) AS PRODUCT_IMAGE_NAME, PROD_CATEGORY, PROD_PRICE, 
+            SELECT PROD_ID, PROD_IMAGE, PROD_NAME, PROD_CATEGORY, PROD_PRICE, 
             PROD_QUANTITY, PROD_THICKNESS, PROD_ROLL_SIZE, PROD_LAST_UPDATED
             FROM PRODUCT
             """
@@ -36,31 +36,45 @@ class Ui_Inventory_2(object):
 
     def display_products(self, products):
         self.tableWidget.setRowCount(len(products))
+        self.tableWidget.setColumnCount(10)  # Adjust according to your columns
+        self.tableWidget.setHorizontalHeaderLabels(['ID', 'Image', 'Name', 'Category', 'Price', 'Quantity', 'Thickness', 'Roll Size', 'Last Updated', 'Actions'])
+
         for row_number, product in enumerate(products):
             for column_number, data in enumerate(product):
-                item = QtWidgets.QTableWidgetItem()
-                item.setTextAlignment(QtCore.Qt.AlignCenter)
-                item.setText(str(data))
-                self.tableWidget.setItem(row_number, column_number, item)
+                if column_number == 1:  # Assuming the image is in the 2nd column
+                    image_data = data
+                    pixmap = QtGui.QPixmap()
+                    pixmap.loadFromData(image_data)
+                    label = QtWidgets.QLabel()
+                    label.setPixmap(pixmap.scaled(100, 100, QtCore.Qt.KeepAspectRatio))
+                    label.setAlignment(QtCore.Qt.AlignCenter)
+                    self.tableWidget.setCellWidget(row_number, column_number, label)
 
-        # Create a widget to hold both edit and delete buttons
-        button_widget = QtWidgets.QWidget()
-        layout = QtWidgets.QHBoxLayout(button_widget)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(10)  # Adjust spacing between buttons if needed
+                    self.tableWidget.setRowHeight(row_number, 100)
+                else:
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setText(str(data))
+                    self.tableWidget.setItem(row_number, column_number, item)
 
-        edit_button = QtWidgets.QPushButton('Edit')
-        edit_button.clicked.connect(lambda checked, row=row_number: self.update_product(row))
-        layout.addWidget(edit_button)
+            # Create a widget to hold both edit and delete buttons
+            button_widget = QtWidgets.QWidget()
+            layout = QtWidgets.QHBoxLayout(button_widget)
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.setSpacing(10)  # Adjust spacing between buttons if needed
 
-        delete_button = QtWidgets.QPushButton('Delete')
-        delete_button.clicked.connect(lambda checked, row=row_number: self.delete_product(row))
-        layout.addWidget(delete_button)
+            edit_button = QtWidgets.QPushButton('Edit')
+            edit_button.clicked.connect(lambda checked, row=row_number: self.update_product(row))
+            layout.addWidget(edit_button)
+
+            delete_button = QtWidgets.QPushButton('Delete')
+            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_product(row))
+            layout.addWidget(delete_button)
 
             # Set the widget containing the buttons into the table cell
-        cell_widget = QtWidgets.QWidget()
-        cell_widget.setLayout(layout)
-        self.tableWidget.setCellWidget(row_number, 8, cell_widget)
+            cell_widget = QtWidgets.QWidget()
+            cell_widget.setLayout(layout)
+            self.tableWidget.setCellWidget(row_number, 10, cell_widget)
 
     def delete_product(self, row):
         # Implement delete logic here
@@ -94,11 +108,11 @@ class Ui_Inventory_2(object):
         self.update_product_ui.setupUi(self.dialog)
 
         # Populate the QLineEdit fields with data from the database
-        self.update_product_ui.lineEdit_2.setText(product_data[1])  # First Name
-        self.update_product_ui.lineEdit_3.setText(product_data[2])  # Last Name
-        self.update_product_ui.lineEdit_4.setText(product_data[4])  # Phone #
-        self.update_product_ui.lineEdit_13.setText(product_data[5])  # Address
-        self.update_product_ui.lineEdit_14.setText(product_data[3])  # Email Address
+        self.update_product_ui.lineEdit_2.setText(product_data[1])  
+        self.update_product_ui.lineEdit_3.setText(product_data[2])  
+        self.update_product_ui.lineEdit_4.setText(product_data[4])  
+        self.update_product_ui.lineEdit_13.setText(product_data[5]) 
+        self.update_product_ui.lineEdit_14.setText(product_data[3])  
 
         self.dialog.exec_()
 
@@ -114,7 +128,7 @@ class Ui_Inventory_2(object):
         self.window2 = QtWidgets.QDialog()
         self.ui = Ui_AddProduct()
         self.ui.setupUi(self.window2)
-        self.window2.setModal(True)  # Ensure the dialog is modal
+        self.window2.setModal(True)  
         self.window2.exec_() 
 
     def order(self):
@@ -297,6 +311,9 @@ class Ui_Inventory_2(object):
         self.TableContainer.setObjectName("TableContainer")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.TableContainer)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.scrollArea = QtWidgets.QScrollArea(self.TableContainer)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.Label = QtWidgets.QFrame(self.TableContainer)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -437,7 +454,7 @@ class Ui_Inventory_2(object):
 
         self.tableWidget = QtWidgets.QTableWidget(self.DataFrame)
         self.tableWidget.verticalHeader().setVisible(False)
-        self.tableWidget.setColumnCount(9)
+        self.tableWidget.setColumnCount(10)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
@@ -550,6 +567,17 @@ class Ui_Inventory_2(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         item.setForeground(brush)
         self.tableWidget.setHorizontalHeaderItem(9, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        brush = QtGui.QBrush(QtGui.QColor(71, 71, 71))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        item.setForeground(brush)
+        self.tableWidget.setHorizontalHeaderItem(9, item)
         self.tableWidget.setColumnWidth(0, 100)  # Set the width of column 0 to 100 pixels
         self.tableWidget.setColumnWidth(1, 250)  # Set the width of column 1 to 150 pixels
         self.tableWidget.setColumnWidth(2, 250)  # Set the width of column 2 to 120 pixels
@@ -588,20 +616,22 @@ class Ui_Inventory_2(object):
         item = self.tableWidget.horizontalHeaderItem(0)   
         item.setText(_translate("Inventory_2", "Product ID"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("Inventory_2", "Product/Service"))
+        item.setText(_translate("Inventory_2", "Product Image"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("Inventory_2", "Category"))
+        item.setText(_translate("Inventory_2", "Product Name"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("Inventory_2", "Price"))
+        item.setText(_translate("Inventory_2", "Category"))
         item = self.tableWidget.horizontalHeaderItem(4)
-        item.setText(_translate("Inventory_2", "Qty"))
+        item.setText(_translate("Inventory_2", "Price"))
         item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("Inventory_2", "Thickness"))
+        item.setText(_translate("Inventory_2", "Qty"))
         item = self.tableWidget.horizontalHeaderItem(6)
-        item.setText(_translate("Inventory_2", "Rollsize"))
+        item.setText(_translate("Inventory_2", "Thickness"))
         item = self.tableWidget.horizontalHeaderItem(7)
-        item.setText(_translate("Inventory_2", "Last Updated"))
+        item.setText(_translate("Inventory_2", "Rollsize"))
         item = self.tableWidget.horizontalHeaderItem(8)
+        item.setText(_translate("Inventory_2", "Last Updated"))
+        item = self.tableWidget.horizontalHeaderItem(9)
         item.setText(_translate("MainWindow", "Actions"))
 
 import font_rc
