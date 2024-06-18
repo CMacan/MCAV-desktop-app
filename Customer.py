@@ -43,24 +43,24 @@ class Ui_Customer_2(object):
                 item.setText(str(data))
                 self.tableWidget.setItem(row_number, column_number, item)
 
-        # Create a widget to hold both edit and delete buttons
-        button_widget = QtWidgets.QWidget()
-        layout = QtWidgets.QHBoxLayout(button_widget)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(10)  # Adjust spacing between buttons if needed
+            # Create a widget to hold both edit and delete buttons
+            button_widget = QtWidgets.QWidget()
+            layout = QtWidgets.QHBoxLayout(button_widget)
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.setSpacing(10)  # Adjust spacing between buttons if needed
 
-        edit_button = QtWidgets.QPushButton('Edit')
-        edit_button.clicked.connect(lambda checked, row=row_number: self.update_customer(row))
-        layout.addWidget(edit_button)
+            edit_button = QtWidgets.QPushButton('Edit')
+            edit_button.clicked.connect(lambda checked, row=row_number: self.update_customer(row))
+            layout.addWidget(edit_button)
 
-        delete_button = QtWidgets.QPushButton('Delete')
-        delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
-        layout.addWidget(delete_button)
+            delete_button = QtWidgets.QPushButton('Delete')
+            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
+            layout.addWidget(delete_button)
 
-            # Set the widget containing the buttons into the table cell
-        cell_widget = QtWidgets.QWidget()
-        cell_widget.setLayout(layout)
-        self.tableWidget.setCellWidget(row_number, 6, cell_widget)
+                # Set the widget containing the buttons into the table cell
+            cell_widget = QtWidgets.QWidget()
+            cell_widget.setLayout(layout)
+            self.tableWidget.setCellWidget(row_number, 6, cell_widget)
 
     def delete_customer(self, row):
         # Implement delete logic here
