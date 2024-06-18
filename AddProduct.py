@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
 import psycopg2
 import io
+from PyQt5.QtWidgets import QMessageBox
 
 class Ui_AddProduct(object):
 
@@ -23,24 +24,50 @@ class Ui_AddProduct(object):
         thickness = self.thickness_lineEdit.text()
         rollsize_width = self.rollsize_input_width.text()
         rollsize_length = self.rollsize_input_length.text()
-        product_image = self.image_data  # Assuming self.image_data holds the byte array of the image
+        product_image = self.image_data 
         
-        # Concatenate width and length into a single string
-        roll_size = f"{rollsize_width} x {rollsize_length}"  # Example format: "80 x 100"
+        roll_size = f"{rollsize_width} x {rollsize_length}"  
 
-        # Insert into database
-        sql = """
-              INSERT INTO PRODUCT (PROD_NAME, PROD_PRICE, PROD_QUANTITY, PROD_CATEGORY, 
-                                    PROD_THICKNESS, PROD_ROLL_SIZE, PROD_IMAGE)
-              VALUES (%s, %s, %s, %s, %s, %s, %s)
-              """
-        try:
-            self.cur.execute(sql, (product_name, price, quantity, category, thickness, roll_size, product_image))
-            self.conn.commit()
-            print("Product added successfully!")
-        except psycopg2.Error as e:
-            print(f"Error inserting product: {e}")
-            self.conn.rollback()
+        if (not product_name or not price or not quantity or not category or not product_image):
+            missing_fields = []
+            if not product_name:
+                missing_fields.append("Product Name")
+            if not price:
+                missing_fields.append("Price")
+            if not quantity:
+                missing_fields.append("Quantity")
+            if not category:
+                missing_fields.append("Category")
+            if not product_image:
+                missing_fields.append("Product Image")
+            
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText(f"Please input all required fields:\n{', '.join(missing_fields)}")
+            msg.setWindowTitle("Required Fields")
+            msg.exec_()
+            return
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Question)
+        msg.setText("Add to product list?")
+        msg.setWindowTitle("Confirmation")
+        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+
+        result = msg.exec_()
+
+        if result == QMessageBox.Yes:
+            sql = """
+                INSERT INTO PRODUCT (PROD_NAME, PROD_PRICE, PROD_QUANTITY, PROD_CATEGORY, 
+                                        PROD_THICKNESS, PROD_ROLL_SIZE, PROD_IMAGE)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                """
+            try:
+                self.cur.execute(sql, (product_name, price, quantity, category, thickness, roll_size, product_image))
+                self.conn.commit()
+                print("Product added successfully!")
+            except psycopg2.Error as e:
+                print(f"Error inserting product: {e}")
+                self.conn.rollback()
     
     def add_new_image(self):
         options = QFileDialog.Options()
@@ -105,30 +132,65 @@ class Ui_AddProduct(object):
         self.label_3.setGeometry(QtCore.QRect(80, 210, 81, 16))
         self.label_3.setObjectName("label_3")
         self.category_label = QtWidgets.QLabel(self.frame)
-        self.category_label.setGeometry(QtCore.QRect(400, 100, 66, 16))
+        self.category_label.setGeometry(QtCore.QRect(360, 100, 66, 16))
         self.category_label.setObjectName("category_label")
+        self.comboBox = QtWidgets.QComboBox(self.frame)
+        self.comboBox.setGeometry(QtCore.QRect(360, 120, 111, 22))
+        self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
         self.thickness_lineEdit = QtWidgets.QLineEdit(self.frame)
-        self.thickness_lineEdit.setGeometry(QtCore.QRect(400, 190, 113, 20))
+        self.thickness_lineEdit.setGeometry(QtCore.QRect(360, 170, 80, 20))
         self.thickness_lineEdit.setObjectName("thickness_lineEdit")
         self.thickness_label = QtWidgets.QLabel(self.frame)
-        self.thickness_label.setGeometry(QtCore.QRect(400, 170, 81, 16))
+        self.thickness_label.setGeometry(QtCore.QRect(360, 150, 81, 16))
         self.thickness_label.setObjectName("thickness_label")
+        self.thickness_oz = QtWidgets.QLabel(self.frame)
+        self.thickness_oz.setGeometry(QtCore.QRect(445, 170, 60, 20))
+        self.thickness_oz.setObjectName("thickness_oz")
         self.Cancel = QtWidgets.QPushButton(self.frame)
         self.Cancel.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Cancel.clicked.connect(AddProduct.close)
-        self.Cancel.setGeometry(QtCore.QRect(354, 360, 96, 31))
+        self.Cancel.setGeometry(QtCore.QRect(360, 370, 96, 31))
         self.Cancel.setObjectName("Cancel")
+        font_cancel = QtGui.QFont()
+        font_cancel.setFamily("Arial")
+        font_cancel.setPointSize(10)
+        font_cancel.setBold(True)        
+        self.Cancel.setFont(font_cancel)
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
         self.AddOrder_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.AddOrder_3.clicked.connect(self.add_new_product)
-        self.AddOrder_3.setGeometry(QtCore.QRect(475, 360, 91, 31))
+        self.AddOrder_3.setGeometry(QtCore.QRect(470, 370, 91, 31))
         self.AddOrder_3.setObjectName("AddOrder_3")
-        self.label_14 = QtWidgets.QLabel(self.frame)
-        self.label_14.setGeometry(QtCore.QRect(80, 260, 76, 16))
-        self.label_14.setObjectName("label_14")
+        font_add_product = QtGui.QFont()
+        font_add_product.setFamily("Arial")
+        font_add_product.setPointSize(10)
+        font_add_product.setBold(True)
+        self.AddOrder_3.setFont(font_add_product)        
+        self.rollsize_label = QtWidgets.QLabel(self.frame)
+        self.rollsize_label.setGeometry(QtCore.QRect(80, 260, 76, 16))
+        self.rollsize_label.setObjectName("rollsize_label")
         self.rollsize_input_width = QtWidgets.QLineEdit(self.frame)
         self.rollsize_input_width.setGeometry(QtCore.QRect(80, 280, 40, 20))
         self.rollsize_input_width.setObjectName("rollsize_input_width")
+        self.optional_label = QtWidgets.QLabel(self.frame)
+        self.optional_label.setGeometry(QtCore.QRect(200, 280, 100, 20))
+        font_optional = QtGui.QFont()
+        font_optional.setFamily("Arial")
+        font_optional.setPointSize(10)
+        self.optional_label.setFont(font_optional)
+        self.optional_label.setStyleSheet("color: #CCAA00;")
+        self.optional_label2 = QtWidgets.QLabel(self.frame)
+        self.optional_label2.setGeometry(QtCore.QRect(490, 170, 113, 20))
+        font_optional = QtGui.QFont()
+        font_optional.setFamily("Arial")
+        font_optional.setPointSize(10)
+        self.optional_label2.setFont(font_optional)
+        self.optional_label2.setStyleSheet("color: #CCAA00;")
+        self.rollsize_label.setObjectName("rollsize_label")
         self.label_times = QtWidgets.QLabel(self.frame)
         self.label_times.setGeometry(QtCore.QRect(130, 280, 16, 20))  
         self.label_times.setObjectName("label_times")
@@ -139,22 +201,15 @@ class Ui_AddProduct(object):
         self.rollsize_input_length = QtWidgets.QLineEdit(self.frame)
         self.rollsize_input_length.setGeometry(QtCore.QRect(145, 280, 40, 20))  
         self.rollsize_input_length.setObjectName("rollsize_input_length")
-        self.comboBox = QtWidgets.QComboBox(self.frame)
-        self.comboBox.setGeometry(QtCore.QRect(400, 120, 111, 22))
-        self.comboBox.setObjectName("comboBox")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
         self.image_label = QtWidgets.QLabel(self.frame)
-        self.image_label.setGeometry(QtCore.QRect(365, 240, 191, 96))
+        self.image_label.setGeometry(QtCore.QRect(360, 210, 200, 96))
         self.image_label.setFrameShape(QtWidgets.QFrame.Box)
         self.image_label.setFrameShadow(QtWidgets.QFrame.Plain)
         self.image_label.setText("")
         self.image_label.setObjectName("image_label")
         self.Image = QtWidgets.QPushButton(self.frame)
         self.Image.clicked.connect(self.add_new_image)
-        self.Image.setGeometry(QtCore.QRect(365, 340, 191, 31))
+        self.Image.setGeometry(QtCore.QRect(360, 310, 200, 31))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("static/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Image.setIcon(icon)
@@ -172,9 +227,12 @@ class Ui_AddProduct(object):
         self.label_3.setText(_translate("AddProduct", "Quantity"))
         self.category_label.setText(_translate("AddProduct", "Category"))
         self.thickness_label.setText(_translate("AddProduct", "Thickness"))
+        self.thickness_oz.setText(_translate("AddProduct", "ounces."))
         self.Cancel.setText(_translate("AddProduct", "Cancel"))
         self.AddOrder_3.setText(_translate("AddProduct", "Add Product"))
-        self.label_14.setText(_translate("AddProduct", "Rollsize"))
+        self.rollsize_label.setText(_translate("AddProduct", "Rollsize"))
+        self.optional_label.setText(_translate("AddProduct", "(optional)"))
+        self.optional_label2.setText(_translate("AddProduct", "(optional)"))
         self.comboBox.setItemText(0, _translate("AddProduct", "Large Format Tarpulin "))
         self.comboBox.setItemText(1, _translate("AddProduct", "Vinyl Sticker Printin"))
         self.comboBox.setItemText(2, _translate("AddProduct", "Laser Printing for papers and Stickers"))
