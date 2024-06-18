@@ -43,24 +43,24 @@ class Ui_Inventory_2(object):
                 item.setText(str(data))
                 self.tableWidget.setItem(row_number, column_number, item)
 
-            # Create a widget to hold both edit and delete buttons for the current row
-            button_widget = QtWidgets.QWidget()
-            layout = QtWidgets.QHBoxLayout(button_widget)
-            layout.setContentsMargins(0, 0, 0, 0)
-            layout.setSpacing(10)  # Adjust spacing between buttons if needed
+        # Create a widget to hold both edit and delete buttons
+        button_widget = QtWidgets.QWidget()
+        layout = QtWidgets.QHBoxLayout(button_widget)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(10)  # Adjust spacing between buttons if needed
 
-            edit_button = QtWidgets.QPushButton('Edit')
-            edit_button.clicked.connect(lambda checked, row=row_number: self.update_product(row))
-            layout.addWidget(edit_button)
+        edit_button = QtWidgets.QPushButton('Edit')
+        edit_button.clicked.connect(lambda checked, row=row_number: self.update_product(row))
+        layout.addWidget(edit_button)
 
-            delete_button = QtWidgets.QPushButton('Delete')
-            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_product(row))
-            layout.addWidget(delete_button)
+        delete_button = QtWidgets.QPushButton('Delete')
+        delete_button.clicked.connect(lambda checked, row=row_number: self.delete_product(row))
+        layout.addWidget(delete_button)
 
             # Set the widget containing the buttons into the table cell
-            cell_widget = QtWidgets.QWidget()
-            cell_widget.setLayout(layout)
-            self.tableWidget.setCellWidget(row_number, 6, cell_widget)
+        cell_widget = QtWidgets.QWidget()
+        cell_widget.setLayout(layout)
+        self.tableWidget.setCellWidget(row_number, 8, cell_widget)
 
     def delete_product(self, row):
         # Implement delete logic here
@@ -550,7 +550,15 @@ class Ui_Inventory_2(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         item.setForeground(brush)
         self.tableWidget.setHorizontalHeaderItem(9, item)
-
+        self.tableWidget.setColumnWidth(0, 50)  # Set the width of column 0 to 100 pixels
+        self.tableWidget.setColumnWidth(1, 250)  # Set the width of column 1 to 150 pixels
+        self.tableWidget.setColumnWidth(2, 250)  # Set the width of column 2 to 120 pixels
+        self.tableWidget.setColumnWidth(3, 200)  # Set the width of column 3 to 200 pixels
+        self.tableWidget.setColumnWidth(4, 100)  # Set the width of column 4 to 120 pixels
+        self.tableWidget.setColumnWidth(5, 100)  # Set the width of column 5 to 250 pixels
+        self.tableWidget.setColumnWidth(6, 100)
+        self.tableWidget.setColumnWidth(7, 250)
+        self.tableWidget.setColumnWidth(8, 20)  # Set the width of column 6 to 150 pixels
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.verticalLayout_4.addWidget(self.tableWidget)
         self.verticalLayout_2.addWidget(self.DataFrame)

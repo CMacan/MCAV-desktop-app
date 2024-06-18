@@ -504,7 +504,6 @@ class Ui_Customer_2(object):
         self.tableWidget.setColumnWidth(4, 200)  # Set the width of column 4 to 120 pixels
         self.tableWidget.setColumnWidth(5, 300)  # Set the width of column 5 to 250 pixels
         self.tableWidget.setColumnWidth(6, 20)  # Set the width of column 6 to 150 pixels
-
         self.tableWidget.horizontalHeader().setCascadingSectionResizes(False)
         self.tableWidget.horizontalHeader().setSortIndicatorShown(False)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
