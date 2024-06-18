@@ -1,13 +1,15 @@
+import sys
+import os
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog, QMessageBox
+from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QFileDialog
 import psycopg2
 import io
-from PyQt5.QtWidgets import QMessageBox
 
-class Ui_AddProduct(object):
-
+class Ui_AddProduct(QDialog):
     def __init__(self):
-        # PostgreSQL connection
+        super().__init__()
+        self.setupUi(self)
         self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", 
                                      dbname="postgres", 
                                      user="postgres.oxzprkjuxnjgnfihweyj", 
@@ -24,11 +26,11 @@ class Ui_AddProduct(object):
         thickness = self.thickness_lineEdit.text()
         rollsize_width = self.rollsize_input_width.text()
         rollsize_length = self.rollsize_input_length.text()
-        product_image = self.image_data 
-        
-        roll_size = f"{rollsize_width} x {rollsize_length}"  
+        product_image = self.image_data
 
-        if (not product_name or not price or not quantity or not category or not product_image):
+        roll_size = f"{rollsize_width} x {rollsize_length}"
+
+        if not all([product_name, price, quantity, category, product_image]):
             missing_fields = []
             if not product_name:
                 missing_fields.append("Product Name")
@@ -40,46 +42,54 @@ class Ui_AddProduct(object):
                 missing_fields.append("Category")
             if not product_image:
                 missing_fields.append("Product Image")
-            
+
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Warning)
             msg.setText(f"Please input all required fields:\n{', '.join(missing_fields)}")
             msg.setWindowTitle("Required Fields")
             msg.exec_()
             return
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Question)
-        msg.setText("Add to product list?")
-        msg.setWindowTitle("Confirmation")
-        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
 
-        result = msg.exec_()
+        confirm_msg = QMessageBox()
+        confirm_msg.setIcon(QMessageBox.Question)
+        confirm_msg.setText("Add to product list?")
+        confirm_msg.setWindowTitle("Confirmation")
+        confirm_msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+
+        result = confirm_msg.exec_()
 
         if result == QMessageBox.Yes:
+            # Save image to a folder (e.g., 'images')
+            image_filename = f"{product_name}.png"  # Adjust filename as needed
+            image_path = os.path.join('images', image_filename)
+            with open(image_path, 'wb') as f:
+                f.write(self.image_data)
+
+            # Insert product into database
             sql = """
                 INSERT INTO PRODUCT (PROD_NAME, PROD_PRICE, PROD_QUANTITY, PROD_CATEGORY, 
-                                        PROD_THICKNESS, PROD_ROLL_SIZE, PROD_IMAGE)
+                                     PROD_THICKNESS, PROD_ROLL_SIZE, PROD_IMAGE)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """
             try:
-                self.cur.execute(sql, (product_name, price, quantity, category, thickness, roll_size, product_image))
+                self.cur.execute(sql, (product_name, price, quantity, category, thickness, roll_size, self.image_data))
                 self.conn.commit()
                 print("Product added successfully!")
             except psycopg2.Error as e:
                 print(f"Error inserting product: {e}")
                 self.conn.rollback()
-    
+
     def add_new_image(self):
         options = QFileDialog.Options()
-        fileName, _ = QFileDialog.getOpenFileName(None,"QFileDialog.getOpenFileName()", "","Image Files (*.png *.jpg *.jpeg *.bmp)", options=options)
+        file_name, _ = QFileDialog.getOpenFileName(self, "Select Image File", "", "Image Files (*.png *.jpg *.jpeg *.bmp)", options=options)
         
-        if fileName:
-            with open(fileName, "rb") as image_file:
+        if file_name:
+            pixmap = QPixmap(file_name)
+            self.image_label.setPixmap(pixmap.scaledToWidth(191))  # Display image in QLabel
+
+            with open(file_name, "rb") as image_file:
                 self.image_data = image_file.read()
 
-            pixmap = QtGui.QPixmap(fileName)
-            self.image_label.setPixmap(pixmap.scaledToWidth(191))  # Display image in QLabel
-    
     def setupUi(self, AddProduct):
         AddProduct.setObjectName("AddProduct")
         AddProduct.resize(640, 480)
@@ -240,9 +250,8 @@ class Ui_AddProduct(object):
         self.Image.setText(_translate("AddProduct", "Select Image"))
 
 if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    AddProduct = QtWidgets.QDialog()
+    app = QApplication(sys.argv)
+    AddProduct = QDialog()
     ui = Ui_AddProduct()
     ui.setupUi(AddProduct)
     AddProduct.show()

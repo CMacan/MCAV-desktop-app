@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from clickable import ClickableLabel 
 import psycopg2
-
+from PyQt5.QtWidgets import QDialog
 
 class Ui_Inventory_2(object):
 
@@ -20,6 +20,87 @@ class Ui_Inventory_2(object):
         self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
                                      password="Milliondollarbaby123", port=6543)
         self.cur = self.conn.cursor()
+
+    def fetch_products(self):
+        try:
+            sql = """
+            SELECT PROD_ID, CONCAT(PROD_IMAGE::text, ' ', PROD_NAME) AS PRODUCT_IMAGE_NAME, PROD_CATEGORY, PROD_PRICE, 
+            PROD_QUANTITY, PROD_THICKNESS, PROD_ROLL_SIZE, PROD_LAST_UPDATED
+            FROM PRODUCT
+            """
+            self.cur.execute(sql)
+            return self.cur.fetchall()
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching data from database: {e}")
+            return []
+
+    def display_products(self, products):
+        self.tableWidget.setRowCount(len(products))
+        for row_number, product in enumerate(products):
+            for column_number, data in enumerate(product):
+                item = QtWidgets.QTableWidgetItem()
+                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                item.setText(str(data))
+                self.tableWidget.setItem(row_number, column_number, item)
+
+        # Create a widget to hold both edit and delete buttons
+        button_widget = QtWidgets.QWidget()
+        layout = QtWidgets.QHBoxLayout(button_widget)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(10)  # Adjust spacing between buttons if needed
+
+        edit_button = QtWidgets.QPushButton('Edit')
+        edit_button.clicked.connect(lambda checked, row=row_number: self.update_product(row))
+        layout.addWidget(edit_button)
+
+        delete_button = QtWidgets.QPushButton('Delete')
+        delete_button.clicked.connect(lambda checked, row=row_number: self.delete_product(row))
+        layout.addWidget(delete_button)
+
+            # Set the widget containing the buttons into the table cell
+        cell_widget = QtWidgets.QWidget()
+        cell_widget.setLayout(layout)
+        self.tableWidget.setCellWidget(row_number, 6, cell_widget)
+
+    def delete_product(self, row):
+        # Implement delete logic here
+        # Example of deleting the selected row's data
+        product_code = self.tableWidget.item(row, 0).text()
+        try:
+            sql = "DELETE FROM PRODUCT WHERE CUS_CODE = %s"
+            self.cur.execute(sql, (product_code,))
+            self.conn.commit()
+            QtWidgets.QMessageBox.information(None, 'Success', 'Product deleted successfully!')
+            # Refresh table after deletion
+            products = self.fetch_products()
+            self.display_products(products)
+        except psycopg2.Error as e:
+            QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
+    
+    def update_product(self, row):
+        from UpdateProduct import Ui_UpdateProduct
+        # Get data from the selected row
+        product_data = []
+        for column_number in range(6):  # Assuming there are 6 columns in the table
+            item = self.tableWidget.item(row, column_number)
+            if item is not None:
+                product_data.append(item.text())
+            else:
+                product_data.append("")  # Handle empty cells if needed
+
+        # Open the UpdateProduct dialog window
+        self.dialog = QDialog()
+        self.update_product_ui = Ui_UpdateProduct()
+        self.update_product_ui.setupUi(self.dialog)
+
+        # Populate the QLineEdit fields with data from the database
+        self.update_product_ui.lineEdit_2.setText(product_data[1])  # First Name
+        self.update_product_ui.lineEdit_3.setText(product_data[2])  # Last Name
+        self.update_product_ui.lineEdit_4.setText(product_data[4])  # Phone #
+        self.update_product_ui.lineEdit_13.setText(product_data[5])  # Address
+        self.update_product_ui.lineEdit_14.setText(product_data[3])  # Email Address
+
+        self.dialog.exec_()
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
@@ -353,7 +434,9 @@ class Ui_Inventory_2(object):
         spacerItem1 = QtWidgets.QSpacerItem(610, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout_4.addWidget(self.SearchFrame)
+
         self.tableWidget = QtWidgets.QTableWidget(self.DataFrame)
+        self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.setColumnCount(9)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
@@ -467,11 +550,15 @@ class Ui_Inventory_2(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         item.setForeground(brush)
         self.tableWidget.setHorizontalHeaderItem(9, item)
+
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.verticalLayout_4.addWidget(self.tableWidget)
         self.verticalLayout_2.addWidget(self.DataFrame)
         self.verticalLayout.addWidget(self.TableContainer)
         Inventory_2.setCentralWidget(self.centralwidget)
+
+        products = self.fetch_products()
+        self.display_products(products)
 
         self.retranslateUi(Inventory_2)
         QtCore.QMetaObject.connectSlotsByName(Inventory_2)
