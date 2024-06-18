@@ -85,12 +85,12 @@ class Ui_Inventory_2(object):
             # Set the widget containing the buttons into the table cell
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
-            self.tableWidget.setCellWidget(row_number, 6, cell_widget)
+            self.tableWidget.setCellWidget(row_number, 9, cell_widget)
 
             # Set the widget containing the buttons into the table cell
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
-            self.tableWidget.setCellWidget(row_number, 10, cell_widget)
+            self.tableWidget.setCellWidget(row_number, 9, cell_widget)
 
 
     def delete_product(self, row):
