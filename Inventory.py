@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QDialog
 from clickable import ClickableLabel 
 import psycopg2
+from UpdateProduct import Ui_UpdateProduct 
 
 class Ui_Inventory_2(object):
 
@@ -87,12 +88,6 @@ class Ui_Inventory_2(object):
             cell_widget.setLayout(layout)
             self.tableWidget.setCellWidget(row_number, 9, cell_widget)
 
-            # Set the widget containing the buttons into the table cell
-            cell_widget = QtWidgets.QWidget()
-            cell_widget.setLayout(layout)
-            self.tableWidget.setCellWidget(row_number, 9, cell_widget)
-
-
     def delete_product(self, row):
         # Implement delete logic here
         # Example of deleting the selected row's data
@@ -107,12 +102,11 @@ class Ui_Inventory_2(object):
             self.display_products(products)
         except psycopg2.Error as e:
             QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
-    
+
     def update_product(self, row):
-        from UpdateProduct import Ui_UpdateProduct
         # Get data from the selected row
         product_data = []
-        for column_number in range(6): 
+        for column_number in range(self.tableWidget.columnCount() - 1):  # Exclude the last column (Actions)
             item = self.tableWidget.item(row, column_number)
             if item is not None:
                 product_data.append(item.text())
@@ -123,13 +117,7 @@ class Ui_Inventory_2(object):
         self.dialog = QDialog()
         self.update_product_ui = Ui_UpdateProduct()
         self.update_product_ui.setupUi(self.dialog)
-
-        # Populate the QLineEdit fields with data from the database
-        self.update_product_ui.lineEdit_2.setText(product_data[1])  
-        self.update_product_ui.lineEdit_3.setText(product_data[2])  
-        self.update_product_ui.lineEdit_4.setText(product_data[4])  
-        self.update_product_ui.lineEdit_13.setText(product_data[5]) 
-        self.update_product_ui.lineEdit_14.setText(product_data[3])  
+        self.update_product_ui.populate_data(product_data)
 
         self.dialog.exec_()
 
