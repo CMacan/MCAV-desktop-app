@@ -550,7 +550,7 @@ class Ui_Inventory_2(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         item.setForeground(brush)
         self.tableWidget.setHorizontalHeaderItem(9, item)
-        self.tableWidget.setColumnWidth(0, 50)  # Set the width of column 0 to 100 pixels
+        self.tableWidget.setColumnWidth(0, 100)  # Set the width of column 0 to 100 pixels
         self.tableWidget.setColumnWidth(1, 250)  # Set the width of column 1 to 150 pixels
         self.tableWidget.setColumnWidth(2, 250)  # Set the width of column 2 to 120 pixels
         self.tableWidget.setColumnWidth(3, 200)  # Set the width of column 3 to 200 pixels
