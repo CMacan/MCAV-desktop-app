@@ -9,9 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QDialog
 from clickable import ClickableLabel 
 import psycopg2
-from PyQt5.QtWidgets import QDialog
 
 class Ui_Inventory_2(object):
 
@@ -34,6 +34,13 @@ class Ui_Inventory_2(object):
             self.show_message("Database Error", f"Error fetching data from database: {e}")
             return []
 
+    def show_message(self, title, message):
+        msg_box = QtWidgets.QMessageBox()
+        msg_box.setIcon(QtWidgets.QMessageBox.Critical)
+        msg_box.setWindowTitle(title)
+        msg_box.setText(message)
+        msg_box.exec_()
+
     def display_products(self, products):
         self.tableWidget.setRowCount(len(products))
         self.tableWidget.setColumnCount(10)  # Adjust according to your columns
@@ -41,6 +48,10 @@ class Ui_Inventory_2(object):
 
         for row_number, product in enumerate(products):
             for column_number, data in enumerate(product):
+                item = QtWidgets.QTableWidgetItem()
+                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                item.setText(str(data))
+                self.tableWidget.setItem(row_number, column_number, item)
                 if column_number == 1:  # Assuming the image is in the 2nd column
                     image_data = data
                     pixmap = QtGui.QPixmap()
@@ -74,14 +85,20 @@ class Ui_Inventory_2(object):
             # Set the widget containing the buttons into the table cell
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
+            self.tableWidget.setCellWidget(row_number, 6, cell_widget)
+
+            # Set the widget containing the buttons into the table cell
+            cell_widget = QtWidgets.QWidget()
+            cell_widget.setLayout(layout)
             self.tableWidget.setCellWidget(row_number, 10, cell_widget)
+
 
     def delete_product(self, row):
         # Implement delete logic here
         # Example of deleting the selected row's data
         product_code = self.tableWidget.item(row, 0).text()
         try:
-            sql = "DELETE FROM PRODUCT WHERE CUS_CODE = %s"
+            sql = "DELETE FROM PRODUCT WHERE PROD_ID = %s"
             self.cur.execute(sql, (product_code,))
             self.conn.commit()
             QtWidgets.QMessageBox.information(None, 'Success', 'Product deleted successfully!')
@@ -95,7 +112,7 @@ class Ui_Inventory_2(object):
         from UpdateProduct import Ui_UpdateProduct
         # Get data from the selected row
         product_data = []
-        for column_number in range(6):  # Assuming there are 6 columns in the table
+        for column_number in range(6): 
             item = self.tableWidget.item(row, column_number)
             if item is not None:
                 product_data.append(item.text())
@@ -577,16 +594,19 @@ class Ui_Inventory_2(object):
         brush = QtGui.QBrush(QtGui.QColor(71, 71, 71))
         brush.setStyle(QtCore.Qt.SolidPattern)
         item.setForeground(brush)
-        self.tableWidget.setHorizontalHeaderItem(9, item)
+        self.tableWidget.setHorizontalHeaderItem(10, item)
         self.tableWidget.setColumnWidth(0, 100)  # Set the width of column 0 to 100 pixels
         self.tableWidget.setColumnWidth(1, 250)  # Set the width of column 1 to 150 pixels
-        self.tableWidget.setColumnWidth(2, 250)  # Set the width of column 2 to 120 pixels
-        self.tableWidget.setColumnWidth(3, 200)  # Set the width of column 3 to 200 pixels
+        self.tableWidget.setColumnWidth(2, 100)  # Set the width of column 2 to 120 pixels
+        self.tableWidget.setColumnWidth(3, 100)  # Set the width of column 3 to 200 pixels
         self.tableWidget.setColumnWidth(4, 100)  # Set the width of column 4 to 120 pixels
         self.tableWidget.setColumnWidth(5, 100)  # Set the width of column 5 to 250 pixels
         self.tableWidget.setColumnWidth(6, 100)
-        self.tableWidget.setColumnWidth(7, 250)
-        self.tableWidget.setColumnWidth(8, 20)  # Set the width of column 6 to 150 pixels
+        self.tableWidget.setColumnWidth(7, 100)
+        self.tableWidget.setColumnWidth(8, 100)  # Set the width of column 6 to 150 pixels
+        self.tableWidget.setColumnWidth(9, 20) 
+        self.tableWidget.horizontalHeader().setCascadingSectionResizes(False)
+        self.tableWidget.horizontalHeader().setSortIndicatorShown(False)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.verticalLayout_4.addWidget(self.tableWidget)
         self.verticalLayout_2.addWidget(self.DataFrame)
