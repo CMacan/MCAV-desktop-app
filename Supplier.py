@@ -11,8 +11,53 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from clickable import ClickableLabel 
 from PyQt5.QtCore import Qt
+import psycopg2
 
 class Ui_Supplier(object):
+
+    def __init__(self):
+        # PostgreSQL connection
+        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
+                                     password="Milliondollarbaby123", port=6543)
+        self.cur = self.conn.cursor()
+
+    def fetch_suppliers(self):
+        try:
+            sql = """
+            SELECT SUP_NAME, SUP_ID, SUPPLIER_EMAIL, SUP_CONTACT, SUP_COUNTRY, SUP_ADDRESS
+            FROM SUPPLIER
+            """
+            self.cur.execute(sql)
+            return self.cur.fetchall()
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching data from database: {e}")
+            return []
+
+    def display_suppliers(self, suppliers):
+        self.tableWidget.setRowCount(len(suppliers))
+        for row_number, customer in enumerate(suppliers):
+            for column_number, data in enumerate(customer):
+                item = QtWidgets.QTableWidgetItem()
+                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                item.setText(str(data))
+                self.tableWidget.setItem(row_number, column_number, item)
+
+            button_widget = QtWidgets.QWidget()
+            layout = QtWidgets.QHBoxLayout(button_widget)
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.setSpacing(10)  
+
+            edit_button = QtWidgets.QPushButton('Edit')
+            edit_button.clicked.connect(lambda checked, row=row_number: self.update_customer(row))
+            layout.addWidget(edit_button)
+
+            delete_button = QtWidgets.QPushButton('Delete')
+            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
+            layout.addWidget(delete_button)
+
+            cell_widget = QtWidgets.QWidget()
+            cell_widget.setLayout(layout)
+            self.tableWidget.setCellWidget(row_number, 6, cell_widget)
     
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
@@ -70,6 +115,14 @@ class Ui_Supplier(object):
         self.ui = Ui_Profile_2()
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
+
+    def add_new_supplier(self):
+        from AddSupplier import Ui_AddSupplier
+        self.window2 = QtWidgets.QDialog()
+        self.ui = Ui_AddSupplier()
+        self.ui.setupUi(self.window2)
+        self.window2.setModal(True)  
+        self.window2.exec_() 
 
     def setupUi(self, Supplier):
         Supplier.setObjectName("Supplier")
@@ -299,6 +352,7 @@ class Ui_Supplier(object):
         self.manageLabel.setObjectName("manageLabel")
         self.verticalLayout_3.addWidget(self.manageLabel)
         self.horizontalLayout_4.addWidget(self.ProductList)
+
         self.BtnContainer = QtWidgets.QFrame(self.Label)
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -311,23 +365,55 @@ class Ui_Supplier(object):
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         spacerItem = QtWidgets.QSpacerItem(649, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem)
-        self.AddProduct = QtWidgets.QPushButton(self.BtnContainer)
-        self.AddProduct.clicked.connect(self.back_to_purchase)
-        self.AddProduct.clicked.connect(Supplier.close)
+
+        self.AddSupplier = QtWidgets.QPushButton(self.BtnContainer)
+        self.AddSupplier.clicked.connect(self.add_new_supplier)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.AddProduct.sizePolicy().hasHeightForWidth())
-        self.AddProduct.setSizePolicy(sizePolicy)
-        self.AddProduct.setMinimumSize(QtCore.QSize(150, 34))
-        self.AddProduct.setMaximumSize(QtCore.QSize(150, 34))
+        sizePolicy.setHeightForWidth(self.AddSupplier.sizePolicy().hasHeightForWidth())
+        self.AddSupplier.setSizePolicy(sizePolicy)
+        self.AddSupplier.setMinimumSize(QtCore.QSize(150, 34))
+        self.AddSupplier.setMaximumSize(QtCore.QSize(150, 34))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
         font.setWeight(75)
-        self.AddProduct.setFont(font)
-        self.AddProduct.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.AddProduct.setStyleSheet("font-size:12px;\n"
+        self.AddSupplier.setFont(font)
+        self.AddSupplier.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.AddSupplier.setStyleSheet("font-size:12px;\n"
+        "border: 2px solid #E08028; \n"
+        "border-radius: 10px;\n"
+        "background-color: #E08028; \n"
+        "padding: 5px; \n"
+        "color: white; \n"
+        "font-weight: bold; frf")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/static/static/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.AddSupplier.setIcon(icon)
+        self.AddSupplier.setIconSize(QtCore.QSize(20, 20))
+        self.AddSupplier.setObjectName("AddSupplier")
+        self.horizontalLayout_3.addWidget(self.AddSupplier)
+        self.horizontalLayout_4.addWidget(self.BtnContainer)
+        self.verticalLayout_2.addWidget(self.Label)
+
+        self.BacktoPurchase = QtWidgets.QPushButton(self.BtnContainer)
+        self.BacktoPurchase.clicked.connect(self.back_to_purchase)
+        self.BacktoPurchase.clicked.connect(Supplier.close)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.BacktoPurchase.sizePolicy().hasHeightForWidth())
+        self.BacktoPurchase.setSizePolicy(sizePolicy)
+        self.BacktoPurchase.setMinimumSize(QtCore.QSize(150, 34))
+        self.BacktoPurchase.setMaximumSize(QtCore.QSize(150, 34))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        font.setBold(True)
+        font.setWeight(75)
+        self.BacktoPurchase.setFont(font)
+        self.BacktoPurchase.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.BacktoPurchase.setStyleSheet("font-size:12px;\n"
 "border: 2px solid #E08028; \n"
 "border-radius: 10px;\n"
 "background-color: #E08028; \n"
@@ -336,10 +422,10 @@ class Ui_Supplier(object):
 "font-weight: bold; frf")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/static/static/back.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.AddProduct.setIcon(icon)
-        self.AddProduct.setIconSize(QtCore.QSize(20, 20))
-        self.AddProduct.setObjectName("AddProduct")
-        self.horizontalLayout_3.addWidget(self.AddProduct)
+        self.BacktoPurchase.setIcon(icon)
+        self.BacktoPurchase.setIconSize(QtCore.QSize(20, 20))
+        self.BacktoPurchase.setObjectName("BacktoPurchase")
+        self.horizontalLayout_3.addWidget(self.BacktoPurchase)
         self.horizontalLayout_4.addWidget(self.BtnContainer)
         self.verticalLayout_2.addWidget(self.Label)
         self.DataFrame = QtWidgets.QFrame(self.TableContainer)
@@ -495,6 +581,9 @@ class Ui_Supplier(object):
         self.verticalLayout.addWidget(self.TableContainer)
         Supplier.setCentralWidget(self.centralwidget)
 
+        suppliers = self.fetch_suppliers()
+        self.display_suppliers(suppliers)
+
         self.retranslateUi(Supplier)
         QtCore.QMetaObject.connectSlotsByName(Supplier)
 
@@ -510,7 +599,8 @@ class Ui_Supplier(object):
         self.Profile.setText(_translate("Supplier", "Profile"))
         self.ProductLabel.setText(_translate("Supplier", "Supplier List"))
         self.manageLabel.setText(_translate("Supplier", "Manage your suppliers"))
-        self.AddProduct.setText(_translate("Supplier", "Back to Purchase"))
+        self.AddSupplier.setText(_translate("Supplier", "Add New Supplier"))
+        self.BacktoPurchase.setText(_translate("Supplier", "Back to Purchase"))
         self.Search.setText(_translate("Supplier", "Search"))
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("Supplier", "Supplier Name"))
