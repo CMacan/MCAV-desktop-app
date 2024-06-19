@@ -116,7 +116,7 @@ class Ui_AddProduct(QDialog):
             self.conn.rollback()  # Roll back transaction on error
             error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
             self.show_message("Error", error_message)
-            
+
     def set_categories(self, categories):
         self.comboBox.clear()
         self.comboBox.addItems(categories)            
