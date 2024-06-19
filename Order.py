@@ -79,10 +79,34 @@ class Ui_Order_2(object):
             layout.setSpacing(10)  # Adjust spacing between buttons if needed
 
             edit_button = QtWidgets.QPushButton('Edit')
+            edit_button.setStyleSheet("""
+                QPushButton {
+                    background-color: #4CAF50; /* Green */
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #45a049;
+                }
+            """)
             edit_button.clicked.connect(lambda checked, row=row_number: self.update_order(row))
             layout.addWidget(edit_button)
 
             delete_button = QtWidgets.QPushButton('Delete')
+            delete_button.setStyleSheet("""
+                QPushButton {
+                    background-color: #f44336; /* Red */
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #da190b;
+                }
+            """)
             delete_button.clicked.connect(lambda checked, row=row_number: self.delete_order(row))
             layout.addWidget(delete_button)
 
@@ -527,7 +551,7 @@ class Ui_Order_2(object):
         self.tableWidget.setFont(font)
         self.tableWidget.setColumnCount(10)
 
-        self.tableWidget.verticalHeader().setVisible(True)
+        self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()

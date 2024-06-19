@@ -49,10 +49,34 @@ class Ui_PurchaseView(object):
             layout.setSpacing(10)  
 
             edit_button = QtWidgets.QPushButton('Edit')
+            edit_button.setStyleSheet("""
+                QPushButton {
+                    background-color: #4CAF50; /* Green */
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #45a049;
+                }
+            """)
             edit_button.clicked.connect(lambda checked, row=row_number: self.update_customer(row))
             layout.addWidget(edit_button)
 
             delete_button = QtWidgets.QPushButton('Delete')
+            delete_button.setStyleSheet("""
+                QPushButton {
+                    background-color: #f44336; /* Red */
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #da190b;
+                }
+            """)
             delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
             layout.addWidget(delete_button)
 
