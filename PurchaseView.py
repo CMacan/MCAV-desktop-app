@@ -10,8 +10,55 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from clickable import ClickableLabel 
+from PyQt5.QtCore import Qt
+import psycopg2
 
 class Ui_PurchaseView(object):
+    def __init__(self):
+        # PostgreSQL connection
+        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
+                                     password="Milliondollarbaby123", port=6543)
+        self.cur = self.conn.cursor()
+
+    def fetch_purchases(self):
+        try:
+            sql = """
+            SELECT p.PUR_ID, p.SUP_ID, s.SUP_NAME, p.PUR_PRODUCT_NAME, p.PUR_AMOUNT, p.PUR_QUANTITY, 
+            p.PUR_ORDER_DATE, p.PUR_THICKNESS, p.PUR_ROLL_SIZE 
+            FROM PURCHASE p 
+            INNER JOIN SUPPLIER s ON p.SUP_ID = s.SUP_ID
+            """
+            self.cur.execute(sql)
+            return self.cur.fetchall()
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching data from database: {e}")
+            return []
+
+    def display_purchases(self, purchases):
+        self.tableWidget.setRowCount(len(purchases))
+        for row_number, customer in enumerate(purchases):
+            for column_number, data in enumerate(customer):
+                item = QtWidgets.QTableWidgetItem()
+                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                item.setText(str(data))
+                self.tableWidget.setItem(row_number, column_number, item)
+
+            button_widget = QtWidgets.QWidget()
+            layout = QtWidgets.QHBoxLayout(button_widget)
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.setSpacing(10)  
+
+            edit_button = QtWidgets.QPushButton('Edit')
+            edit_button.clicked.connect(lambda checked, row=row_number: self.update_customer(row))
+            layout.addWidget(edit_button)
+
+            delete_button = QtWidgets.QPushButton('Delete')
+            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
+            layout.addWidget(delete_button)
+
+            cell_widget = QtWidgets.QWidget()
+            cell_widget.setLayout(layout)
+            self.tableWidget.setCellWidget(row_number, 11, cell_widget)
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
@@ -435,10 +482,11 @@ class Ui_PurchaseView(object):
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout_4.addWidget(self.SearchFrame)
         self.tableWidget = QtWidgets.QTableWidget(self.DataFrame)
+        self.tableWidget.verticalHeader().setVisible(False)
         font = QtGui.QFont()
         font.setPointSize(10)
         self.tableWidget.setFont(font)
-        self.tableWidget.setColumnCount(9)
+        self.tableWidget.setColumnCount(11)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
@@ -540,11 +588,36 @@ class Ui_PurchaseView(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         item.setForeground(brush)
         self.tableWidget.setHorizontalHeaderItem(8, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        brush = QtGui.QBrush(QtGui.QColor(71, 71, 71))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        item.setForeground(brush)
+        self.tableWidget.setHorizontalHeaderItem(9, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        brush = QtGui.QBrush(QtGui.QColor(71, 71, 71))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        item.setForeground(brush)
+        self.tableWidget.setHorizontalHeaderItem(10, item)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.verticalLayout_4.addWidget(self.tableWidget)
         self.verticalLayout_2.addWidget(self.DataFrame)
         self.verticalLayout.addWidget(self.TableContainer)
         PurchaseView.setCentralWidget(self.centralwidget)
+
+        purchases = self.fetch_purchases()
+        self.display_purchases(purchases)
 
         self.retranslateUi(PurchaseView)
         QtCore.QMetaObject.connectSlotsByName(PurchaseView)
@@ -565,22 +638,26 @@ class Ui_PurchaseView(object):
         self.AddProduct.setText(_translate("PurchaseView", "View Suppliers"))
         self.Search.setText(_translate("PurchaseView", "Search"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("PurchaseView", "Supplier ID"))
+        item.setText(_translate("PurchaseView", "Product ID"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("PurchaseView", "Supplier Name"))
+        item.setText(_translate("PurchaseView", "Supplier ID"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("PurchaseView", "Quantity"))
+        item.setText(_translate("PurchaseView", "Supplier Name"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("PurchaseView", "Thickness"))
+        item.setText(_translate("PurchaseView", "Product Name"))
         item = self.tableWidget.horizontalHeaderItem(4)
-        item.setText(_translate("PurchaseView", "Roll Size"))
+        item.setText(_translate("PurchaseView", "Total Cost"))
         item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("PurchaseView", "Date Ordered"))
+        item.setText(_translate("PurchaseView", "Quantity"))
         item = self.tableWidget.horizontalHeaderItem(6)
-        item.setText(_translate("PurchaseView", "Date Received"))
+        item.setText(_translate("PurchaseView", "Order Date"))
         item = self.tableWidget.horizontalHeaderItem(7)
-        item.setText(_translate("PurchaseView", "Amount"))
+        item.setText(_translate("PurchaseView", "Thickness"))
         item = self.tableWidget.horizontalHeaderItem(8)
+        item.setText(_translate("PurchaseView", "Roll Size"))
+        item = self.tableWidget.horizontalHeaderItem(9)
+        item.setText(_translate("PurchaseView", "Status"))
+        item = self.tableWidget.horizontalHeaderItem(10)
         item.setText(_translate("PurchaseView", "Action"))
 import font_rc
 import images_rc
