@@ -6,7 +6,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import psycopg2
 
 class Ui_AddProduct(QDialog):
-    def __init__(self):
+    def __init__(self, dialog):
         super().__init__()
         self.setupUi(self)
         self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", 
@@ -16,6 +16,7 @@ class Ui_AddProduct(QDialog):
                                      port=6543)
         self.cur = self.conn.cursor()
         self.image_data = None
+        self.dialog = dialog
 
     def add_new_product(self):
         product_name = self.lineEdit.text()
@@ -80,18 +81,12 @@ class Ui_AddProduct(QDialog):
             try:
                 self.cur.execute(sql, (product_name, price, quantity, category, thickness, roll_size, self.image_data))
                 self.conn.commit()
-                print("Product added successfully!")
-
-                self.lineEdit.clear()
-                self.priceLineEdit.clear()
-                self.quantityLineEdit.clear()
-                self.thickness_lineEdit.clear()
-                self.rollsize_input_width.clear()
-                self.rollsize_input_length.clear()
-                self.image_label.clear()
+                self.show_message("Success", "Data saved successfully.")
+                self.dialog.accept()
             except psycopg2.Error as e:
-                print(f"Error inserting product: {e}")
-                self.conn.rollback()
+                self.conn.rollback()  # Roll back transaction on error
+                error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
+                self.show_message("Error", error_message)
 
     def add_new_image(self):
         options = QFileDialog.Options()
@@ -103,6 +98,14 @@ class Ui_AddProduct(QDialog):
 
             with open(file_name, "rb") as image_file:
                 self.image_data = image_file.read()
+
+    def show_message(self, title, message):
+        msg = QMessageBox()
+        msg.setWindowTitle(title)
+        msg.setText(message)
+        msg.setIcon(QMessageBox.Information)
+        msg.exec_()
+
     
     def load_categories(self):
         try:
@@ -110,8 +113,10 @@ class Ui_AddProduct(QDialog):
             categories = [row[0] for row in self.cur.fetchall()]
             self.set_categories(categories)
         except psycopg2.Error as e:
-            print(f"Error loading categories: {e}")
-
+            self.conn.rollback()  # Roll back transaction on error
+            error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
+            self.show_message("Error", error_message)
+            
     def set_categories(self, categories):
         self.comboBox.clear()
         self.comboBox.addItems(categories)            
@@ -357,7 +362,7 @@ class Ui_AddProduct(QDialog):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     AddProduct = QDialog()
-    ui = Ui_AddProduct()
+    ui = Ui_AddProduct(AddProduct)
     ui.setupUi(AddProduct)
     AddProduct.show()
     sys.exit(app.exec_())
