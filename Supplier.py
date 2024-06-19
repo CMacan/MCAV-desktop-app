@@ -11,8 +11,53 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from clickable import ClickableLabel 
 from PyQt5.QtCore import Qt
+import psycopg2
 
 class Ui_Supplier(object):
+
+    def __init__(self):
+        # PostgreSQL connection
+        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
+                                     password="Milliondollarbaby123", port=6543)
+        self.cur = self.conn.cursor()
+
+    def fetch_suppliers(self):
+        try:
+            sql = """
+            SELECT SUP_NAME, SUP_ID, SUPPLIER_EMAIL, SUP_CONTACT, SUP_COUNTRY, SUP_ADDRESS
+            FROM SUPPLIER
+            """
+            self.cur.execute(sql)
+            return self.cur.fetchall()
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching data from database: {e}")
+            return []
+
+    def display_suppliers(self, suppliers):
+        self.tableWidget.setRowCount(len(suppliers))
+        for row_number, customer in enumerate(suppliers):
+            for column_number, data in enumerate(customer):
+                item = QtWidgets.QTableWidgetItem()
+                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                item.setText(str(data))
+                self.tableWidget.setItem(row_number, column_number, item)
+
+            button_widget = QtWidgets.QWidget()
+            layout = QtWidgets.QHBoxLayout(button_widget)
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.setSpacing(10)  
+
+            edit_button = QtWidgets.QPushButton('Edit')
+            edit_button.clicked.connect(lambda checked, row=row_number: self.update_customer(row))
+            layout.addWidget(edit_button)
+
+            delete_button = QtWidgets.QPushButton('Delete')
+            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
+            layout.addWidget(delete_button)
+
+            cell_widget = QtWidgets.QWidget()
+            cell_widget.setLayout(layout)
+            self.tableWidget.setCellWidget(row_number, 6, cell_widget)
     
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
@@ -535,6 +580,9 @@ class Ui_Supplier(object):
         self.verticalLayout_2.addWidget(self.DataFrame)
         self.verticalLayout.addWidget(self.TableContainer)
         Supplier.setCentralWidget(self.centralwidget)
+
+        suppliers = self.fetch_suppliers()
+        self.display_suppliers(suppliers)
 
         self.retranslateUi(Supplier)
         QtCore.QMetaObject.connectSlotsByName(Supplier)
