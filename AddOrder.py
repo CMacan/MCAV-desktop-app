@@ -23,18 +23,19 @@ class Ui_AddOder(object):
     def save_data(self):
         # Get data from UI elements
         cus_fname = self.lineEdit.text().strip()
-        cus_lname = self.lineEdit_5.text().strip()
-        cus_email = self.lineEdit_2.text().strip()
-        cus_phone = self.lineEdit_3.text().strip()
-        cus_address = self.lineEdit_14.text().strip()
+        cus_lname = self.LnamelineEdit.text().strip()
+        cus_email = self.emailLineEdit.text().strip()
+        cus_phone = self.phonelineEdit.text().strip()
+        cus_address = self.AddressLineEdit.text().strip()
         order_date = date.today()
-        due_date = self.lineEdit_13.text().strip()
-        product_name = self.comboBox.currentText().strip()
-        quantity = self.lineEdit_11.text().strip()
-        total_amount = self.lineEdit_15.text().strip()
+        due_date = self.DueLineEdit.text().strip()
+        product_category = self.comboBox.currentText().strip()
+        product_name = self.prodNameLineEdit.text().strip()
+        quantity = self.QuantityLineEdit.text().strip()
+        total_amount = self.TotalLineEdit.text().strip()
 
         # Validate input data
-        if not (cus_fname and cus_lname and cus_email and cus_phone and cus_address and due_date and product_name and quantity and total_amount):
+        if not (cus_fname and cus_lname and cus_email and cus_phone and cus_address and due_date and product_category and product_name and quantity and total_amount):
             self.show_message("Error", "Please fill all the fields.")
             return
 
@@ -53,14 +54,14 @@ class Ui_AddOder(object):
             # Insert into CUSTOMER table
             sql_customer = """
             INSERT INTO CUSTOMER (CUS_FNAME, CUS_LNAME, CUS_EMAIL, CUS_PHONE, CUS_ADDRESS) 
-            VALUES (%s, %s, %s, %s, %s) RETURNING CUS_ID
+            VALUES (%s, %s, %s, %s, %s) RETURNING CUS_CODE
             """
             self.cur.execute(sql_customer, (cus_fname, cus_lname, cus_email, cus_phone, cus_address))
             customer_id = self.cur.fetchone()[0]  # Get the newly inserted customer ID
 
             # Insert into ORDERS table
             sql_orders = """
-            INSERT INTO ORDERS (CUS_ID, ORDER_DATE, DUE_DATE, PROD_ID, QUANTITY, TOTAL_AMOUNT) 
+            INSERT INTO ORDERS (CUS_CODE, ORD_DATE, ORD_DATE_COMPLETION, PROD_ID, ORD_QUANTITY, ORD_TOTAL_AMOUNT) 
             VALUES (%s, %s, %s, %s, %s, %s)
             """
             self.cur.execute(sql_orders, (customer_id, order_date, due_date, product_id, quantity, total_amount))
@@ -89,22 +90,22 @@ class Ui_AddOder(object):
         self.frame.setEnabled(True)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("QFrame{\n"
-"    background-color: rgb(255, 255, 255);\n"
-"}\n"
-"QLabel#AddOrder{\n"
-"    font-size: 25px;\n"
-"}\n"
-"QLineEdit{\n"
-"    width: 200px;\n"
-"}\n"
-"QPushButton#Cancel{    \n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: #202020;\n"
-"}\n"
-"QPushButton{    \n"
-"    color: rgb(255, 255, 255);\n"
-"    background-color: #CD2E2E;\n"
-"}")
+                                "    background-color: rgb(255, 255, 255);\n"
+                                "}\n"
+                                "QLabel#AddOrder{\n"
+                                "    font-size: 25px;\n"
+                                "}\n"
+                                "QLineEdit{\n"
+                                "    width: 200px;\n"
+                                "}\n"
+                                "QPushButton#Cancel{    \n"
+                                "    color: rgb(255, 255, 255);\n"
+                                "    background-color: #202020;\n"
+                                "}\n"
+                                "QPushButton{    \n"
+                                "    color: rgb(255, 255, 255);\n"
+                                "    background-color: #CD2E2E;\n"
+                                "}")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -118,7 +119,6 @@ class Ui_AddOder(object):
         self.Cancel.setObjectName("Cancel")
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
         self.AddOrder_3.clicked.connect(self.save_data)
-        self.AddOrder_3.clicked.connect(AddOder.close)
         self.AddOrder_3.setGeometry(QtCore.QRect(470, 420, 91, 31))
         self.AddOrder_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.AddOrder_3.setObjectName("AddOrder_3")
@@ -128,62 +128,7 @@ class Ui_AddOder(object):
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.frame_2.setLineWidth(1)
         self.frame_2.setObjectName("frame_2")
-        self.lineEdit_14 = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit_14.setGeometry(QtCore.QRect(30, 230, 113, 20))
-        self.lineEdit_14.setObjectName("lineEdit_14")
-        self.label_14 = QtWidgets.QLabel(self.frame_2)
-        self.label_14.setGeometry(QtCore.QRect(30, 210, 76, 16))
-        self.label_14.setObjectName("label_14")
-        self.lineEdit_4 = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit_4.setEnabled(False)
-        self.lineEdit_4.setGeometry(QtCore.QRect(30, 280, 113, 20))
-        self.lineEdit_4.setObjectName("lineEdit_4")
-        self.label_4 = QtWidgets.QLabel(self.frame_2)
-        self.label_4.setGeometry(QtCore.QRect(30, 260, 76, 16))
-        self.label_4.setObjectName("label_4")
-        self.lineEdit_10 = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit_10.setGeometry(QtCore.QRect(330, 280, 41, 20))
-        self.lineEdit_10.setObjectName("lineEdit_10")
-        self.label_11 = QtWidgets.QLabel(self.frame_2)
-        self.label_11.setGeometry(QtCore.QRect(330, 260, 47, 14))
-        self.label_11.setObjectName("label_11")
-        self.lineEdit_11 = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit_11.setGeometry(QtCore.QRect(330, 230, 113, 20))
-        self.lineEdit_11.setObjectName("lineEdit_11")
-        self.label_12 = QtWidgets.QLabel(self.frame_2)
-        self.label_12.setGeometry(QtCore.QRect(330, 210, 47, 14))
-        self.label_12.setObjectName("label_12")
-        self.label_13 = QtWidgets.QLabel(self.frame_2)
-        self.label_13.setGeometry(QtCore.QRect(330, 110, 81, 16))
-        self.label_13.setObjectName("label_13")
-        self.label_10 = QtWidgets.QLabel(self.frame_2)
-        self.label_10.setGeometry(QtCore.QRect(330, 60, 47, 14))
-        self.label_10.setObjectName("label_10")
-        self.lineEdit_13 = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit_13.setGeometry(QtCore.QRect(330, 80, 113, 20))
-        self.lineEdit_13.setObjectName("lineEdit_13")
-        self.comboBox = QtWidgets.QComboBox(self.frame_2)
-        self.comboBox.setGeometry(QtCore.QRect(330, 130, 151, 22))
-        self.comboBox.setObjectName("comboBox")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.lineEdit_m = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit_m.setGeometry(QtCore.QRect(330, 180, 151, 22))
-        self.lineEdit_m.setObjectName("lineEdit_m")
-        self.label_15 = QtWidgets.QLabel(self.frame_2)
-        self.label_15.setGeometry(QtCore.QRect(330, 160, 81, 16))
-        self.label_15.setObjectName("label_15")
-        self.lineEdit_3 = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit_3.setGeometry(QtCore.QRect(30, 180, 113, 20))
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.label_3 = QtWidgets.QLabel(self.frame_2)
-        self.label_3.setGeometry(QtCore.QRect(30, 160, 81, 16))
-        self.label_3.setObjectName("label_3")
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit_2.setGeometry(QtCore.QRect(30, 130, 113, 20))
-        self.lineEdit_2.setObjectName("lineEdit_2")
+
         self.lineEdit = QtWidgets.QLineEdit(self.frame_2)
         self.lineEdit.setGeometry(QtCore.QRect(30, 30, 111, 20))
         self.lineEdit.setMaxLength(300)
@@ -191,33 +136,94 @@ class Ui_AddOder(object):
         self.label = QtWidgets.QLabel(self.frame_2)
         self.label.setGeometry(QtCore.QRect(30, 10, 101, 16))
         self.label.setObjectName("label")
-        self.lineEdit_5 = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit_5.setGeometry(QtCore.QRect(30, 80, 111, 20))
-        self.lineEdit_5.setMaxLength(300)
-        self.lineEdit_5.setObjectName("lineEdit_5")
+
+        self.LnamelineEdit = QtWidgets.QLineEdit(self.frame_2)
+        self.LnamelineEdit.setGeometry(QtCore.QRect(30, 80, 111, 20))
+        self.LnamelineEdit.setMaxLength(300)
+        self.LnamelineEdit.setObjectName("LnamelineEdit")
         self.label_5 = QtWidgets.QLabel(self.frame_2)
         self.label_5.setGeometry(QtCore.QRect(30, 60, 101, 16))
         self.label_5.setObjectName("label_5")
+
+        self.emailLineEdit = QtWidgets.QLineEdit(self.frame_2)
+        self.emailLineEdit.setGeometry(QtCore.QRect(30, 130, 113, 20))
+        self.emailLineEdit.setObjectName("emailLineEdit")
         self.label_2 = QtWidgets.QLabel(self.frame_2)
         self.label_2.setGeometry(QtCore.QRect(30, 110, 76, 16))
         self.label_2.setObjectName("label_2")
+
+        self.phonelineEdit = QtWidgets.QLineEdit(self.frame_2)
+        self.phonelineEdit.setGeometry(QtCore.QRect(30, 180, 113, 20))
+        self.phonelineEdit.setObjectName("phonelineEdit")
+        self.label_3 = QtWidgets.QLabel(self.frame_2)
+        self.label_3.setGeometry(QtCore.QRect(30, 160, 81, 16))
+        self.label_3.setObjectName("label_3")
+
+        self.AddressLineEdit = QtWidgets.QLineEdit(self.frame_2)
+        self.AddressLineEdit.setGeometry(QtCore.QRect(30, 230, 113, 20))
+        self.AddressLineEdit.setObjectName("AddressLineEdit")
+        self.label_14 = QtWidgets.QLabel(self.frame_2)
+        self.label_14.setGeometry(QtCore.QRect(30, 210, 76, 16))
+        self.label_14.setObjectName("label_14")
+
+        self.lineEdit_4 = QtWidgets.QLineEdit(self.frame_2)
+        self.lineEdit_4.setEnabled(False)
+        self.lineEdit_4.setGeometry(QtCore.QRect(30, 280, 113, 20))
+        self.lineEdit_4.setObjectName("lineEdit_4")
+        self.label_4 = QtWidgets.QLabel(self.frame_2)
+        self.label_4.setGeometry(QtCore.QRect(30, 260, 76, 16))
+        self.label_4.setObjectName("label_4")
+
+        self.TotalLineEdit = QtWidgets.QLineEdit(self.frame_2)
+        self.TotalLineEdit.setGeometry(QtCore.QRect(30, 330, 113, 20))
+        self.TotalLineEdit.setObjectName("TotalLineEdit")
         self.label_6 = QtWidgets.QLabel(self.frame_2)
         self.label_6.setGeometry(QtCore.QRect(30, 310, 76, 16))
         self.label_6.setObjectName("label_6")
-        self.lineEdit_15 = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit_15.setGeometry(QtCore.QRect(30, 330, 113, 20))
-        self.lineEdit_15.setObjectName("lineEdit_15")
+
+        self.DueLineEdit = QtWidgets.QLineEdit(self.frame_2)
+        self.DueLineEdit.setGeometry(QtCore.QRect(330, 80, 113, 20))
+        self.DueLineEdit.setObjectName("DueLineEdit")
+        self.label_10 = QtWidgets.QLabel(self.frame_2)
+        self.label_10.setGeometry(QtCore.QRect(330, 60, 47, 14))
+        self.label_10.setObjectName("label_10")
+
+        self.comboBox = QtWidgets.QComboBox(self.frame_2)
+        self.comboBox.setGeometry(QtCore.QRect(330, 130, 151, 22))
+        self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.label_13 = QtWidgets.QLabel(self.frame_2)
+        self.label_13.setGeometry(QtCore.QRect(330, 110, 81, 16))
+        self.label_13.setObjectName("label_13")
+
+        self.prodNameLineEdit = QtWidgets.QLineEdit(self.frame_2)
+        self.prodNameLineEdit.setGeometry(QtCore.QRect(330, 180, 151, 22))
+        self.prodNameLineEdit.setObjectName("prodNameLineEdit")
+        self.label_15 = QtWidgets.QLabel(self.frame_2)
+        self.label_15.setGeometry(QtCore.QRect(330, 160, 81, 16))
+        self.label_15.setObjectName("label_15")
+
+        self.QuantityLineEdit = QtWidgets.QLineEdit(self.frame_2)
+        self.QuantityLineEdit.setGeometry(QtCore.QRect(330, 230, 113, 20))
+        self.QuantityLineEdit.setObjectName("QuantityLineEdit")
+        self.label_12 = QtWidgets.QLabel(self.frame_2)
+        self.label_12.setGeometry(QtCore.QRect(330, 210, 47, 14))
+        self.label_12.setObjectName("label_12")
+
+        self.lineEdit_10 = QtWidgets.QLineEdit(self.frame_2)
+        self.lineEdit_10.setGeometry(QtCore.QRect(330, 280, 41, 20))
+        self.lineEdit_10.setObjectName("lineEdit_10")
+        self.label_11 = QtWidgets.QLabel(self.frame_2)
+        self.label_11.setGeometry(QtCore.QRect(330, 260, 47, 14))
+        self.label_11.setObjectName("label_11")
+
         self.lineEdit_12 = QtWidgets.QLineEdit(self.frame_2)
         self.lineEdit_12.setGeometry(QtCore.QRect(400, 280, 41, 20))
         self.lineEdit_12.setObjectName("lineEdit_12")
-        self.textEdit = QtWidgets.QTextEdit(self.frame_2)
-        self.textEdit.setEnabled(True)
-        self.textEdit.setGeometry(QtCore.QRect(378, 280, 21, 41))
-        self.textEdit.setAcceptDrops(False)
-        self.textEdit.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.textEdit.setAcceptRichText(False)
-        self.textEdit.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-        self.textEdit.setObjectName("textEdit")
+        
         self.comboBox_3 = QtWidgets.QComboBox(self.frame_2)
         self.comboBox_3.setGeometry(QtCore.QRect(450, 280, 61, 22))
         self.comboBox_3.setObjectName("comboBox_3")
@@ -226,37 +232,31 @@ class Ui_AddOder(object):
         self.comboBox_3.addItem("")
         self.comboBox_3.addItem("")
         self.comboBox_3.addItem("")
-        self.textEdit.raise_()
-        self.lineEdit_14.raise_()
-        self.label_14.raise_()
-        self.lineEdit_4.raise_()
-        self.label_4.raise_()
-        self.lineEdit_10.raise_()
-        self.label_11.raise_()
-        self.lineEdit_11.raise_()
-        self.label_12.raise_()
-        self.label_13.raise_()
-        self.label_10.raise_()
-        self.lineEdit_13.raise_()
-        self.comboBox.raise_()
-        self.lineEdit_m.raise_()
-        self.label_15.raise_()
-        self.lineEdit_3.raise_()
-        self.label_3.raise_()
-        self.lineEdit_2.raise_()
-        self.lineEdit.raise_()
-        self.label.raise_()
-        self.lineEdit_5.raise_()
-        self.label_5.raise_()
-        self.label_2.raise_()
-        self.label_6.raise_()
-        self.lineEdit_15.raise_()
-        self.lineEdit_12.raise_()
-        self.comboBox_3.raise_()
-        self.frame_2.raise_()
-        self.AddOrder.raise_()
-        self.Cancel.raise_()
-        self.AddOrder_3.raise_()
+
+        self.textEdit = QtWidgets.QTextEdit(self.frame_2)
+        self.textEdit.setEnabled(True)
+        self.textEdit.setGeometry(QtCore.QRect(378, 280, 21, 41))
+        self.textEdit.setAcceptDrops(False)
+        self.textEdit.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.textEdit.setAcceptRichText(False)
+        self.textEdit.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+        self.textEdit.setObjectName("textEdit")
+        
+        AddOder.setTabOrder(self.lineEdit, self.LnamelineEdit)
+        AddOder.setTabOrder(self.LnamelineEdit, self.emailLineEdit)
+        AddOder.setTabOrder(self.emailLineEdit, self.phonelineEdit)
+        AddOder.setTabOrder(self.phonelineEdit, self.AddressLineEdit)
+        AddOder.setTabOrder(self.AddressLineEdit, self.lineEdit_4)
+        AddOder.setTabOrder(self.lineEdit_4, self.TotalLineEdit)
+        AddOder.setTabOrder(self.TotalLineEdit, self.DueLineEdit)
+        AddOder.setTabOrder(self.DueLineEdit, self.comboBox)
+        AddOder.setTabOrder(self.comboBox, self.prodNameLineEdit)
+        AddOder.setTabOrder(self.prodNameLineEdit, self.QuantityLineEdit)
+        AddOder.setTabOrder(self.QuantityLineEdit, self.lineEdit_10)
+        AddOder.setTabOrder(self.lineEdit_10, self.lineEdit_12)
+        AddOder.setTabOrder(self.lineEdit_12, self.comboBox_3)
+        AddOder.setTabOrder(self.comboBox_3, self.AddOrder_3)
+        AddOder.setTabOrder(self.AddOrder_3, self.Cancel)
 
         self.retranslateUi(AddOder)
         QtCore.QMetaObject.connectSlotsByName(AddOder)
@@ -284,16 +284,15 @@ class Ui_AddOder(object):
         self.label_2.setText(_translate("AddOder", "Email Address"))
         self.label_6.setText(_translate("AddOder", "Total Amount"))
         self.textEdit.setHtml(_translate("AddOder", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">X</span></p></body></html>"))
+                                                "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                                "p, li { white-space: pre-wrap; }\n"
+                                                "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+                                                "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">X</span></p></body></html>"))
         self.comboBox_3.setItemText(0, _translate("AddOder", "ft"))
         self.comboBox_3.setItemText(1, _translate("AddOder", "inches"))
         self.comboBox_3.setItemText(2, _translate("AddOder", "small"))
         self.comboBox_3.setItemText(3, _translate("AddOder", "medium"))
         self.comboBox_3.setItemText(4, _translate("AddOder", "large"))
-
 
 if __name__ == "__main__":
     import sys
