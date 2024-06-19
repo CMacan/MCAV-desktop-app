@@ -20,6 +20,9 @@ class Ui_PurchaseView(object):
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()   
     
+    def search(self):
+        pass
+
     def view_supplier(self):
         from Supplier import Ui_Supplier
         self.window2 = QtWidgets.QMainWindow()
@@ -311,7 +314,6 @@ class Ui_PurchaseView(object):
         self.horizontalLayout_3.addItem(spacerItem)
         self.AddProduct_2 = QtWidgets.QPushButton(self.BtnContainer)
         self.AddProduct_2.clicked.connect(self.add_purchase)
-        self.AddProduct_2.clicked.connect(PurchaseView.close)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

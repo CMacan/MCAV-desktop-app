@@ -109,6 +109,9 @@ class Ui_Customer_2(object):
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
+
+    def search(self):
+        pass
     
     def profile(self):
         from Profile import Ui_Profile_2

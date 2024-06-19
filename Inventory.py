@@ -12,7 +12,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QDialog
 from clickable import ClickableLabel 
 import psycopg2
-from UpdateProduct import Ui_UpdateProduct 
 
 class Ui_Inventory_2(object):
 
@@ -44,9 +43,6 @@ class Ui_Inventory_2(object):
 
     def display_products(self, products):
         self.tableWidget.setRowCount(len(products))
-        self.tableWidget.setColumnCount(10)  # Adjust according to your columns
-        self.tableWidget.setHorizontalHeaderLabels(['ID', 'Image', 'Name', 'Category', 'Price', 'Quantity', 'Thickness', 'Roll Size', 'Last Updated', 'Actions'])
-
         for row_number, product in enumerate(products):
             for column_number, data in enumerate(product):
                 item = QtWidgets.QTableWidgetItem()
@@ -104,9 +100,11 @@ class Ui_Inventory_2(object):
             QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
 
     def update_product(self, row):
+        from UpdateProduct import Ui_UpdateProduct 
         # Get data from the selected row
         product_data = []
-        for column_number in range(self.tableWidget.columnCount() - 1):  # Exclude the last column (Actions)
+        # for column_number in range(self.tableWidget.columnCount() - 1):  # Exclude the last column (Actions)
+        for column_number in range(10):    
             item = self.tableWidget.item(row, column_number)
             if item is not None:
                 product_data.append(item.text())
@@ -117,9 +115,16 @@ class Ui_Inventory_2(object):
         self.dialog = QDialog()
         self.update_product_ui = Ui_UpdateProduct()
         self.update_product_ui.setupUi(self.dialog)
-        self.update_product_ui.populate_data(product_data)
+
+        # Populate the QLineEdit fields with data from the database
+        self.update_product_ui.lineEdit.setText(product_data[2])  # First Name
+        self.update_product_ui.lineEdit_2.setText(product_data[4])  # Last Name
+        self.update_product_ui.lineEdit_3.setText(product_data[5])  # Phone #
+        self.update_product_ui.lineEdit_4.setText(product_data[7])  # Address
+        self.update_product_ui.lineEdit_14.setText(product_data[6])  # Email Address
 
         self.dialog.exec_()
+
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
@@ -127,6 +132,9 @@ class Ui_Inventory_2(object):
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
+
+    def search(self):
+        pass
 
     def add_product(self):
         from AddProduct import Ui_AddProduct
@@ -177,7 +185,7 @@ class Ui_Inventory_2(object):
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
 
-    def setupUi(self, Inventory_2):
+    def setupUi(self, Inventory_2): 
         Inventory_2.setObjectName("Inventory_2")
         Inventory_2.resize(975, 495)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -197,6 +205,9 @@ class Ui_Inventory_2(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.NavbarFrame.sizePolicy().hasHeightForWidth())
         self.NavbarFrame.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.NavbarFrame.setFont(font)
         self.NavbarFrame.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.NavbarFrame.setStyleSheet("QPushButton {\n"
 "    min-width: 100px; \n"
