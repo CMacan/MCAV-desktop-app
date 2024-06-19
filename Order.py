@@ -666,7 +666,7 @@ class Ui_Order_2(object):
         self.AddProduct.setText(_translate("Order_2", "Add New Order"))
         self.Search.setText(_translate("Order_2", "Search"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("Order_2", "Product/Service"))
+        item.setText(_translate("Order_2", "Type of Product"))
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("Order_2", "Category"))
         item = self.tableWidget.horizontalHeaderItem(2)
