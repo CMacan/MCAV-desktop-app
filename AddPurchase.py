@@ -104,14 +104,6 @@ class Ui_AddPurchase(object):
         msg.setIcon(QMessageBox.Information)
         msg.exec_()
 
-
-    def add_puchase(self):
-        from PurchaseView import Ui_PurchaseView
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_PurchaseView()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
-
     def setupUi(self, AddPurchase):
         AddPurchase.setObjectName("AddPurchase")
         AddPurchase.resize(640, 480)

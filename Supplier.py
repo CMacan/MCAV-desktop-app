@@ -299,6 +299,8 @@ class Ui_Supplier(object):
         self.manageLabel.setObjectName("manageLabel")
         self.verticalLayout_3.addWidget(self.manageLabel)
         self.horizontalLayout_4.addWidget(self.ProductList)
+
+
         self.BtnContainer = QtWidgets.QFrame(self.Label)
         font = QtGui.QFont()
         font.setPointSize(10)
