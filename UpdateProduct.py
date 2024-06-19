@@ -12,8 +12,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import  pyqtSignal, QObject
 import psycopg2
 
-class Ui_UpdateProduct(object):
-    product_info_updated = pyqtSignal(str, str, str, str, str)  # Define a signal with updated customer information
+class Ui_UpdateProduct(QObject):
+    product_info_updated = pyqtSignal(str, str, str, str, str)  # Define a signal with updated product information
 
     def inventory(self):
         from Inventory import Ui_Inventory_2
@@ -38,7 +38,7 @@ class Ui_UpdateProduct(object):
                                         password="Milliondollarbaby123", port=6543)
                 cur = conn.cursor()
 
-                # Update the customer information in the database
+                # Update the product information in the database
                 sql = """
                 UPDATE PRODUCT
                 SET PROD_NAME = %s, PROD_PRICE = %s, PROD_QUANTITY = %s, PROD_ROLL_SIZE = %s, PROD_THICKNESS = %s
@@ -52,12 +52,13 @@ class Ui_UpdateProduct(object):
 
                 print("Product information updated successfully!")
 
+                # Emit the signal with updated information
+                self.product_info_updated.emit(new_prod_name, new_prod_price, new_prod_quantity, new_prod_rollSize, new_prod_thickness)
+
             except psycopg2.Error as e:
                 print(f"Error updating product information: {e}")
         else:
-            print("No changes made. Retaining current customer information.")
-
-        self.update_product_info.emit(new_prod_name, new_prod_price, new_prod_quantity, new_prod_rollSize, new_prod_thickness)
+            print("No changes made. Retaining current product information.")
 
     def setupUi(self, UpdateProduct):
         UpdateProduct.setObjectName("UpdateProduct")
