@@ -169,6 +169,9 @@ class Ui_AddProduct(QDialog):
     def setupUi(self, AddProduct):
         AddProduct.setObjectName("AddProduct")
         AddProduct.resize(640, 480)
+        AddProduct.setFixedSize(640, 480)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        AddProduct.setSizePolicy(sizePolicy)
         self.frame = QtWidgets.QFrame(AddProduct)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("QFrame{\n"

@@ -117,11 +117,11 @@ class Ui_Inventory_2(object):
         self.update_product_ui.setupUi(self.dialog)
 
         # Populate the QLineEdit fields with data from the database
-        self.update_product_ui.lineEdit.setText(product_data[2])  # First Name
-        self.update_product_ui.lineEdit_2.setText(product_data[4])  # Last Name
-        self.update_product_ui.lineEdit_3.setText(product_data[5])  # Phone #
-        self.update_product_ui.lineEdit_4.setText(product_data[7])  # Address
-        self.update_product_ui.lineEdit_14.setText(product_data[6])  # Email Address
+        self.update_product_ui.lineEdit.setText(product_data[2]) 
+        self.update_product_ui.lineEdit_2.setText(product_data[4]) 
+        self.update_product_ui.lineEdit_3.setText(product_data[5]) 
+        self.update_product_ui.lineEdit_4.setText(product_data[7])  
+        self.update_product_ui.lineEdit_14.setText(product_data[6])
 
         self.dialog.exec_()
 

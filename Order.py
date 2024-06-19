@@ -21,14 +21,17 @@ class Ui_Order_2(object):
                                      password="Milliondollarbaby123", port=6543)
         self.cur = self.conn.cursor()
 
-    def fetch_orders(self):
+
+    def fetch_orders_with_details(self):
         try:
-            sql = """
-            SELECT ORD_ID, ORD_TYPE_PRODUCT, ORD_CATEGORY, ORD_SIZE, ORD_QUANTITY, ORD_DATE,
-            ORD_DATE_COMPLETION, ORD_TOTAL_AMOUNT
+            query = """
+            SELECT ORDERS.ORD_ID, CUSTOMER.CUS_CODE, PRODUCT.PROD_CATEGORY, PRODUCT.PROD_NAME, ORDERS.ORD_SIZE, 
+                ORDERS.ORD_QUANTITY, ORDERS.ORD_TOTAL_AMOUNT, ORDERS.ORD_DATE, ORDERS.ORD_DATE_COMPLETION
             FROM ORDERS
+            JOIN CUSTOMER ON ORDERS.CUS_CODE = CUSTOMER.CUS_CODE
+            JOIN PRODUCT ON ORDERS.PROD_ID = PRODUCT.PROD_ID
             """
-            self.cur.execute(sql)
+            self.cur.execute(query)
             return self.cur.fetchall()
         except psycopg2.Error as e:
             self.show_message("Database Error", f"Error fetching data from database: {e}")
@@ -43,8 +46,14 @@ class Ui_Order_2(object):
 
     def display_orders(self, orders):
         self.tableWidget.setRowCount(len(orders))
+        self.tableWidget.setRowCount(len(orders))
+        self.tableWidget.setColumnCount(11)  # Ensure you have the correct number of columns
+        headers = ['Ord_ID', 'Cus_Code', 'Prod_Category', 'Prod_Name', 'Ord_Size', 'Ord_Quantity', 
+                   'Ord_total_Amount', 'Ord_date', 'Ord_Date_Completion', 'Status', 'Actions']
+        self.tableWidget.setHorizontalHeaderLabels(headers)
+        
         for row_number, order in enumerate(orders):
-            for column_number, data in enumerate(order): 
+            for column_number, data in enumerate(order):
                 item = QtWidgets.QTableWidgetItem()
                 item.setTextAlignment(QtCore.Qt.AlignCenter)
                 item.setText(str(data))
@@ -55,6 +64,10 @@ class Ui_Order_2(object):
             layout = QtWidgets.QHBoxLayout(button_widget)
             layout.setContentsMargins(0, 0, 0, 0)
             layout.setSpacing(10)  # Adjust spacing between buttons if needed
+
+            status_button = QtWidgets.QPushButton('Ongoing')
+            status_button.clicked.connect(lambda checked, row=row_number: self.status_order(row))
+            layout.addWidget(status_button)
 
             edit_button = QtWidgets.QPushButton('Edit')
             edit_button.clicked.connect(lambda checked, row=row_number: self.update_order(row))
@@ -67,18 +80,21 @@ class Ui_Order_2(object):
             # Set the widget containing the buttons into the table cell
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
-            self.tableWidget.setCellWidget(row_number, 5, cell_widget)
+            self.tableWidget.setCellWidget(row_number, len(order), cell_widget)  # Place in the last column
+
+    def status_order(self, row):
+        pass
 
     def delete_order(self, row):
         # Implement delete logic here
         order_id = self.tableWidget.item(row, 0).text()
         try:
-            sql = 'DELETE FROM "ORDERS" WHERE ORD_ID = %s'
+            sql = 'DELETE FROM ORDERS WHERE ORD_ID = %s'
             self.cur.execute(sql, (order_id,))
             self.conn.commit()
             QtWidgets.QMessageBox.information(None, 'Success', 'Product deleted successfully!')
             # Refresh table after deletion
-            orders = self.fetch_orders()
+            orders = self.fetch_orders_with_details()
             self.display_orders(orders)
         except psycopg2.Error as e:
             QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
@@ -87,7 +103,7 @@ class Ui_Order_2(object):
         from UpdateOrder import Ui_UpdateOrder
         # Get data from the selected row
         order_data = []
-        for column_number in range(10):
+        for column_number in range(11):
             item = self.tableWidget.item(row, column_number)
             if item is not None:
                 order_data.append(item.text())
@@ -121,9 +137,9 @@ class Ui_Order_2(object):
         pass
     
     def add_new_order(self):
-        from AddOrder  import Ui_AddOder
+        from AddOrder  import Ui_AddOrder
         self.window2 = QtWidgets.QDialog()
-        self.ui = Ui_AddOder()
+        self.ui = Ui_AddOrder()
         self.ui.setupUi(self.window2)
         # self.window2.show()
         self.window2.setModal(True)  # Ensure the dialog is modal
@@ -626,6 +642,17 @@ class Ui_Order_2(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         item.setForeground(brush)
         self.tableWidget.setColumnCount(10)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift SemiBold")
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        brush = QtGui.QBrush(QtGui.QColor(71, 71, 71))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        item.setForeground(brush)
+        self.tableWidget.setColumnCount(11)
         # Set specific column widths
         self.tableWidget.setColumnWidth(0, 100)  
         self.tableWidget.setColumnWidth(1, 100) 
@@ -637,6 +664,7 @@ class Ui_Order_2(object):
         self.tableWidget.setColumnWidth(7, 100)  
         self.tableWidget.setColumnWidth(8, 100)  
         self.tableWidget.setColumnWidth(9, 20)
+        self.tableWidget.setColumnWidth(10, 20)
         self.tableWidget.horizontalHeader().setCascadingSectionResizes(False)
         self.tableWidget.horizontalHeader().setSortIndicatorShown(False)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
@@ -645,7 +673,7 @@ class Ui_Order_2(object):
         self.verticalLayout.addWidget(self.TableContainer)
         Order_2.setCentralWidget(self.centralwidget)
 
-        orders = self.fetch_orders()
+        orders = self.fetch_orders_with_details()
         self.display_orders(orders)
 
         self.retranslateUi(Order_2)
@@ -666,29 +694,30 @@ class Ui_Order_2(object):
         self.AddProduct.setText(_translate("Order_2", "Add New Order"))
         self.Search.setText(_translate("Order_2", "Search"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("Order_2", "Type of Product"))
+        item.setText(_translate("Order_2", "Order ID"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("Order_2", "Category"))
+        item.setText(_translate("Order_2", "Customer Code"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("Order_2", "Customer ID"))
+        item.setText(_translate("Order_2", "Category"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("Order_2", "Size"))
+        item.setText(_translate("Order_2", "Product Name"))
         item = self.tableWidget.horizontalHeaderItem(4)
-        item.setText(_translate("Order_2", "Quantity"))
+        item.setText(_translate("Order_2", "Size"))
         item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("Order_2", "Ordered Date"))
+        item.setText(_translate("Order_2", "Quantity"))
         item = self.tableWidget.horizontalHeaderItem(6)
-        item.setText(_translate("Order_2", "Completion Date"))
-        item = self.tableWidget.horizontalHeaderItem(7)
-        item.setText(_translate("Order_2", "Status"))
-        item = self.tableWidget.horizontalHeaderItem(8)
         item.setText(_translate("Order_2", "Amount Total"))
+        item = self.tableWidget.horizontalHeaderItem(7)
+        item.setText(_translate("Order_2", "Order Date"))
+        item = self.tableWidget.horizontalHeaderItem(8)
+        item.setText(_translate("Order_2", "Date Completion"))
         item = self.tableWidget.horizontalHeaderItem(9)
+        item.setText(_translate("Order_2", "Status"))
+        item = self.tableWidget.horizontalHeaderItem(10)
         item.setText(_translate("Order_2", "Actions"))
 
 import font_rc
 import images_rc
-
 
 if __name__ == "__main__":
     import sys
