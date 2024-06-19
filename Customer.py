@@ -440,7 +440,6 @@ class Ui_Customer_2(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.tableWidget.setFont(font)
-        
         self.tableWidget.setColumnCount(7)
         
         self.tableWidget.verticalHeader().setVisible(False)

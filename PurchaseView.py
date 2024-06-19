@@ -104,7 +104,7 @@ class Ui_PurchaseView(object):
     def add_purchase(self):
         from AddPurchase import Ui_AddPurchase
         self.window2 = QtWidgets.QDialog()
-        self.ui = Ui_AddPurchase(PurchaseView)
+        self.ui = Ui_AddPurchase(self)
         self.ui.setupUi(self.window2)
         self.window2.setModal(True)
         self.window2.exec_() 
