@@ -145,7 +145,7 @@ class Ui_UpdateCustomer(QObject):
         self.label_4.setText(_translate("UpdateCustomer", "Phone Numer"))
         self.label_10.setText(_translate("UpdateCustomer", "Address"))
         self.Cancel.setText(_translate("UpdateCustomer", "Cancel"))
-        self.AddOrder_3.setText(_translate("UpdateCustomer", "Update Order"))
+        self.AddOrder_3.setText(_translate("UpdateCustomer", "Update"))
         self.label_14.setText(_translate("UpdateCustomer", "Email Address"))
 
 if __name__ == "__main__":
