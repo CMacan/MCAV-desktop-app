@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import psycopg2
 
 class Ui_UpdateProduct(object):
 
