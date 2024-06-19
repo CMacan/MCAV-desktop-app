@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 from datetime import date
 
-class Ui_AddOder(object):
+class Ui_AddOrder(object):
 
     def __init__(self):
         # PostgreSQL connection        
@@ -20,22 +20,23 @@ class Ui_AddOder(object):
                                      password="Milliondollarbaby123", port=6543)
         self.cur = self.conn.cursor()
 
-    def save_data(self):
+    def add_new_order(self):
         # Get data from UI elements
-        cus_fname = self.lineEdit.text().strip()
-        cus_lname = self.LnamelineEdit.text().strip()
-        cus_email = self.emailLineEdit.text().strip()
-        cus_phone = self.phonelineEdit.text().strip()
-        cus_address = self.AddressLineEdit.text().strip()
+        cus_fname = self.lineEdit.text()
+        cus_lname = self.LnamelineEdit.text()
+        cus_email = self.emailLineEdit.text()
+        cus_phone = self.phonelineEdit.text()
+        cus_address = self.AddressLineEdit.text()
         order_date = date.today()
-        due_date = self.dueDateEdit.text().strip()
-        product_category = self.comboBox.currentText().strip()
-        product_name = self.prodNameLineEdit.text().strip()
-        quantity = self.QuantityLineEdit.text().strip()
-        total_amount = self.TotalLineEdit.text().strip()
+        due_date = self.dueDateEdit.text()
+        product_category = self.comboBox.currentText()
+        product_name = self.prodNameLineEdit.text()
+        quantity = self.QuantityLineEdit.text()
+        total_amount = self.TotalLineEdit.text()
 
         # Validate input data
-        if not (cus_fname and cus_lname and cus_email and cus_phone and cus_address and due_date and product_category and product_name and quantity and total_amount):
+        if not (cus_fname and cus_lname and cus_email and cus_phone and cus_address and 
+                due_date and product_category and product_name and quantity and total_amount):
             self.show_message("Error", "Please fill all the fields.")
             return
 
@@ -80,13 +81,13 @@ class Ui_AddOder(object):
         msg.setIcon(QMessageBox.Information)
         msg.exec_()
 
-    def setupUi(self, AddOder):
-        AddOder.setObjectName("AddOder")
-        AddOder.resize(641, 481)
-        AddOder.setFixedSize(640, 480)
+    def setupUi(self, AddOrder):
+        AddOrder.setObjectName("AddOrder")
+        AddOrder.resize(641, 481)
+        AddOrder.setFixedSize(640, 480)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        AddOder.setSizePolicy(sizePolicy)
-        self.frame = QtWidgets.QFrame(AddOder)
+        AddOrder.setSizePolicy(sizePolicy)
+        self.frame = QtWidgets.QFrame(AddOrder)
         self.frame.setEnabled(True)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("QFrame{\n"
@@ -114,7 +115,7 @@ class Ui_AddOder(object):
         self.AddOrder.setObjectName("AddOrder")
 
         self.Cancel = QtWidgets.QPushButton(self.frame)
-        self.Cancel.clicked.connect(AddOder.close)
+        self.Cancel.clicked.connect(AddOrder.close)
         self.Cancel.setGeometry(QtCore.QRect(380, 370, 96, 31))
         self.Cancel.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Cancel.setObjectName("Cancel")
@@ -124,9 +125,9 @@ class Ui_AddOder(object):
         font_cancel.setBold(True)        
         self.Cancel.setFont(font_cancel)
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
-        self.AddOrder_3.clicked.connect(self.save_data)
-        self.AddOrder_3.setGeometry(QtCore.QRect(490, 370, 91, 31))
         self.AddOrder_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.AddOrder_3.clicked.connect(self.add_new_order)
+        self.AddOrder_3.setGeometry(QtCore.QRect(490, 370, 91, 31))
         self.AddOrder_3.setObjectName("AddOrder_3")
         font_AddOrder_3 = QtGui.QFont()
         font_AddOrder_3.setFamily("Arial")
@@ -261,63 +262,63 @@ class Ui_AddOder(object):
         self.textEdit.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
         self.textEdit.setObjectName("textEdit")
         
-        AddOder.setTabOrder(self.lineEdit, self.LnamelineEdit)
-        AddOder.setTabOrder(self.LnamelineEdit, self.emailLineEdit)
-        AddOder.setTabOrder(self.emailLineEdit, self.phonelineEdit)
-        AddOder.setTabOrder(self.phonelineEdit, self.AddressLineEdit)
-        AddOder.setTabOrder(self.AddressLineEdit, self.priceLineEdit)
-        AddOder.setTabOrder(self.priceLineEdit, self.TotalLineEdit)
-        AddOder.setTabOrder(self.TotalLineEdit, self.dueDateEdit)
-        AddOder.setTabOrder(self.dueDateEdit, self.comboBox)
-        AddOder.setTabOrder(self.comboBox, self.prodNameLineEdit)
-        AddOder.setTabOrder(self.prodNameLineEdit, self.QuantityLineEdit)
-        AddOder.setTabOrder(self.QuantityLineEdit, self.sizeLineEdit1)
-        AddOder.setTabOrder(self.sizeLineEdit1, self.sizeLineEdit2)
-        AddOder.setTabOrder(self.sizeLineEdit2, self.comboBox_unitMeasure)
-        AddOder.setTabOrder(self.comboBox_unitMeasure, self.AddOrder_3)
-        AddOder.setTabOrder(self.AddOrder_3, self.Cancel)
+        AddOrder.setTabOrder(self.lineEdit, self.LnamelineEdit)
+        AddOrder.setTabOrder(self.LnamelineEdit, self.emailLineEdit)
+        AddOrder.setTabOrder(self.emailLineEdit, self.phonelineEdit)
+        AddOrder.setTabOrder(self.phonelineEdit, self.AddressLineEdit)
+        AddOrder.setTabOrder(self.AddressLineEdit, self.priceLineEdit)
+        AddOrder.setTabOrder(self.priceLineEdit, self.TotalLineEdit)
+        AddOrder.setTabOrder(self.TotalLineEdit, self.dueDateEdit)
+        AddOrder.setTabOrder(self.dueDateEdit, self.comboBox)
+        AddOrder.setTabOrder(self.comboBox, self.prodNameLineEdit)
+        AddOrder.setTabOrder(self.prodNameLineEdit, self.QuantityLineEdit)
+        AddOrder.setTabOrder(self.QuantityLineEdit, self.sizeLineEdit1)
+        AddOrder.setTabOrder(self.sizeLineEdit1, self.sizeLineEdit2)
+        AddOrder.setTabOrder(self.sizeLineEdit2, self.comboBox_unitMeasure)
+        AddOrder.setTabOrder(self.comboBox_unitMeasure, self.AddOrder_3)
+        AddOrder.setTabOrder(self.AddOrder_3, self.Cancel)
 
-        self.retranslateUi(AddOder)
-        QtCore.QMetaObject.connectSlotsByName(AddOder)
+        self.retranslateUi(AddOrder)
+        QtCore.QMetaObject.connectSlotsByName(AddOrder)
 
-    def retranslateUi(self, AddOder):
+    def retranslateUi(self, AddOrder):
         _translate = QtCore.QCoreApplication.translate
-        AddOder.setWindowTitle(_translate("AddOder", "Dialog"))
-        self.AddOrder.setText(_translate("AddOder", "Add Order"))
-        self.Cancel.setText(_translate("AddOder", "Cancel"))
-        self.AddOrder_3.setText(_translate("AddOder", "Add Order"))
-        self.addressLabel.setText(_translate("AddOder", "Address"))
-        self.priceLabel.setText(_translate("AddOder", "Price"))
-        self.sizeLabel.setText(_translate("AddOder", "Size"))
-        self.quantityLabel.setText(_translate("AddOder", "Quantity"))
-        self.categoryLabel.setText(_translate("AddOder", "Category"))
-        self.dueDateLabel.setText(_translate("AddOder", "Due Date"))
-        self.comboBox.setItemText(0, _translate("AddOder", "Large Format Tarpaulin"))
-        self.comboBox.setItemText(1, _translate("AddOder", "Vinyl Sticker Printing"))
-        self.comboBox.setItemText(2, _translate("AddOder", "Laser Printing Stickers"))
-        self.comboBox.setItemText(3, _translate("AddOder", "T-shirt Printing"))
-        self.prodNameLabel.setText(_translate("AddOder", "Type of Product"))
-        self.phoneLineLabel.setText(_translate("AddOder", "Contact Number"))
-        self.label.setText(_translate("AddOder", "Customer First Name"))
-        self.label_5.setText(_translate("AddOder", "Customer Last Name"))
-        self.label_2.setText(_translate("AddOder", "Email Address"))
-        self.totalAmtLabel.setText(_translate("AddOder", "Total Amount"))
-        self.textEdit.setHtml(_translate("AddOder", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        AddOrder.setWindowTitle(_translate("AddOrder", "Dialog"))
+        self.AddOrder.setText(_translate("AddOrder", "Add Order"))
+        self.Cancel.setText(_translate("AddOrder", "Cancel"))
+        self.AddOrder_3.setText(_translate("AddOrder", "Add Order"))
+        self.addressLabel.setText(_translate("AddOrder", "Address"))
+        self.priceLabel.setText(_translate("AddOrder", "Price"))
+        self.sizeLabel.setText(_translate("AddOrder", "Size"))
+        self.quantityLabel.setText(_translate("AddOrder", "Quantity"))
+        self.categoryLabel.setText(_translate("AddOrder", "Category"))
+        self.dueDateLabel.setText(_translate("AddOrder", "Due Date"))
+        self.comboBox.setItemText(0, _translate("AddOrder", "Large Format Tarpaulin"))
+        self.comboBox.setItemText(1, _translate("AddOrder", "Vinyl Sticker Printing"))
+        self.comboBox.setItemText(2, _translate("AddOrder", "Laser Printing Stickers"))
+        self.comboBox.setItemText(3, _translate("AddOrder", "T-shirt Printing"))
+        self.prodNameLabel.setText(_translate("AddOrder", "Type of Product"))
+        self.phoneLineLabel.setText(_translate("AddOrder", "Contact Number"))
+        self.label.setText(_translate("AddOrder", "Customer First Name"))
+        self.label_5.setText(_translate("AddOrder", "Customer Last Name"))
+        self.label_2.setText(_translate("AddOrder", "Email Address"))
+        self.totalAmtLabel.setText(_translate("AddOrder", "Total Amount"))
+        self.textEdit.setHtml(_translate("AddOrder", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                                 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
                                                 "p, li { white-space: pre-wrap; }\n"
                                                 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
                                                 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">X</span></p></body></html>"))
-        self.comboBox_unitMeasure.setItemText(0, _translate("AddOder", "ft"))
-        self.comboBox_unitMeasure.setItemText(1, _translate("AddOder", "inches"))
-        self.comboBox_unitMeasure.setItemText(2, _translate("AddOder", "small"))
-        self.comboBox_unitMeasure.setItemText(3, _translate("AddOder", "medium"))
-        self.comboBox_unitMeasure.setItemText(4, _translate("AddOder", "large"))
+        self.comboBox_unitMeasure.setItemText(0, _translate("AddOrder", "ft"))
+        self.comboBox_unitMeasure.setItemText(1, _translate("AddOrder", "inches"))
+        self.comboBox_unitMeasure.setItemText(2, _translate("AddOrder", "small"))
+        self.comboBox_unitMeasure.setItemText(3, _translate("AddOrder", "medium"))
+        self.comboBox_unitMeasure.setItemText(4, _translate("AddOrder", "large"))
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    AddOder = QtWidgets.QDialog()
-    ui = Ui_AddOder()
-    ui.setupUi(AddOder)
-    AddOder.show()
+    AddOrder = QtWidgets.QDialog()
+    ui = Ui_AddOrder()
+    ui.setupUi(AddOrder)
+    AddOrder.show()
     sys.exit(app.exec_())

@@ -73,7 +73,7 @@ class Ui_Order_2(object):
         # Implement delete logic here
         order_id = self.tableWidget.item(row, 0).text()
         try:
-            sql = 'DELETE FROM "ORDERS" WHERE ORD_ID = %s'
+            sql = 'DELETE FROM ORDERS WHERE ORD_ID = %s'
             self.cur.execute(sql, (order_id,))
             self.conn.commit()
             QtWidgets.QMessageBox.information(None, 'Success', 'Product deleted successfully!')
@@ -121,9 +121,9 @@ class Ui_Order_2(object):
         pass
     
     def add_new_order(self):
-        from AddOrder  import Ui_AddOder
+        from AddOrder  import Ui_AddOrder
         self.window2 = QtWidgets.QDialog()
-        self.ui = Ui_AddOder()
+        self.ui = Ui_AddOrder()
         self.ui.setupUi(self.window2)
         # self.window2.show()
         self.window2.setModal(True)  # Ensure the dialog is modal
