@@ -9,56 +9,62 @@
 
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import  pyqtSignal, QObject
 import psycopg2
 
-class Ui_UpdateProduct(QObject):
-    product_info_updated = pyqtSignal(str, str, str, str, str)  # Define a signal with updated product information
+class Ui_UpdateProduct(object):
 
-    def inventory(self):
-        from Inventory import Ui_Inventory_2
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Inventory_2()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+    def __init__(self):
+        # PostgreSQL connection        
+        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
+                                     password="Milliondollarbaby123", port=6543)
+        self.cur = self.conn.cursor()
 
-    def update_product_info(self):
+    def save_data(self):
         # Get data from UI elements
-        new_prod_name = self.lineEdit.text()
-        new_prod_price = self.lineEdit_2.text()
-        new_prod_quantity = self.lineEdit_3.text()
-        new_prod_rollSize = self.lineEdit_4.text()
-        new_prod_thickness = self.lineEdit_14.text()
+        prod_name = self.lineEdit.text().strip()
+        prod_price = self.lineEdit_2.text().strip()
+        prod_quantity = self.lineEdit_3.text().strip()
+        prod_rollSize = self.lineEdit_4.text().strip()
+        prod_thickness = self.lineEdit_14.text().strip()
 
         # Validate input data
-        if new_prod_name or new_prod_price or new_prod_quantity or new_prod_rollSize or new_prod_thickness:
-            try:
-                # Establish a connection to the PostgreSQL database
-                conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj",
-                                        password="Milliondollarbaby123", port=6543)
-                cur = conn.cursor()
+        if not (prod_name and prod_price and prod_quantity):
+            self.show_message("Error", "Please fill all the fields.")
+            return
 
-                # Update the product information in the database
-                sql = """
-                UPDATE PRODUCT
-                SET PROD_NAME = %s, PROD_PRICE = %s, PROD_QUANTITY = %s, PROD_ROLL_SIZE = %s, PROD_THICKNESS = %s
-                """
-                cur.execute(sql, (new_prod_name, new_prod_price, new_prod_quantity, new_prod_rollSize, new_prod_thickness))
-                conn.commit()
+        try:
+            # Check if product exists and get its ID
+            sql_get_product_id = "SELECT PROD_ID FROM PRODUCT WHERE PROD_NAME = %s"
+            self.cur.execute(sql_get_product_id, (prod_name,))
+            product_id_result = self.cur.fetchone()
 
-                # Close the cursor and connection
-                cur.close()
-                conn.close()
+            if product_id_result is None:
+                self.show_message("Error", "Selected product does not exist.")
+                return
 
-                print("Product information updated successfully!")
+            product_id = product_id_result[0]
 
-                # Emit the signal with updated information
-                self.product_info_updated.emit(new_prod_name, new_prod_price, new_prod_quantity, new_prod_rollSize, new_prod_thickness)
+            # Update product details
+            sql_update_product = """
+            UPDATE PRODUCT 
+            SET PROD_PRICE = %s, PROD_QUANTITY = %s, PROD_ROLL_SIZE = %s, PROD_THICKNESS = %s
+            WHERE PROD_ID = %s
+            """
+            self.cur.execute(sql_update_product, (prod_price, prod_quantity, prod_rollSize, prod_thickness, product_id))
+            self.conn.commit()
 
-            except psycopg2.Error as e:
-                print(f"Error updating product information: {e}")
-        else:
-            print("No changes made. Retaining current product information.")
+            self.show_message("Success", "Product updated successfully.")
+        except psycopg2.Error as e:
+            self.conn.rollback()  # Roll back transaction on error
+            error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
+            self.show_message("Error", error_message) 
+
+    def show_message(self, title, message):
+        msg = QMessageBox()
+        msg.setWindowTitle(title)
+        msg.setText(message)
+        msg.setIcon(QMessageBox.Information)
+        msg.exec_()
 
     def setupUi(self, UpdateProduct):
         UpdateProduct.setObjectName("UpdateProduct")
@@ -122,20 +128,27 @@ class Ui_UpdateProduct(QObject):
         self.label_4.setGeometry(QtCore.QRect(80, 315, 76, 16))
         self.label_4.setObjectName("label_4")
         self.label_9 = QtWidgets.QLabel(self.frame)
-        self.label_9.setGeometry(QtCore.QRect(400, 130, 81, 16))
+        self.label_9.setGeometry(QtCore.QRect(400, 70, 66, 16))
         self.label_9.setObjectName("label_9")
         self.label_10 = QtWidgets.QLabel(self.frame)
-        self.label_10.setGeometry(QtCore.QRect(400, 185, 86, 16))
+        self.label_10.setGeometry(QtCore.QRect(400, 130, 81, 16))
         self.label_10.setObjectName("label_10")
+        self.lineEdit_11 = QtWidgets.QLineEdit(self.frame)
+        self.lineEdit_11.setGeometry(QtCore.QRect(400, 205, 113, 20))
+        self.lineEdit_11.setObjectName("lineEdit_11")
+        self.label_12 = QtWidgets.QLabel(self.frame)
+        self.label_12.setGeometry(QtCore.QRect(400, 185, 86, 16))
+        self.label_12.setObjectName("label_12")
         self.lineEdit_12 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_12.setGeometry(QtCore.QRect(400, 205, 113, 20))
+        self.lineEdit_12.setGeometry(QtCore.QRect(400, 150, 113, 20))
         self.lineEdit_12.setObjectName("lineEdit_12")
         self.Cancel = QtWidgets.QPushButton(self.frame)
         self.Cancel.clicked.connect(UpdateProduct.close)
         self.Cancel.setGeometry(QtCore.QRect(354, 360, 96, 31))
+        self.Cancel.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Cancel.setObjectName("Cancel")
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
-        self.AddOrder_3.clicked.connect(self.update_product_info)
+        self.AddOrder_3.clicked.connect(self.save_data)
         self.AddOrder_3.clicked.connect(UpdateProduct.close)
         self.AddOrder_3.setGeometry(QtCore.QRect(475, 360, 91, 31))
         self.AddOrder_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -147,7 +160,7 @@ class Ui_UpdateProduct(QObject):
         self.lineEdit_14.setGeometry(QtCore.QRect(80, 280, 113, 20))
         self.lineEdit_14.setObjectName("lineEdit_14")
         self.comboBox = QtWidgets.QComboBox(self.frame)
-        self.comboBox.setGeometry(QtCore.QRect(400, 150, 113, 20))
+        self.comboBox.setGeometry(QtCore.QRect(400, 95, 111, 20))
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
@@ -160,6 +173,8 @@ class Ui_UpdateProduct(QObject):
         self.Image.setIcon(icon)
         self.Image.setIconSize(QtCore.QSize(20, 20))
         self.Image.setObjectName("Image")
+        self.Cancel.raise_()
+        self.AddOrder_3.raise_()
 
         self.retranslateUi(UpdateProduct)
         QtCore.QMetaObject.connectSlotsByName(UpdateProduct)
@@ -174,6 +189,7 @@ class Ui_UpdateProduct(QObject):
         self.label_4.setText(_translate("UpdateProduct", "Roll Size"))
         self.label_9.setText(_translate("UpdateProduct", "Category"))
         self.label_10.setText(_translate("UpdateProduct", "Type of Product"))
+        self.label_12.setText(_translate("UpdateProduct", "Quantity per roll"))
         self.Cancel.setText(_translate("UpdateProduct", "Cancel"))
         self.AddOrder_3.setText(_translate("UpdateProduct", "Update Product"))
         self.label_14.setText(_translate("UpdateProduct", "Thickness"))

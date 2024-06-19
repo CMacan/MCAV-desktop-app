@@ -58,7 +58,7 @@ class Ui_PurchaseView(object):
 
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
-            self.tableWidget.setCellWidget(row_number, 11, cell_widget)
+            self.tableWidget.setCellWidget(row_number, 10, cell_widget)
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
