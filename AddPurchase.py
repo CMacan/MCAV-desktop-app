@@ -5,40 +5,31 @@ from PyQt5.QtWidgets import QMessageBox
 
 class Ui_AddPurchase(object):
 
-    def __init__(self):
+    def __init__(self, dialog):
         # PostgreSQL connection
         self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj",
                                      password="Milliondollarbaby123", port=6543)
         self.cur = self.conn.cursor()
+        self.dialog = dialog
 
     def save_data(self):
         # Get data from UI elements
-        sup_name = self.lineEdit.text().strip()
-        sup_email = self.emailLineEdit.text().strip()
-        sup_contact = self.contactLineEdit.text().strip()
-        sup_address = self.addressLineEdit.text().strip()
-        sup_country = self.countryLineEdit.text().strip()
+        sup_id = self.searchLineEdit.text().strip()
         pur_total = self.totalLineEdit.text().strip()
         pur_order_date = self.orderDateEdit.date().toString(QtCore.Qt.ISODate)
         pur_product_name = self.prodNameLineEdit.text().strip()
         pur_quantity = self.quantityLineEdit.text().strip()
         pur_thickness = self.thicknessLineEdit.text().strip()
-        pur_roll_size = self.rollsizeLineEdit1.text().strip()
+        rollsize_width = self.rollsizeLineEdit1.text().strip()
+        rollsize_length = self.rollsizeLineEdit2.text().strip()
+
+        pur_roll_size = f"{rollsize_width} x {rollsize_length}"
 
         # Validate input data
-        if not all([sup_name, sup_contact, sup_address, sup_email, pur_total,
-                    sup_country, pur_order_date, pur_product_name, pur_quantity]):
+        if not all([sup_id, pur_order_date, pur_product_name, pur_quantity]):
             missing_fields = []
-            if not sup_name:
-                missing_fields.append("Supplier Name")
-            if not sup_email:
-                missing_fields.append("Supplier Email")
-            if not sup_contact:
-                missing_fields.append("Supplier Contact")
-            if not sup_address:
-                missing_fields.append("Supplier Address")
-            if not sup_country:
-                missing_fields.append("Supplier Country")
+            if not sup_id:
+                missing_fields.append("Supplier ID")
             if not pur_total:
                 missing_fields.append("Total Amount")
             if not pur_order_date:
@@ -68,13 +59,14 @@ class Ui_AddPurchase(object):
             try:
                 # Insert into PURCHASE table
                 sql_purchase = """
-                INSERT INTO PURCHASE (PUR_AMOUNT, PUR_ORDER_DATE, PUR_PRODUCT_NAME, PUR_QUANTITY, PUR_THICKNESS, PUR_ROLL_SIZE)
-                VALUES (%s, %s, %s, %s, %s, %s)
+                INSERT INTO PURCHASE (SUP_ID, PUR_AMOUNT, PUR_ORDER_DATE, PUR_PRODUCT_NAME, PUR_QUANTITY, PUR_THICKNESS, PUR_ROLL_SIZE)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """
 
-                self.cur.execute(sql_purchase, (pur_total, pur_order_date, pur_product_name, pur_quantity, pur_thickness, pur_roll_size))
+                self.cur.execute(sql_purchase, (sup_id, pur_total, pur_order_date, pur_product_name, pur_quantity, pur_thickness, pur_roll_size))
                 self.conn.commit()
                 self.show_message("Success", "Data saved successfully.")
+                self.dialog.accept()
             except psycopg2.Error as e:
                 self.conn.rollback()  # Roll back transaction on error
                 error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
@@ -331,7 +323,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     AddPurchase = QtWidgets.QDialog()
-    ui = Ui_AddPurchase()
+    ui = Ui_AddPurchase(AddPurchase)
     ui.setupUi(AddPurchase)
     AddPurchase.show()
     sys.exit(app.exec_())
