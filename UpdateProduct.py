@@ -9,9 +9,27 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import psycopg2
 
 class Ui_UpdateProduct(object):
+
+    def update_product(self, prod_id, new_data):
+        try:
+            sql = """
+            UPDATE PRODUCT
+            SET PROD_IMAGE = %s, PROD_NAME = %s, PROD_CATEGORY = %s, PROD_PRICE = %s, 
+                PROD_QUANTITY = %s, PROD_THICKNESS = %s, PROD_ROLL_SIZE = %s, PROD_LAST_UPDATED = %s
+            WHERE PROD_ID = %s
+            """
+            self.cur.execute(sql, (new_data['PROD_IMAGE'], new_data['PROD_NAME'], new_data['PROD_CATEGORY'],
+                                new_data['PROD_PRICE'], new_data['PROD_QUANTITY'], new_data['PROD_THICKNESS'],
+                                new_data['PROD_ROLL_SIZE'], new_data['PROD_LAST_UPDATED'], prod_id))
+            self.conn.commit()
+            return True
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error updating product in the database: {e}")
+            return False
+    
     def setupUi(self, UpdateProduct):
         UpdateProduct.setObjectName("UpdateProduct")
         UpdateProduct.resize(640, 480)
