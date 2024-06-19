@@ -59,7 +59,6 @@ class Ui_Order_2(object):
                 item.setText(str(data))
                 self.tableWidget.setItem(row_number, column_number, item)
 
-            # Create a widget to hold both edit and delete buttons
             button_widget = QtWidgets.QWidget()
             layout = QtWidgets.QHBoxLayout(button_widget)
             layout.setContentsMargins(0, 0, 0, 0)
@@ -68,6 +67,16 @@ class Ui_Order_2(object):
             status_button = QtWidgets.QPushButton('Ongoing')
             status_button.clicked.connect(lambda checked, row=row_number: self.status_order(row))
             layout.addWidget(status_button)
+
+            cell_widget = QtWidgets.QWidget()
+            cell_widget.setLayout(layout)
+            self.tableWidget.setCellWidget(row_number, 9, cell_widget)
+
+            # Create a widget to hold both edit and delete buttons
+            button_widget = QtWidgets.QWidget()
+            layout = QtWidgets.QHBoxLayout(button_widget)
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.setSpacing(10)  # Adjust spacing between buttons if needed
 
             edit_button = QtWidgets.QPushButton('Edit')
             edit_button.clicked.connect(lambda checked, row=row_number: self.update_order(row))
@@ -80,7 +89,7 @@ class Ui_Order_2(object):
             # Set the widget containing the buttons into the table cell
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
-            self.tableWidget.setCellWidget(row_number, len(order), cell_widget)  # Place in the last column
+            self.tableWidget.setCellWidget(row_number, 10, cell_widget)  # Place in the last column
 
     def status_order(self, row):
         pass
