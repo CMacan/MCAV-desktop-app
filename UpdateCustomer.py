@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import  pyqtSignal, QObject
+from PyQt5.QtWidgets import QMessageBox
 import psycopg2
 
 class Ui_UpdateCustomer(QObject):
@@ -23,6 +24,7 @@ class Ui_UpdateCustomer(QObject):
         self.window2.showMaximized()
 
     def update_customer_info(self):
+        from psycopg2 import IntegrityError
         # Get the new information entered by the user
         new_first_name = self.lineEdit_2.text()
         new_last_name = self.lineEdit_3.text()
@@ -31,7 +33,7 @@ class Ui_UpdateCustomer(QObject):
         new_email = self.lineEdit_14.text()
 
         # Check if any of the fields are empty
-        if new_address or new_email or new_first_name or new_last_name or new_phone:
+        if new_first_name or new_last_name or new_phone or new_address or new_email:
             try:
                 # Establish a connection to the PostgreSQL database
                 conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj",
@@ -41,19 +43,42 @@ class Ui_UpdateCustomer(QObject):
                 # Update the customer information in the database
                 sql = """
                 UPDATE CUSTOMER
-                SET CUS_FNAME = %s, CUS_LNAME = %s, CUS_PHONE = %s, CUS_ADDRESS = %s, CUS_EMAIL = %s
+                SET CUS_FNAME = %s, CUS_LNAME = %s, CUS_PHONE = %s, CUS_ADDRESS = %s
+                WHERE CUS_EMAIL = %s
                 """
                 cur.execute(sql, (new_first_name, new_last_name, new_phone, new_address, new_email))
                 conn.commit()
+
+                print("Customer information updated successfully!")
 
                 # Close the cursor and connection
                 cur.close()
                 conn.close()
 
-                print("Customer information updated successfully!")
+            except IntegrityError as e:
+                conn.rollback()  # Rollback the transaction to handle the error gracefully
+                print(f"IntegrityError: {e}")
+
+                # Handle the unique constraint violation here (merge data, update other fields, etc.)
+                # Example:
+                # You can choose to update other fields when the email already exists
+                update_sql = """
+                UPDATE CUSTOMER
+                SET CUS_FNAME = %s, CUS_LNAME = %s, CUS_PHONE = %s, CUS_ADDRESS = %s
+                WHERE CUS_EMAIL = %s
+                """
+                cur.execute(update_sql, (new_first_name, new_last_name, new_phone, new_address, new_email))
+                conn.commit()
+
+                print("Customer information updated despite duplicate email.")
+
+                # Close the cursor and connection
+                cur.close()
+                conn.close()
 
             except psycopg2.Error as e:
                 print(f"Error updating customer information: {e}")
+
         else:
             print("No changes made. Retaining current customer information.")
 
