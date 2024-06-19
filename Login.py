@@ -1,7 +1,7 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from Dashboard import Ui_Dasboard  # Assuming this is where your dashboard UI is defined
+from PyQt5 import QtCore, QtGui, QtWidgets 
 import psycopg2
 from PyQt5.QtWidgets import QMessageBox
+import datetime
 
 class Ui_Login(object):
     
@@ -11,8 +11,9 @@ class Ui_Login(object):
                                      user="postgres.oxzprkjuxnjgnfihweyj", password="Milliondollarbaby123", 
                                      port=6543)
         self.cur = self.conn.cursor()
-    
+
     def dashboard(self):
+        from Dashboard import Ui_Dasboard 
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)

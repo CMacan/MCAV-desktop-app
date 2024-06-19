@@ -10,8 +10,21 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from clickable import ClickableLabel 
+import psycopg2
 
 class Ui_Profile_2(object):
+    
+    def __init__(self):
+        # PostgreSQL connection
+        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", 
+                                     user="postgres.oxzprkjuxnjgnfihweyj", password="Milliondollarbaby123", 
+                                     port=6543)
+        self.cur = self.conn.cursor()
+
+    def fetch_user_details(self, username):
+        sql = "SELECT ADMIN_NAME, ADMIN_EMAIL, ADMIN_USER, ADMIN_PMNT_ADD, ADMIN_ZIP, ADMIN_PRSNT_ADD, ADMIN_CITY, ADMIN_COUNTRY FROM ADMIN WHERE ADMIN_USER = %s"
+        self.cur.execute(sql, (username,))
+        return self.cur.fetchone()
     
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
@@ -19,7 +32,7 @@ class Ui_Profile_2(object):
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
-    
+            
     def logout(self):
         from Login import Ui_Login
         self.window2 = QtWidgets.QMainWindow()
@@ -40,6 +53,7 @@ class Ui_Profile_2(object):
         self.ui = Ui_Inventory_2()
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
+
 
     def report(self):
         from Report import Ui_Report_2
@@ -70,6 +84,7 @@ class Ui_Profile_2(object):
         self.window2.showMaximized()
 
     def setupUi(self, Profile_2):
+        from Login import Ui_Login
         Profile_2.setObjectName("Profile_2")
         Profile_2.resize(975, 495)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -356,92 +371,90 @@ class Ui_Profile_2(object):
         self.label_4 = QtWidgets.QLabel(self.frame_4)
         self.label_4.setObjectName("label_4")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.label_4)
-        self.lineEdit_16 = QtWidgets.QLineEdit(self.frame_4)
-        self.lineEdit_16.setEnabled(False)
+        self.name = QtWidgets.QLineEdit(self.frame_4)
+        self.name.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_16.sizePolicy().hasHeightForWidth())
-        self.lineEdit_16.setSizePolicy(sizePolicy)
-        self.lineEdit_16.setMinimumSize(QtCore.QSize(180, 0))
-        self.lineEdit_16.setObjectName("lineEdit_16")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.lineEdit_16)
-        self.lineEdit_3 = QtWidgets.QLineEdit(self.frame_4)
-        self.lineEdit_3.setEnabled(False)
-        self.lineEdit_3.setMinimumSize(QtCore.QSize(150, 0))
-        self.lineEdit_3.setMaximumSize(QtCore.QSize(180, 16777215))
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.lineEdit_3)
+        sizePolicy.setHeightForWidth(self.name.sizePolicy().hasHeightForWidth())
+        self.name.setSizePolicy(sizePolicy)
+        self.name.setMinimumSize(QtCore.QSize(180, 0))
+        self.name.setObjectName("name")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.name)
+        self.username = QtWidgets.QLineEdit(self.frame_4)
+        self.username.setEnabled(False)
+        self.username.setMinimumSize(QtCore.QSize(150, 0))
+        self.username.setMaximumSize(QtCore.QSize(180, 16777215))
+        self.username.setObjectName("username")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.username)
         self.label_2 = QtWidgets.QLabel(self.frame_4)
         self.label_2.setObjectName("label_2")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_2)
         self.label_7 = QtWidgets.QLabel(self.frame_4)
         self.label_7.setObjectName("label_7")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.label_7)
-        self.lineEdit = QtWidgets.QLineEdit(self.frame_4)
-        self.lineEdit.setEnabled(False)
-        self.lineEdit.setMinimumSize(QtCore.QSize(180, 0))
-        self.lineEdit.setObjectName("lineEdit")
-        self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.lineEdit)
-        self.lineEdit_6 = QtWidgets.QLineEdit(self.frame_4)
-        self.lineEdit_6.setEnabled(False)
-        self.lineEdit_6.setMinimumSize(QtCore.QSize(150, 0))
-        self.lineEdit_6.setMaximumSize(QtCore.QSize(180, 16777215))
-        self.lineEdit_6.setObjectName("lineEdit_6")
-        self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.lineEdit_6)
+        self.email = QtWidgets.QLineEdit(self.frame_4)
+        self.email.setEnabled(False)
+        self.email.setMinimumSize(QtCore.QSize(180, 0))
+        self.email.setObjectName("email")
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.email)
+        self.password = QtWidgets.QLineEdit(self.frame_4)
+        self.password.setEnabled(False)
+        self.password.setMinimumSize(QtCore.QSize(150, 0))
+        self.password.setMaximumSize(QtCore.QSize(180, 16777215))
+        self.password.setObjectName("password")
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.password)
         self.label_3 = QtWidgets.QLabel(self.frame_4)
         self.label_3.setObjectName("label_3")
         self.formLayout.setWidget(4, QtWidgets.QFormLayout.LabelRole, self.label_3)
         self.label_14 = QtWidgets.QLabel(self.frame_4)
         self.label_14.setObjectName("label_14")
         self.formLayout.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.label_14)
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.frame_4)
-        self.lineEdit_2.setEnabled(False)
-        self.lineEdit_2.setMinimumSize(QtCore.QSize(180, 0))
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.formLayout.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.lineEdit_2)
-        self.lineEdit_13 = QtWidgets.QLineEdit(self.frame_4)
-        self.lineEdit_13.setEnabled(False)
-        self.lineEdit_13.setMinimumSize(QtCore.QSize(150, 0))
-        self.lineEdit_13.setMaximumSize(QtCore.QSize(180, 16777215))
-        self.lineEdit_13.setObjectName("lineEdit_13")
-        self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.lineEdit_13)
+        self.date_of_birth = QtWidgets.QLineEdit(self.frame_4)
+        self.date_of_birth.setEnabled(False)
+        self.date_of_birth.setMinimumSize(QtCore.QSize(180, 0))
+        self.date_of_birth.setObjectName("date_of_birth")
+        self.formLayout.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.date_of_birth)
+        self.present_address = QtWidgets.QLineEdit(Profile_2)
+        self.present_address.setEnabled(False)
+        self.present_address.setMinimumSize(QtCore.QSize(150, 0))
+        self.present_address.setMaximumSize(QtCore.QSize(180, 16777215))
+        self.present_address.setObjectName("present_address")
+        self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.present_address)
         self.label_5 = QtWidgets.QLabel(self.frame_4)
         self.label_5.setObjectName("label_5")
         self.formLayout.setWidget(6, QtWidgets.QFormLayout.LabelRole, self.label_5)
         self.label_15 = QtWidgets.QLabel(self.frame_4)
         self.label_15.setObjectName("label_15")
         self.formLayout.setWidget(6, QtWidgets.QFormLayout.FieldRole, self.label_15)
-        self.lineEdit_4 = QtWidgets.QLineEdit(self.frame_4)
-        self.lineEdit_4.setEnabled(False)
-        self.lineEdit_4.setMinimumSize(QtCore.QSize(180, 0))
-        self.lineEdit_4.setObjectName("lineEdit_4")
-        self.formLayout.setWidget(7, QtWidgets.QFormLayout.LabelRole, self.lineEdit_4)
-        self.lineEdit_14 = QtWidgets.QLineEdit(self.frame_4)
-        self.lineEdit_14.setEnabled(False)
-        self.lineEdit_14 = QtWidgets.QLineEdit(self.frame_4)
-        self.lineEdit_14.setEnabled(False)
-        self.lineEdit_14.setMinimumSize(QtCore.QSize(150, 0))
-        self.lineEdit_14.setMaximumSize(QtCore.QSize(180, 16777215))
-        self.lineEdit_14.setObjectName("lineEdit_14")
-        self.formLayout.setWidget(7, QtWidgets.QFormLayout.FieldRole, self.lineEdit_14)
+        self.permanent_address = QtWidgets.QLineEdit(self.frame_4)
+        self.permanent_address.setEnabled(False)
+        self.permanent_address.setMinimumSize(QtCore.QSize(180, 0))
+        self.permanent_address.setObjectName("permanent_address")
+        self.formLayout.setWidget(7, QtWidgets.QFormLayout.LabelRole, self.permanent_address)
+        self.city = QtWidgets.QLineEdit(self.frame_4)
+        self.city.setEnabled(False)
+        self.city.setMinimumSize(QtCore.QSize(150, 0))
+        self.city.setMaximumSize(QtCore.QSize(180, 16777215))
+        self.city.setObjectName("city")
+        self.formLayout.setWidget(7, QtWidgets.QFormLayout.FieldRole, self.city)
         self.label_6 = QtWidgets.QLabel(self.frame_4)
         self.label_6.setObjectName("label_6")
         self.formLayout.setWidget(8, QtWidgets.QFormLayout.LabelRole, self.label_6)
         self.label_16 = QtWidgets.QLabel(self.frame_4)
         self.label_16.setObjectName("label_16")
         self.formLayout.setWidget(8, QtWidgets.QFormLayout.FieldRole, self.label_16)
-        self.lineEdit_5 = QtWidgets.QLineEdit(self.frame_4)
-        self.lineEdit_5.setEnabled(False)
-        self.lineEdit_5.setMinimumSize(QtCore.QSize(180, 0))
-        self.lineEdit_5.setObjectName("lineEdit_5")
-        self.formLayout.setWidget(9, QtWidgets.QFormLayout.LabelRole, self.lineEdit_5)
-        self.lineEdit_15 = QtWidgets.QLineEdit(self.frame_4)
-        self.lineEdit_15.setEnabled(False)
-        self.lineEdit_15.setMinimumSize(QtCore.QSize(150, 0))
-        self.lineEdit_15.setMaximumSize(QtCore.QSize(180, 16777215))
-        self.lineEdit_15.setObjectName("lineEdit_15")
-        self.formLayout.setWidget(9, QtWidgets.QFormLayout.FieldRole, self.lineEdit_15)
+        self.postal = QtWidgets.QLineEdit(self.frame_4)
+        self.postal.setEnabled(False)
+        self.postal.setMinimumSize(QtCore.QSize(180, 0))
+        self.postal.setObjectName("postal")
+        self.formLayout.setWidget(9, QtWidgets.QFormLayout.LabelRole, self.postal)
+        self.country = QtWidgets.QLineEdit(self.frame_4)
+        self.country.setEnabled(False)
+        self.country.setMinimumSize(QtCore.QSize(150, 0))
+        self.country.setMaximumSize(QtCore.QSize(180, 16777215))
+        self.country.setObjectName("country")
+        self.formLayout.setWidget(9, QtWidgets.QFormLayout.FieldRole, self.country)
         self.horizontalLayout_3.addWidget(self.frame_4)
         self.verticalLayout_3.addWidget(self.frame_2)
         self.verticalLayout_2.addWidget(self.DataFrame)
@@ -450,6 +463,20 @@ class Ui_Profile_2(object):
 
         self.retranslateUi(Profile_2)
         QtCore.QMetaObject.connectSlotsByName(Profile_2)
+    
+        username = 'test'
+        user_details = self.fetch_user_details(username)
+
+        # Populate user details into QLineEdit fields
+        if user_details:
+            self.username.setText(user_details[2])  # Username
+            self.name.setText(user_details[0])  # Full Name
+            self.email.setText(user_details[1])  # Email
+            self.permanent_address.setText(user_details[3])  # Permanent Address
+            self.postal.setText(user_details[4])  # ZIP Code
+            self.present_address.setText(user_details[5])  # Present Address
+            self.city.setText(user_details[6])  # City
+            self.country.setText(user_details[7])  # Country
 
     def retranslateUi(self, Profile_2):
         _translate = QtCore.QCoreApplication.translate
