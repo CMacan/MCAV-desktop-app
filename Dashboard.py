@@ -20,6 +20,152 @@ class Ui_Dasboard(object):
                                      password="Milliondollarbaby123", port=6543)
         self.cur = self.conn.cursor()
     
+    def fetch_purchases(self):
+        try:
+            sql = """
+            SELECT SUM(PUR_AMOUNT) FROM PURCHASE
+            """
+            self.cur.execute(sql)
+            total_sum = self.cur.fetchone()[0]  # Fetch the count value
+            return total_sum
+        
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching total customers: {e}")
+            return 0  # Return 0 or handle error case
+        
+    def display_purchase(self):
+        total_sum = self.fetch_purchases()
+        return total_sum
+
+    def fetch_sale(self):
+        try:
+            sql = """
+            SELECT SUM(ORD_TOTAL_AMOUNT) FROM ORDERS
+            """
+            self.cur.execute(sql)
+            total_sum = self.cur.fetchone()[0]  # Fetch the count value
+            return total_sum
+        
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching total customers: {e}")
+            return 0  # Return 0 or handle error case
+        
+    def display_sale(self):
+        total_sum = self.fetch_sale()
+        return total_sum
+
+    def fetch_total_sale(self):
+        try:
+            sql = """
+            SELECT COUNT(*) FROM ORDERS
+            """
+            self.cur.execute(sql)
+            total_customers = self.cur.fetchone()[0]  # Fetch the count value
+            return total_customers
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching total customers: {e}")
+            return 0  # Return 0 or handle error case
+        
+    def display_total_sale(self):
+        # Fetch total customers
+        total_sale = self.fetch_total_sale()      
+        return total_sale
+    
+    def fetch_total_purchase(self):
+        try:
+            sql = """
+            SELECT COUNT(*) FROM PURCHASE
+            """
+            self.cur.execute(sql)
+            total_customers = self.cur.fetchone()[0]  # Fetch the count value
+            return total_customers
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching total customers: {e}")
+            return 0  # Return 0 or handle error case
+        
+    def display_total_purchase(self):
+        # Fetch total customers
+        total_purchase = self.fetch_total_purchase()      
+        return total_purchase
+
+
+    def fetch_total_supplier(self):
+        try:
+            sql = """
+            SELECT COUNT(*) FROM SUPPLIER
+            """
+            self.cur.execute(sql)
+            total_customers = self.cur.fetchone()[0]  # Fetch the count value
+            return total_customers
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching total customers: {e}")
+            return 0  # Return 0 or handle error case
+        
+    def display_total_supplier(self):
+        # Fetch total customers
+        total_supplier = self.fetch_total_supplier()      
+        return total_supplier
+
+    def fetch_total_customers(self):
+        try:
+            sql = """
+            SELECT COUNT(*) FROM CUSTOMER
+            """
+            self.cur.execute(sql)
+            total_customers = self.cur.fetchone()[0]  # Fetch the count value
+            return total_customers
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching total customers: {e}")
+            return 0  # Return 0 or handle error case
+    
+    def display_total_customers(self):
+        # Fetch total customers
+        total_customers = self.fetch_total_customers()      
+        return total_customers
+    
+    def fetch_customer(self):
+        try:
+            sql = """
+            SELECT CUSTOMER.CUS_FNAME,CUSTOMER.CUS_LNAME, ORDERS.ORD_TYPE_PRODUCT, ORDERS.ORD_TOTAL_AMOUNT
+            FROM CUSTOMER
+            NATURAL JOIN ORDERS
+            """
+            self.cur.execute(sql)
+            return self.cur.fetchall()
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching data from database: {e}")
+            return []
+        
+    def display_recent_customer(self, customers):
+        self.tableWidget.setRowCount(len(customers))
+        for row_number, customer in enumerate(customers):
+            for column_number, data in enumerate(customer):
+                item = QtWidgets.QTableWidgetItem()
+                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                item.setText(str(data))
+                self.tableWidget.setItem(row_number, column_number, item)
+
+    def fetch_purchase(self):
+        try:
+            sql = """
+            SELECT PROD_NAME, PROD_PRICE
+            FROM PRODUCT
+            """
+            self.cur.execute(sql)
+            return self.cur.fetchall()
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching data from database: {e}")
+            return []
+        
+    def display_recent_purchase(self, customers):
+        self.tableWidget_2.setRowCount(len(customers))
+        for row_number, customer in enumerate(customers):
+            for column_number, data in enumerate(customer):
+                item = QtWidgets.QTableWidgetItem()
+                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                item.setText(str(data))
+                self.tableWidget_2.setItem(row_number, column_number, item)
+    
     def show_purchase(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
@@ -678,6 +824,12 @@ class Ui_Dasboard(object):
         self.verticalLayout.addWidget(self.TableContainer)
         Dasboard.setCentralWidget(self.centralwidget)
 
+        purchase = self.fetch_customer()
+        self.display_recent_customer(purchase)
+
+        purchase = self.fetch_purchase()
+        self.display_recent_purchase(purchase)
+
         self.retranslateUi(Dasboard)
         QtCore.QMetaObject.connectSlotsByName(Dasboard)
 
@@ -691,13 +843,13 @@ class Ui_Dasboard(object):
         self.Report.setText(_translate("Dasboard", "Reports"))
         self.Customer.setText(_translate("Dasboard", "Customers"))
         self.Profile.setText(_translate("Dasboard", "Profile"))
-        self.label.setText(_translate("Dasboard", "100"))
+        self.label.setText(_translate("Dasboard", f"{self.display_total_customers()}"))
         self.label_2.setText(_translate("Dasboard", "Customers"))
-        self.label_3.setText(_translate("Dasboard", "110"))
+        self.label_3.setText(_translate("Dasboard", f"{self.display_total_supplier()}"))
         self.label_4.setText(_translate("Dasboard", "Suppliers"))
-        self.label_5.setText(_translate("Dasboard", "150"))
+        self.label_5.setText(_translate("Dasboard", f"{self.display_total_purchase()}"))
         self.label_6.setText(_translate("Dasboard", "Purchases"))
-        self.label_7.setText(_translate("Dasboard", "170"))
+        self.label_7.setText(_translate("Dasboard", f"{self.display_total_sale()}"))
         self.label_8.setText(_translate("Dasboard", "Sales Count"))
         self.label_15.setText(_translate("Dasboard", "Last Transactions"))
         item = self.tableWidget.horizontalHeaderItem(0)
@@ -709,9 +861,9 @@ class Ui_Dasboard(object):
         item = self.tableWidget.horizontalHeaderItem(3)
         item.setText(_translate("Dasboard", "Amount"))
         self.label_10.setText(_translate("Dasboard", "Total Sales"))
-        self.label_9.setText(_translate("Dasboard", "912, 750"))
+        self.label_9.setText(_translate("Dasboard", f"{self.display_sale()}"))
         self.label_11.setText(_translate("Dasboard", "Total Purchases"))
-        self.label_12.setText(_translate("Dasboard", "153, 460"))
+        self.label_12.setText(_translate("Dasboard", f"{self.display_purchase()}"))
         self.label_16.setText(_translate("Dasboard", "Recent Purchases"))
         self.AddProduct.setText(_translate("Dasboard", " View All"))
         item = self.tableWidget_2.horizontalHeaderItem(0)
