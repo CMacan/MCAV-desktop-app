@@ -1,10 +1,9 @@
 import sys
 import os
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog, QMessageBox
+from PyQt5.QtWidgets import QApplication, QInputDialog, QFileDialog, QDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore, QtGui, QtWidgets
 import psycopg2
-import io
 
 class Ui_AddProduct(QDialog):
     def __init__(self):
@@ -20,8 +19,8 @@ class Ui_AddProduct(QDialog):
 
     def add_new_product(self):
         product_name = self.lineEdit.text()
-        price = self.lineEdit_2.text()
-        quantity = self.lineEdit_3.text()
+        price = self.priceLineEdit.text()
+        quantity = self.quantityLineEdit.text()
         category = self.comboBox.currentText()
         thickness = self.thickness_lineEdit.text().strip()
         rollsize_width = self.rollsize_input_width.text()
@@ -33,7 +32,7 @@ class Ui_AddProduct(QDialog):
         price = float(price)  
         quantity = int(quantity)
         if thickness:
-            thickness = int(thickness)  # Convert thickness to int if it's not empty
+            thickness = int(thickness) 
         else:
             thickness = None
             
@@ -84,8 +83,8 @@ class Ui_AddProduct(QDialog):
                 print("Product added successfully!")
 
                 self.lineEdit.clear()
-                self.lineEdit_2.clear()
-                self.lineEdit_3.clear()
+                self.priceLineEdit.clear()
+                self.quantityLineEdit.clear()
                 self.thickness_lineEdit.clear()
                 self.rollsize_input_width.clear()
                 self.rollsize_input_length.clear()
@@ -104,6 +103,68 @@ class Ui_AddProduct(QDialog):
 
             with open(file_name, "rb") as image_file:
                 self.image_data = image_file.read()
+    
+    def load_categories(self):
+        try:
+            self.cur.execute("SELECT CAT_NAME FROM CATEGORY")
+            categories = [row[0] for row in self.cur.fetchall()]
+            self.set_categories(categories)
+        except psycopg2.Error as e:
+            print(f"Error loading categories: {e}")
+
+    def set_categories(self, categories):
+        self.comboBox.clear()
+        self.comboBox.addItems(categories)            
+
+    def add_category(self):
+        new_category, ok = QInputDialog.getText(self, "Add Category", "Enter new category name:")
+        if ok and new_category:
+            if self.comboBox.findText(new_category) == -1:  # Check for duplicate
+                try:
+                    self.cur.execute("INSERT INTO CATEGORY (CAT_NAME) VALUES (%s)", (new_category,))
+                    self.conn.commit()
+                    self.comboBox.addItem(new_category)
+                    success_msg = QMessageBox()
+                    success_msg.setIcon(QMessageBox.Information)
+                    success_msg.setText(f"New Category Added")
+                    success_msg.setWindowTitle("Successfully Added")
+                    success_msg.exec_()
+                except psycopg2.Error as e:
+                    QMessageBox.warning(self, "Database Error", f"Error adding category: {e}")
+                    self.conn.rollback()
+            else:
+                QMessageBox.warning(self, "Duplicate Category", "This category already exists.")
+
+    def delete_category(self):
+        current_category = self.comboBox.currentText()
+        if current_category:
+            reply = QMessageBox.question(self, "Delete Category", f"Are you sure you want to delete the category '{current_category}'?",
+                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if reply == QMessageBox.Yes:
+                try:
+                    self.cur.execute("DELETE FROM CATEGORY WHERE CAT_NAME = %s", (current_category,))
+                    self.conn.commit()
+                    index = self.comboBox.findText(current_category)
+                    if index >= 0:
+                        self.comboBox.removeItem(index)
+                except psycopg2.Error as e:
+                    QMessageBox.warning(self, "Database Error", f"Error deleting category: {e}")
+                    self.conn.rollback()
+
+    def edit_category(self):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Question)
+        msg.setWindowTitle("Edit Category")
+        msg.setText("Would you like to add or delete a category?")
+        add_button = msg.addButton("Add", QMessageBox.ActionRole)
+        delete_button = msg.addButton("Delete", QMessageBox.ActionRole)
+        msg.addButton(QMessageBox.Cancel)
+        msg.exec_()
+
+        if msg.clickedButton() == add_button:
+            self.add_category()
+        elif msg.clickedButton() == delete_button:
+            self.delete_category()           
 
     def setupUi(self, AddProduct):
         AddProduct.setObjectName("AddProduct")
@@ -121,11 +182,15 @@ class Ui_AddProduct(QDialog):
 "}\n"
 "QPushButton#Cancel{    \n"
 "    color: rgb(255, 255, 255);\n"
-"    background-color: #202020;\n"
+"    background-color: #CD2E2E;\n"
+"}\n"
+"QPushButton#edit_cat{    \n"
+"    color: rgb(255, 255, 255);\n"
+"    background-color: #1049ad;\n"
 "}\n"
 "QPushButton{    \n"
 "    color: rgb(255, 255, 255);\n"
-"    background-color: #CD2E2E;\n"
+"    background-color: #202020;\n"
 "}\n"
 "QPushButton#Image{    \n"
 "    color: black;\n"
@@ -144,28 +209,39 @@ class Ui_AddProduct(QDialog):
         self.lineEdit.setGeometry(QtCore.QRect(80, 120, 111, 20))
         self.lineEdit.setMaxLength(300)
         self.lineEdit.setObjectName("lineEdit")
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_2.setGeometry(QtCore.QRect(80, 175, 113, 20))
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.label_2 = QtWidgets.QLabel(self.frame)
-        self.label_2.setGeometry(QtCore.QRect(80, 155, 76, 16))
-        self.label_2.setObjectName("label_2")
-        self.lineEdit_3 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_3.setGeometry(QtCore.QRect(80, 230, 113, 20))
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.label_3 = QtWidgets.QLabel(self.frame)
-        self.label_3.setGeometry(QtCore.QRect(80, 210, 81, 16))
-        self.label_3.setObjectName("label_3")
+        self.priceLineEdit = QtWidgets.QLineEdit(self.frame)
+        self.priceLineEdit.setGeometry(QtCore.QRect(80, 175, 113, 20))
+        self.priceLineEdit.setObjectName("priceLineEdit")
+        self.priceLabel = QtWidgets.QLabel(self.frame)
+        self.priceLabel.setGeometry(QtCore.QRect(80, 155, 76, 16))
+        self.priceLabel.setObjectName("priceLabel")
+        self.quantityLineEdit = QtWidgets.QLineEdit(self.frame)
+        self.quantityLineEdit.setGeometry(QtCore.QRect(80, 230, 113, 20))
+        self.quantityLineEdit.setObjectName("quantityLineEdit")
+        self.quantityLabel = QtWidgets.QLabel(self.frame)
+        self.quantityLabel.setGeometry(QtCore.QRect(80, 210, 81, 16))
+        self.quantityLabel.setObjectName("quantityLabel")
         self.category_label = QtWidgets.QLabel(self.frame)
         self.category_label.setGeometry(QtCore.QRect(360, 100, 66, 16))
         self.category_label.setObjectName("category_label")
         self.comboBox = QtWidgets.QComboBox(self.frame)
-        self.comboBox.setGeometry(QtCore.QRect(360, 120, 111, 22))
+        self.comboBox.setGeometry(QtCore.QRect(360, 120, 200, 22))
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
+        self.edit_cat = QtWidgets.QPushButton(self.frame)
+        self.edit_cat.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.edit_cat.setGeometry(QtCore.QRect(570, 120, 50, 22))
+        self.edit_cat.setText("...")
+        self.edit_cat.clicked.connect(self.edit_category)
+        self.edit_cat.setObjectName("edit_cat")
+        font_cat_btn = QtGui.QFont()
+        font_cat_btn.setFamily("Arial")
+        font_cat_btn.setPointSize(8)
+        font_cat_btn.setBold(True)        
+        self.edit_cat.setFont(font_cat_btn)
         self.thickness_lineEdit = QtWidgets.QLineEdit(self.frame)
         self.thickness_lineEdit.setGeometry(QtCore.QRect(360, 170, 80, 20))
         self.thickness_lineEdit.setObjectName("thickness_lineEdit")
@@ -243,13 +319,23 @@ class Ui_AddProduct(QDialog):
         self.retranslateUi(AddProduct)
         QtCore.QMetaObject.connectSlotsByName(AddProduct)
 
+        AddProduct.setTabOrder(self.lineEdit, self.priceLineEdit)
+        AddProduct.setTabOrder(self.priceLineEdit, self.quantityLineEdit)
+        AddProduct.setTabOrder(self.quantityLineEdit, self.rollsize_input_width)
+        AddProduct.setTabOrder(self.rollsize_input_width, self.rollsize_input_length)
+        AddProduct.setTabOrder(self.rollsize_input_length, self.comboBox)
+        AddProduct.setTabOrder(self.comboBox, self.thickness_lineEdit)
+        AddProduct.setTabOrder(self.thickness_lineEdit, self.Image)
+        AddProduct.setTabOrder(self.Image, self.Cancel)
+        AddProduct.setTabOrder(self.Cancel, self.AddOrder_3)
+
     def retranslateUi(self, AddProduct):
         _translate = QtCore.QCoreApplication.translate
         AddProduct.setWindowTitle(_translate("AddProduct", "Dialog"))
         self.AddOrder.setText(_translate("AddProduct", "Add Product"))
         self.label.setText(_translate("AddProduct", "Product Name"))
-        self.label_2.setText(_translate("AddProduct", "Price"))
-        self.label_3.setText(_translate("AddProduct", "Quantity"))
+        self.priceLabel.setText(_translate("AddProduct", "Price"))
+        self.quantityLabel.setText(_translate("AddProduct", "Quantity"))
         self.category_label.setText(_translate("AddProduct", "Category"))
         self.thickness_label.setText(_translate("AddProduct", "Thickness"))
         self.thickness_oz.setText(_translate("AddProduct", "ounces."))
@@ -262,6 +348,7 @@ class Ui_AddProduct(QDialog):
         self.comboBox.setItemText(1, _translate("AddProduct", "Vinyl Sticker Printin"))
         self.comboBox.setItemText(2, _translate("AddProduct", "Laser Printing for papers and Stickers"))
         self.comboBox.setItemText(3, _translate("AddProduct", "T-shirt printing "))
+        self.edit_cat.setText(_translate("AddProduct", "Modify"))
         self.Image.setText(_translate("AddProduct", "Select Image"))
 
 if __name__ == "__main__":
