@@ -68,7 +68,7 @@ class Ui_Inventory_2(object):
             # Create a widget to hold both edit and delete buttons
             button_widget = QtWidgets.QWidget()
             layout = QtWidgets.QHBoxLayout(button_widget)
-            layout.setContentsMargins(0, 0, 0, 0)
+            layout.setContentsMargins(0, 0, 0, 0) 
             layout.setSpacing(10)  # Adjust spacing between buttons if needed
 
             edit_button = QtWidgets.QPushButton('Edit')
