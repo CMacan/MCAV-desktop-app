@@ -139,7 +139,7 @@ class Ui_Inventory_2(object):
     def add_product(self):
         from AddProduct import Ui_AddProduct
         self.window2 = QtWidgets.QDialog()
-        self.ui = Ui_AddProduct()
+        self.ui = Ui_AddProduct(Inventory_2)
         self.ui.setupUi(self.window2)
         self.window2.setModal(True)  
         self.window2.exec_() 
