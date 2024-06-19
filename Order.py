@@ -73,7 +73,7 @@ class Ui_Order_2(object):
         # Implement delete logic here
         order_id = self.tableWidget.item(row, 0).text()
         try:
-            sql = 'DELETE FROM "ORDERS" WHERE ORD_ID = %s'
+            sql = 'DELETE FROM ORDERS WHERE ORD_ID = %s'
             self.cur.execute(sql, (order_id,))
             self.conn.commit()
             QtWidgets.QMessageBox.information(None, 'Success', 'Product deleted successfully!')
