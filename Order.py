@@ -44,6 +44,44 @@ class Ui_Order_2(object):
         msg_box.setText(message)
         msg_box.exec_()
 
+    def search(self):
+        search_text = self.SearchInput.text().strip()
+        
+        if not search_text:
+            try:
+                # Fetch all products from the PRODUCT table
+                sql_all_order = """
+                SELECT ORDERS.ORD_ID, CUSTOMER.CUS_CODE, PRODUCT.PROD_CATEGORY, PRODUCT.PROD_NAME, ORDERS.ORD_SIZE, 
+                ORDERS.ORD_QUANTITY, ORDERS.ORD_TOTAL_AMOUNT, ORDERS.ORD_DATE, ORDERS.ORD_DATE_COMPLETION
+                FROM ORDERS
+                JOIN CUSTOMER ON ORDERS.CUS_CODE = CUSTOMER.CUS_CODE
+                JOIN PRODUCT ON ORDERS.PROD_ID = PRODUCT.PROD_ID
+                """
+                self.cur.execute(sql_all_order)
+                results = self.cur.fetchall()
+                self.display_orders(results)
+            except psycopg2.Error as e:
+                self.show_message("Database Error", f"Error fetching orders: {e}")
+            
+            return
+
+        try:
+            sql_search = """
+            SELECT ORDERS.ORD_ID, CUSTOMER.CUS_CODE, PRODUCT.PROD_CATEGORY, PRODUCT.PROD_NAME, ORDERS.ORD_SIZE, 
+            ORDERS.ORD_QUANTITY, ORDERS.ORD_TOTAL_AMOUNT, ORDERS.ORD_DATE, ORDERS.ORD_DATE_COMPLETION
+            FROM ORDERS
+            JOIN CUSTOMER ON ORDERS.CUS_CODE = CUSTOMER.CUS_CODE
+            JOIN PRODUCT ON ORDERS.PROD_ID = PRODUCT.PROD_ID
+            WHERE PROD_CATEGORY ILIKE %s
+            """
+            # Use search_pattern in execute instead of search_text
+            search_pattern = f"%{search_text}%"
+            self.cur.execute(sql_search, (search_pattern,))
+            results = self.cur.fetchall()
+            self.display_orders(results)
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching search results: {e}")
+
     def display_orders(self, orders):
         self.tableWidget.setRowCount(len(orders))
         self.tableWidget.setRowCount(len(orders))
@@ -149,9 +187,6 @@ class Ui_Order_2(object):
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
-    
-    def search(self):
-        pass
     
     def add_new_order(self):
         from AddOrder  import Ui_AddOrder
@@ -471,53 +506,65 @@ class Ui_Order_2(object):
         self.SearchFrame.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.SearchFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.SearchFrame.setObjectName("SearchFrame")
+        
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.SearchFrame)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+
         self.Search = QtWidgets.QLabel(self.SearchFrame)
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
         self.Search.setFont(font)
-        self.Search.setStyleSheet("font-weight: bold;\n"
-"")
+        self.Search.setStyleSheet("font-weight: bold;")
         self.Search.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Search.setObjectName("Search")
         self.horizontalLayout_2.addWidget(self.Search)
+
         self.SearchInput = QtWidgets.QLineEdit(self.SearchFrame)
         self.SearchInput.setMinimumSize(QtCore.QSize(0, 25))
         self.SearchInput.setMaximumSize(QtCore.QSize(200, 25))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.SearchInput.setFont(font)
-        self.SearchInput.setStyleSheet("background-color: #D9D9D9;\n"
-"border-radius: 5px;\n"
-"\n"
-"")
+        self.SearchInput.setStyleSheet("""
+            background-color: #D9D9D9; 
+            border-radius: 5px;
+            padding-left: 7px; 
+            font-size: 10.5pt; 
+        """)
+        self.SearchInput.setPlaceholderText("Enter Order ID...")
         self.SearchInput.setObjectName("SearchInput")
+        self.SearchInput.setFixedWidth(220)
         self.horizontalLayout_2.addWidget(self.SearchInput)
-        self.Filter = QtWidgets.QLabel(self.SearchFrame)
-        self.Filter.setMinimumSize(QtCore.QSize(25, 25))
-        self.Filter.setMaximumSize(QtCore.QSize(25, 25))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.Filter.setFont(font)
-        self.Filter.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Filter.setText("")
-        self.Filter.setPixmap(QtGui.QPixmap("static/filter.png"))
-        self.Filter.setScaledContents(True)
-        self.Filter.setObjectName("Filter")
-        self.horizontalLayout_2.addWidget(self.Filter)
-        spacerItem1 = QtWidgets.QSpacerItem(610, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem1)
-        self.verticalLayout_4.addWidget(self.SearchFrame)
-        self.tableWidget = QtWidgets.QTableWidget(self.DataFrame)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.tableWidget.setFont(font)
-        self.tableWidget.setColumnCount(10)
 
+        self.SearchBtn = QtWidgets.QPushButton(self.SearchFrame)
+        self.SearchBtn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.SearchBtn.setText("Search")
+        self.SearchBtn.setObjectName("SearchBtn")
+        self.SearchBtn.setStyleSheet("""
+            QPushButton {
+                background-color: #E08028; 
+                color: white; /* White text color */
+                border-radius: 5px; 
+                padding: 8px 16px; 
+                border: none; 
+                font-weight: bold;
+                width: 40px;
+                height:10px;
+            }
+            QPushButton:hover {
+                background-color: #ff8617; 
+            }
+        """)
+
+        self.SearchBtn.clicked.connect(self.search)
+        self.horizontalLayout_2.addWidget(self.SearchBtn)
+        self.verticalLayout_4.addWidget(self.SearchFrame)
+        
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem)
+
+        self.tableWidget = QtWidgets.QTableWidget(self.DataFrame)
         self.tableWidget.verticalHeader().setVisible(False)
+        self.tableWidget.setColumnCount(10)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()

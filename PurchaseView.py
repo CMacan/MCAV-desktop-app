@@ -35,6 +35,49 @@ class Ui_PurchaseView(object):
         except psycopg2.Error as e:
             self.show_message("Database Error", f"Error fetching data from database: {e}")
             return []
+        
+    def show_message(self, title, message):
+        msg_box = QtWidgets.QMessageBox()
+        msg_box.setIcon(QtWidgets.QMessageBox.Critical)
+        msg_box.setWindowTitle(title)
+        msg_box.setText(message)
+        msg_box.exec_()
+
+    def search(self):
+        search_text = self.SearchInput.text().strip()
+        
+        if not search_text:
+            try:
+                # Fetch all products from the PRODUCT table
+                sql_all_purchase = """
+                SELECT p.PUR_ID, p.SUP_ID, s.SUP_NAME, p.PUR_PRODUCT_NAME, p.PUR_AMOUNT, p.PUR_QUANTITY, 
+                p.PUR_ORDER_DATE, p.PUR_THICKNESS, p.PUR_ROLL_SIZE 
+                FROM PURCHASE p 
+                INNER JOIN SUPPLIER s ON p.SUP_ID = s.SUP_ID
+                """
+                self.cur.execute(sql_all_purchase)
+                results = self.cur.fetchall()
+                self.display_purchases(results)
+            except psycopg2.Error as e:
+                self.show_message("Database Error", f"Error fetching products: {e}")
+            
+            return
+
+        try:
+            sql_search = """
+            SELECT p.PUR_ID, p.SUP_ID, s.SUP_NAME, p.PUR_PRODUCT_NAME, p.PUR_AMOUNT, p.PUR_QUANTITY, 
+            p.PUR_ORDER_DATE, p.PUR_THICKNESS, p.PUR_ROLL_SIZE 
+            FROM PURCHASE p 
+            INNER JOIN SUPPLIER s ON p.SUP_ID = s.SUP_ID
+            WHERE PUR_PRODUCT_NAME ILIKE %s 
+            """
+            # Use search_pattern in execute instead of search_text
+            search_pattern = f"%{search_text}%"
+            self.cur.execute(sql_search, (search_pattern,))
+            results = self.cur.fetchall()
+            self.display_purchases(results)
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching search results: {e}")
 
     def display_purchases(self, purchases):
         self.tableWidget.setRowCount(len(purchases))
@@ -84,7 +127,7 @@ class Ui_PurchaseView(object):
 
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
-            self.tableWidget.setCellWidget(row_number, 10, cell_widget)
+            self.tableWidget.setCellWidget(row_number, 9, cell_widget)
 
     def update_purchase(self, row):
         from UpdatePurchase import Ui_UpdatePurchase
@@ -145,10 +188,7 @@ class Ui_PurchaseView(object):
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Dasboard()
         self.ui.setupUi(self.window2)
-        self.window2.showMaximized()   
-    
-    def search(self):
-        pass
+        self.window2.showMaximized()
 
     def view_supplier(self):
         from Supplier import Ui_Supplier
@@ -501,52 +541,64 @@ class Ui_PurchaseView(object):
         self.SearchFrame.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.SearchFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.SearchFrame.setObjectName("SearchFrame")
+
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.SearchFrame)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+
         self.Search = QtWidgets.QLabel(self.SearchFrame)
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
         self.Search.setFont(font)
-        self.Search.setStyleSheet("font-weight: bold;\n"
-"")
+        self.Search.setStyleSheet("font-weight: bold;")
         self.Search.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Search.setObjectName("Search")
         self.horizontalLayout_2.addWidget(self.Search)
+
         self.SearchInput = QtWidgets.QLineEdit(self.SearchFrame)
         self.SearchInput.setMinimumSize(QtCore.QSize(0, 25))
         self.SearchInput.setMaximumSize(QtCore.QSize(200, 25))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.SearchInput.setFont(font)
-        self.SearchInput.setStyleSheet("background-color: #D9D9D9;\n"
-"border-radius: 5px;\n"
-"\n"
-"")
+        self.SearchInput.setStyleSheet("""
+            background-color: #D9D9D9; 
+            border-radius: 5px;
+            padding-left: 7px; 
+            font-size: 10.5pt; 
+        """)
+        self.SearchInput.setPlaceholderText("Enter Product Name...")
         self.SearchInput.setObjectName("SearchInput")
+        self.SearchInput.setFixedWidth(220)
         self.horizontalLayout_2.addWidget(self.SearchInput)
-        self.Filter = QtWidgets.QLabel(self.SearchFrame)
-        self.Filter.setMinimumSize(QtCore.QSize(25, 25))
-        self.Filter.setMaximumSize(QtCore.QSize(25, 25))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.Filter.setFont(font)
-        self.Filter.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Filter.setText("")
-        self.Filter.setPixmap(QtGui.QPixmap("static/filter.png"))
-        self.Filter.setScaledContents(True)
-        self.Filter.setObjectName("Filter")
-        self.horizontalLayout_2.addWidget(self.Filter)
-        spacerItem1 = QtWidgets.QSpacerItem(610, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem1)
+
+        self.SearchBtn = QtWidgets.QPushButton(self.SearchFrame)
+        self.SearchBtn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.SearchBtn.setText("Search")
+        self.SearchBtn.setObjectName("SearchBtn")
+        self.SearchBtn.setStyleSheet("""
+            QPushButton {
+                background-color: #E08028; 
+                color: white; /* White text color */
+                border-radius: 5px; 
+                padding: 8px 16px; 
+                border: none; 
+                font-weight: bold;
+                width: 40px;
+                height:10px;
+            }
+            QPushButton:hover {
+                background-color: #ff8617; 
+            }
+        """)
+        self.SearchBtn.clicked.connect(self.search)
+        self.horizontalLayout_2.addWidget(self.SearchBtn)
         self.verticalLayout_4.addWidget(self.SearchFrame)
+        
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem)
+
         self.tableWidget = QtWidgets.QTableWidget(self.DataFrame)
         self.tableWidget.verticalHeader().setVisible(False)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.tableWidget.setFont(font)
-        self.tableWidget.setColumnCount(11)
+        self.tableWidget.setColumnCount(10)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
@@ -659,17 +711,6 @@ class Ui_PurchaseView(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         item.setForeground(brush)
         self.tableWidget.setHorizontalHeaderItem(9, item)
-        item = QtWidgets.QTableWidgetItem()
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(9)
-        font.setBold(True)
-        font.setWeight(75)
-        item.setFont(font)
-        brush = QtGui.QBrush(QtGui.QColor(71, 71, 71))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        item.setForeground(brush)
-        self.tableWidget.setHorizontalHeaderItem(10, item)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.verticalLayout_4.addWidget(self.tableWidget)
         self.verticalLayout_2.addWidget(self.DataFrame)
@@ -715,8 +756,6 @@ class Ui_PurchaseView(object):
         item = self.tableWidget.horizontalHeaderItem(8)
         item.setText(_translate("PurchaseView", "Roll Size"))
         item = self.tableWidget.horizontalHeaderItem(9)
-        item.setText(_translate("PurchaseView", "Status"))
-        item = self.tableWidget.horizontalHeaderItem(10)
         item.setText(_translate("PurchaseView", "Action"))
 import font_rc
 import images_rc
