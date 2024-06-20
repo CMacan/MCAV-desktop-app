@@ -34,6 +34,14 @@ class Ui_Customer_2(object):
             self.show_message("Database Error", f"Error fetching data from database: {e}")
             return []
     
+    def add_new_customer(self):
+        from AddCustomer import Ui_AddCustomer
+        self.window2 = QtWidgets.QDialog()
+        self.ui = Ui_AddCustomer()
+        self.ui.setupUi(self.window2)
+        self.window2.setModal(True)  
+        self.window2.exec_() 
+
     def show_message(self, title, message):
         msg_box = QtWidgets.QMessageBox()
         msg_box.setIcon(QtWidgets.QMessageBox.Critical)
@@ -439,6 +447,38 @@ class Ui_Customer_2(object):
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         spacerItem = QtWidgets.QSpacerItem(649, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem)
+
+        self.AddCustomer = QtWidgets.QPushButton(self.BtnContainer)
+        self.AddCustomer.clicked.connect(self.add_new_customer)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.AddCustomer.sizePolicy().hasHeightForWidth())
+        self.AddCustomer.setSizePolicy(sizePolicy)
+        self.AddCustomer.setMinimumSize(QtCore.QSize(150, 34))
+        self.AddCustomer.setMaximumSize(QtCore.QSize(150, 34))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        font.setBold(True)
+        font.setWeight(75)
+        self.AddCustomer.setFont(font)
+        self.AddCustomer.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.AddCustomer.setStyleSheet("font-size:12px;\n"
+        "border: 2px solid #E08028; \n"
+        "border-radius: 10px;\n"
+        "background-color: #E08028; \n"
+        "padding: 5px; \n"
+        "color: white; \n"
+        "font-weight: bold; frf")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/static/static/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.AddCustomer.setIcon(icon)
+        self.AddCustomer.setIconSize(QtCore.QSize(20, 20))
+        self.AddCustomer.setObjectName("AddCustomer")
+        self.horizontalLayout_3.addWidget(self.AddCustomer)
+        self.horizontalLayout_4.addWidget(self.BtnContainer)
+        self.verticalLayout_2.addWidget(self.Label)
+   
         self.horizontalLayout_4.addWidget(self.BtnContainer)
         self.verticalLayout_2.addWidget(self.Label)
         self.DataFrame = QtWidgets.QFrame(self.TableContainer)
@@ -633,6 +673,7 @@ class Ui_Customer_2(object):
         self.Profile.setText(_translate("Customer_2", "Profile"))
         self.ProductLabel.setText(_translate("Customer_2", "Customer List"))
         self.manageLabel.setText(_translate("Customer_2", "Manage your customers"))
+        self.AddCustomer.setText(_translate("Customer_2", "Add New Customer"))
         self.Search.setText(_translate("Customer_2", "Search"))
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("Customer_2", "Customer ID"))
