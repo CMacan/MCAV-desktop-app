@@ -269,6 +269,13 @@ class Ui_Order_2(object):
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
 
+    def purchase(self):
+        from PurchaseView import Ui_PurchaseView
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_PurchaseView()
+        self.ui.setupUi(self.window2)
+        self.window2.showMaximized()
+
     def customer(self):
         from Customer import Ui_Customer_2
         self.window2 = QtWidgets.QMainWindow()
@@ -382,30 +389,24 @@ class Ui_Order_2(object):
         self.Inventory.setObjectName("Inventory")
         self.horizontalLayout.addWidget(self.Inventory)
         self.Order = QtWidgets.QPushButton(self.NavbarFrame)
-        font = QtGui.QFont()
-        font.setPointSize(0)
-        font.setBold(True)
-        font.setWeight(75)
-        self.Order.setFont(font)
-        self.Order.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Order.setStyleSheet("font-size:12px;\n"
-"color: white;\n"
-"border: 2px solid #CD2E2E;\n"
-"background-color: #CD2E2E;")
-        self.Order.setObjectName("Order")
-        self.horizontalLayout.addWidget(self.Order)
-        self.Order = QtWidgets.QPushButton(self.NavbarFrame)
         self.Order.clicked.connect(self.order)
         self.Order.clicked.connect(Order_2.close)
-        font = QtGui.QFont()
-        font.setPointSize(-1)
-        font.setBold(True)
-        font.setWeight(75)
-        self.Order.setFont(font)
         self.Order.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Order.setStyleSheet("font-size:12px;")
         self.Order.setObjectName("Order")
+        self.Order.setStyleSheet("font-size:12px;\n"
+        "color: white;\n"
+        "border: 2px solid #CD2E2E;\n"
+        "background-color: #CD2E2E;\n"
+        "")
         self.horizontalLayout.addWidget(self.Order)
+        self.Purchase = QtWidgets.QPushButton(self.NavbarFrame)
+        self.Purchase.clicked.connect(self.purchase)
+        self.Purchase.clicked.connect(Order_2.close)
+        self.Purchase.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.Purchase.setStyleSheet("font-size:12px;")
+        self.Purchase.setObjectName("Purchase")
+        self.horizontalLayout.addWidget(self.Purchase)
         self.Customer = QtWidgets.QPushButton(self.NavbarFrame)
         self.Customer.clicked.connect(self.customer)
         self.Customer.clicked.connect(Order_2.close)
@@ -769,7 +770,7 @@ class Ui_Order_2(object):
         self.tarp.setText(_translate("Order_2", "TARPAULIN PRINTING SERVICES"))
         self.Inventory.setText(_translate("Order_2", "Inventory"))
         self.Order.setText(_translate("Order_2", "Orders"))
-        self.Order.setText(_translate("Order_2", "Orders"))
+        self.Purchase.setText(_translate("Order_2", "Purchases"))
         self.Customer.setText(_translate("Order_2", "Customers"))
         self.Profile.setText(_translate("Order_2", "Profile"))
         self.ProductLabel.setText(_translate("Order_2", "Order List"))
