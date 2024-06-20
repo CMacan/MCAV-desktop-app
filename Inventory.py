@@ -41,6 +41,40 @@ class Ui_Inventory_2(object):
         msg_box.setText(message)
         msg_box.exec_()
 
+    def search(self):
+        search_text = self.SearchInput.text().strip()
+        if not search_text:
+            try:
+                # Fetch all products from the PRODUCT table
+                sql_all_products = """
+                SELECT PROD_ID, PROD_IMAGE, PROD_NAME, PROD_CATEGORY, PROD_PRICE, 
+                PROD_QUANTITY, PROD_THICKNESS, PROD_ROLL_SIZE, PROD_LAST_UPDATED
+                FROM PRODUCT
+                """
+                self.cur.execute(sql_all_products)
+                results = self.cur.fetchall()
+                self.display_products(results)
+            except psycopg2.Error as e:
+                self.show_message("Database Error", f"Error fetching products: {e}")
+            
+            return
+
+        try:
+            sql_search = """
+            SELECT PROD_ID, PROD_IMAGE, PROD_NAME, PROD_CATEGORY, PROD_PRICE, 
+            PROD_QUANTITY, PROD_THICKNESS, PROD_ROLL_SIZE, PROD_LAST_UPDATED
+            FROM PRODUCT
+            WHERE PROD_ID = %s OR PROD_NAME ILIKE %s OR PROD_CATEGORY ILIKE %s
+            """
+            # Provide three parameters corresponding to the three placeholders in the query
+            search_pattern = f"%{search_text}%"
+            self.cur.execute(sql_search, (search_text, search_pattern, search_pattern))
+            results = self.cur.fetchall()
+            self.display_products(results)
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching search results: {e}")
+
+
     def display_products(self, products):
         self.tableWidget.setRowCount(len(products))
         for row_number, product in enumerate(products):
@@ -72,10 +106,34 @@ class Ui_Inventory_2(object):
             layout.setSpacing(10)  # Adjust spacing between buttons if needed
 
             edit_button = QtWidgets.QPushButton('Edit')
+            edit_button.setStyleSheet("""
+                QPushButton {
+                    background-color: #4CAF50; /* Green */
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #45a049;
+                }
+            """)
             edit_button.clicked.connect(lambda checked, row=row_number: self.update_product(row))
             layout.addWidget(edit_button)
 
             delete_button = QtWidgets.QPushButton('Delete')
+            delete_button.setStyleSheet("""
+                QPushButton {
+                    background-color: #f44336; /* Red */
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #da190b;
+                }
+            """)
             delete_button.clicked.connect(lambda checked, row=row_number: self.delete_product(row))
             layout.addWidget(delete_button)
 
@@ -124,7 +182,7 @@ class Ui_Inventory_2(object):
         self.update_product_ui.lineEdit_14.setText(product_data[6])
 
         self.dialog.exec_()
-
+        self.dialog.close()
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
@@ -133,13 +191,10 @@ class Ui_Inventory_2(object):
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
 
-    def search(self):
-        pass
-
     def add_product(self):
         from AddProduct import Ui_AddProduct
         self.window2 = QtWidgets.QDialog()
-        self.ui = Ui_AddProduct(Inventory_2)
+        self.ui = Ui_AddProduct(self)
         self.ui.setupUi(self.window2)
         self.window2.setModal(True)  
         self.window2.exec_() 
@@ -419,40 +474,60 @@ class Ui_Inventory_2(object):
         self.SearchFrame.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.SearchFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.SearchFrame.setObjectName("SearchFrame")
+
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.SearchFrame)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+
         self.Search = QtWidgets.QLabel(self.SearchFrame)
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
         self.Search.setFont(font)
-        self.Search.setStyleSheet("font-weight: bold;\n"
-"")
-        self.Search.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.Search.setStyleSheet("font-weight: bold;")
+        self.Search.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.Search.setObjectName("Search")
         self.horizontalLayout_2.addWidget(self.Search)
+
         self.SearchInput = QtWidgets.QLineEdit(self.SearchFrame)
         self.SearchInput.setMinimumSize(QtCore.QSize(0, 25))
         self.SearchInput.setMaximumSize(QtCore.QSize(200, 25))
-        self.SearchInput.setStyleSheet("background-color: #D9D9D9;\n"
-"border-radius: 5px;\n"
-"\n"
-"")
+        self.SearchInput.setStyleSheet("""
+            background-color: #D9D9D9; 
+            border-radius: 5px;
+            padding-left: 7px; 
+            font-size: 10.5pt; 
+        """)
+        self.SearchInput.setPlaceholderText("Enter ID or Name or Category...")
         self.SearchInput.setObjectName("SearchInput")
+        self.SearchInput.setFixedWidth(220)
         self.horizontalLayout_2.addWidget(self.SearchInput)
-        self.Filter = QtWidgets.QLabel(self.SearchFrame)
-        self.Filter.setMinimumSize(QtCore.QSize(25, 25))
-        self.Filter.setMaximumSize(QtCore.QSize(25, 25))
-        self.Filter.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Filter.setText("")
-        self.Filter.setPixmap(QtGui.QPixmap("static/filter.png"))
-        self.Filter.setScaledContents(True)
-        self.Filter.setObjectName("Filter")
-        self.horizontalLayout_2.addWidget(self.Filter)
-        spacerItem1 = QtWidgets.QSpacerItem(610, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem1)
+
+        self.SearchBtn = QtWidgets.QPushButton(self.SearchFrame)
+        self.SearchBtn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.SearchBtn.setText("Search")
+        self.SearchBtn.setObjectName("SearchBtn")
+        self.SearchBtn.setStyleSheet("""
+            QPushButton {
+                background-color: #E08028; 
+                color: white; /* White text color */
+                border-radius: 5px; 
+                padding: 8px 16px; 
+                border: none; 
+                font-weight: bold;
+                width: 40px;
+                height:10px;
+            }
+            QPushButton:hover {
+                background-color: #ff8617; 
+            }
+        """)
+        self.SearchBtn.clicked.connect(self.search)
+        self.horizontalLayout_2.addWidget(self.SearchBtn)
         self.verticalLayout_4.addWidget(self.SearchFrame)
+        
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem)
 
         self.tableWidget = QtWidgets.QTableWidget(self.DataFrame)
         self.tableWidget.verticalHeader().setVisible(False)

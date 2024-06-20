@@ -10,7 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from clickable import ClickableLabel 
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QDialog
 import psycopg2
 
 class Ui_Supplier(object):
@@ -24,7 +24,7 @@ class Ui_Supplier(object):
     def fetch_suppliers(self):
         try:
             sql = """
-            SELECT SUP_NAME, SUP_ID, SUPPLIER_EMAIL, SUP_CONTACT, SUP_COUNTRY, SUP_ADDRESS
+            SELECT SUP_ID, SUP_NAME, SUP_EMAIL, SUP_CONTACT, SUP_ADDRESS, SUP_COUNTRY
             FROM SUPPLIER
             """
             self.cur.execute(sql)
@@ -32,6 +32,13 @@ class Ui_Supplier(object):
         except psycopg2.Error as e:
             self.show_message("Database Error", f"Error fetching data from database: {e}")
             return []
+    
+    def show_message(self, title, message):
+        msg_box = QtWidgets.QMessageBox()
+        msg_box.setIcon(QtWidgets.QMessageBox.Critical)
+        msg_box.setWindowTitle(title)
+        msg_box.setText(message)
+        msg_box.exec_()
 
     def display_suppliers(self, suppliers):
         self.tableWidget.setRowCount(len(suppliers))
@@ -48,13 +55,36 @@ class Ui_Supplier(object):
             layout.setSpacing(10)  
 
             edit_button = QtWidgets.QPushButton('Edit')
-            edit_button.clicked.connect(lambda checked, row=row_number: self.update_customer(row))
+            edit_button.setStyleSheet("""
+                QPushButton {
+                    background-color: #4CAF50; /* Green */
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #45a049;
+                }
+            """)
+            edit_button.clicked.connect(lambda checked, row=row_number: self.update_supplier(row))
             layout.addWidget(edit_button)
 
             delete_button = QtWidgets.QPushButton('Delete')
-            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
+            delete_button.setStyleSheet("""
+                QPushButton {
+                    background-color: #f44336; /* Red */
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #da190b;
+                }
+            """)
+            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_supplier(row))
             layout.addWidget(delete_button)
-
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
             self.tableWidget.setCellWidget(row_number, 6, cell_widget)
@@ -73,13 +103,86 @@ class Ui_Supplier(object):
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
     
-        
     def order(self):
         from Order import Ui_Order_2
         self.window2 = QtWidgets.QMainWindow()
         self.ui = Ui_Order_2()
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
+
+    def delete_supplier(self, row):
+        sup_id = self.tableWidget.item(row, 0).text()
+        try:
+            # Check if there are any purchases associated with the supplier
+            self.cur.execute("SELECT COUNT(*) FROM PURCHASE WHERE SUP_ID = %s", (sup_id,))
+            count = self.cur.fetchone()[0]
+            
+            if count > 0:
+                reply = QtWidgets.QMessageBox.question(None, 'Warning', 'This supplier has associated purchases. Do you want to delete them?',
+                                                    QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No, QtWidgets.QMessageBox.No)
+                if reply == QtWidgets.QMessageBox.No:
+                    return
+            
+            # Delete associated purchases first
+            self.cur.execute("DELETE FROM PURCHASE WHERE SUP_ID = %s", (sup_id,))
+            self.conn.commit()
+            
+            # Then delete the supplier
+            self.cur.execute("DELETE FROM SUPPLIER WHERE SUP_ID = %s", (sup_id,))
+            self.conn.commit()
+
+            QtWidgets.QMessageBox.information(None, 'Success', 'Supplier deleted successfully!')
+            # Refresh table after deletion
+            suppliers = self.fetch_suppliers()
+            self.display_suppliers(suppliers)
+        except psycopg2.Error as e:
+            self.conn.rollback()
+            QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
+
+    def update_supplier(self, row):
+        from UpdateSupplier import Ui_UpdateSupplier
+        # Get data from the selected row
+        supplier_data = []
+        for column_number in range(6):
+            item = self.tableWidget.item(row, column_number)
+            if item is not None:
+                supplier_data.append(item.text())
+            else:
+                supplier_data.append("")  
+
+        # Retrieve the supplier ID from the database
+        supplier_name = supplier_data[1]
+        sql_get_supplier_id = "SELECT SUP_ID FROM SUPPLIER WHERE SUP_NAME = %s"
+        self.cur.execute(sql_get_supplier_id, (supplier_name,))
+        sup_id_result = self.cur.fetchone()
+        
+        if sup_id_result is None:
+            self.show_message("Error", "Selected supplier does not exist.")
+            return
+
+        sup_id = sup_id_result[0]
+
+        # Open the UpdateSupplier dialog window
+        self.dialog = QDialog()
+        self.update_supplier_ui = Ui_UpdateSupplier(sup_id)
+        self.update_supplier_ui.setupUi(self.dialog)
+
+        # Populate the QLineEdit fields with data from the database
+        self.update_supplier_ui.lineEdit.setText(supplier_data[1])  
+        self.update_supplier_ui.emailLineEdit.setText(supplier_data[2])
+        self.update_supplier_ui.contactLineEdit.setText(supplier_data[3])    
+        self.update_supplier_ui.addressLineEdit.setText(supplier_data[4])  
+        self.update_supplier_ui.countryComboBox.setCurrentText(supplier_data[5])
+        
+        self.dialog.exec_()
+
+    def add_new_supplier(self):
+        from AddSupplier import Ui_AddSupplier
+        self.window2 = QtWidgets.QDialog()
+        self.ui = Ui_AddSupplier()
+        self.ui.setupUi(self.window2)
+        self.window2.setModal(True)  
+        self.window2.exec_() 
 
     def inventory(self):
         from Inventory import Ui_Inventory_2
@@ -108,14 +211,6 @@ class Ui_Supplier(object):
         self.ui = Ui_Profile_2()
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
-
-    def add_new_supplier(self):
-        from AddSupplier import Ui_AddSupplier
-        self.window2 = QtWidgets.QDialog()
-        self.ui = Ui_AddSupplier()
-        self.ui.setupUi(self.window2)
-        self.window2.setModal(True)  
-        self.window2.exec_() 
 
     def setupUi(self, Supplier):
         Supplier.setObjectName("Supplier")
@@ -472,7 +567,9 @@ class Ui_Supplier(object):
         spacerItem1 = QtWidgets.QSpacerItem(610, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout_4.addWidget(self.SearchFrame)
+
         self.tableWidget = QtWidgets.QTableWidget(self.DataFrame)
+        self.tableWidget.verticalHeader().setVisible(False)
         font = QtGui.QFont()
         font.setPointSize(10)
         self.tableWidget.setFont(font)

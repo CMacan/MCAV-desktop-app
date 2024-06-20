@@ -83,6 +83,7 @@ class Ui_AddProduct(QDialog):
                 self.conn.commit()
                 self.show_message("Success", "Data saved successfully.")
                 self.dialog.accept()
+                
             except psycopg2.Error as e:
                 self.conn.rollback()  # Roll back transaction on error
                 error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
@@ -134,6 +135,7 @@ class Ui_AddProduct(QDialog):
                     success_msg.setText(f"New Category Added")
                     success_msg.setWindowTitle("Successfully Added")
                     success_msg.exec_()
+                    
                 except psycopg2.Error as e:
                     QMessageBox.warning(self, "Database Error", f"Error adding category: {e}")
                     self.conn.rollback()

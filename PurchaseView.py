@@ -49,16 +49,53 @@ class Ui_PurchaseView(object):
             layout.setSpacing(10)  
 
             edit_button = QtWidgets.QPushButton('Edit')
+            edit_button.setStyleSheet("""
+                QPushButton {
+                    background-color: #4CAF50; /* Green */
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #45a049;
+                }
+            """)
             edit_button.clicked.connect(lambda checked, row=row_number: self.update_customer(row))
             layout.addWidget(edit_button)
 
             delete_button = QtWidgets.QPushButton('Delete')
-            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
+            delete_button.setStyleSheet("""
+                QPushButton {
+                    background-color: #f44336; /* Red */
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #da190b;
+                }
+            """)
+            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_purchase(row))
             layout.addWidget(delete_button)
 
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
             self.tableWidget.setCellWidget(row_number, 10, cell_widget)
+
+    def delete_purchase(self, row):
+        pur_id = self.tableWidget.item(row, 0).text()
+        try:
+            sql = "DELETE FROM PURCHASE WHERE PUR_ID = %s"
+            self.cur.execute(sql, (pur_id,))
+            self.conn.commit()
+            QtWidgets.QMessageBox.information(None, 'Success', 'Purchase deleted successfully!')
+            # Refresh table after deletion
+            purchases = self.fetch_purchases()
+            self.display_purchases(purchases)
+        except psycopg2.Error as e:
+            QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
@@ -80,7 +117,7 @@ class Ui_PurchaseView(object):
     def add_purchase(self):
         from AddPurchase import Ui_AddPurchase
         self.window2 = QtWidgets.QDialog()
-        self.ui = Ui_AddPurchase(PurchaseView)
+        self.ui = Ui_AddPurchase(self)
         self.ui.setupUi(self.window2)
         self.window2.setModal(True)
         self.window2.exec_() 
