@@ -49,7 +49,7 @@ class Ui_Order_2(object):
         self.tableWidget.setRowCount(len(orders))
         self.tableWidget.setColumnCount(10)  # Ensure you have the correct number of columns
         headers = ['Ord_ID', 'Cus_Code', 'Prod_Category', 'Prod_Name', 'Ord_Size', 'Ord_Quantity', 
-                   'Ord_total_Amount', 'Ord_date', 'Ord_Date_Completion', 'Status', 'Actions']
+                   'Ord_total_Amount', 'Ord_date', 'Ord_Date_Completion', 'Actions']
         self.tableWidget.setHorizontalHeaderLabels(headers)
         
         for row_number, order in enumerate(orders):
@@ -101,9 +101,6 @@ class Ui_Order_2(object):
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
             self.tableWidget.setCellWidget(row_number, 9, cell_widget)  # Place in the last column
-
-    def status_order(self, row):
-        pass
 
     def delete_order(self, row):
         # Implement delete logic here
@@ -646,14 +643,14 @@ class Ui_Order_2(object):
         self.tableWidget.setColumnCount(10)
         # Set specific column widths
         self.tableWidget.setColumnWidth(0, 80)  
-        self.tableWidget.setColumnWidth(1, 200) 
+        self.tableWidget.setColumnWidth(1, 100) 
         self.tableWidget.setColumnWidth(2, 150) 
-        self.tableWidget.setColumnWidth(3, 200) 
-        self.tableWidget.setColumnWidth(4, 150)  
+        self.tableWidget.setColumnWidth(3, 100) 
+        self.tableWidget.setColumnWidth(4, 100)  
         self.tableWidget.setColumnWidth(5, 100)  
-        self.tableWidget.setColumnWidth(6, 200) 
-        self.tableWidget.setColumnWidth(7, 200)  
-        self.tableWidget.setColumnWidth(8, 200)  
+        self.tableWidget.setColumnWidth(6, 100) 
+        self.tableWidget.setColumnWidth(7, 150)  
+        self.tableWidget.setColumnWidth(8, 150)  
         self.tableWidget.setColumnWidth(9, 20)
         self.tableWidget.horizontalHeader().setCascadingSectionResizes(False)
         self.tableWidget.horizontalHeader().setSortIndicatorShown(False)
