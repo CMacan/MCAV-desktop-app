@@ -13,10 +13,8 @@ class Ui_AddOrder(object):
         self.cur = self.conn.cursor()
 
     def save_data(self):
-        # Get data from UI elements
         cus_code = self.searchLineEdit.text().strip()
-        order_date = self.dueDateEdit.date().toString(QtCore.Qt.ISODate)
-        due_date = self.dueDateEdit.text()
+        due_date = self.dueDateEdit.date().toString(QtCore.Qt.ISODate)
         product_category = self.comboBox.currentText()
         product_name = self.comboBox_product.currentText()
         quantity = self.QuantityLineEdit.text()
@@ -55,12 +53,23 @@ class Ui_AddOrder(object):
 
         if result == QMessageBox.Yes:
             try:
+                # Fetch product ID based on product name
+                sql_get_product_id = "SELECT PROD_ID FROM PRODUCT WHERE PROD_NAME = %s"
+                self.cur.execute(sql_get_product_id, (product_name,))
+                product_id_result = self.cur.fetchone()
+
+                if product_id_result is None:
+                    self.show_message("Error", "Selected product does not exist.")
+                    return
+
+                product_id = product_id_result[0]
+                
                 # Insert into ORDERS table
                 sql_orders = """
-                INSERT INTO ORDERS (CUS_CODE, ORD_DATE, ORD_DATE_COMPLETION, PROD_ID, ORD_QUANTITY, ORD_TOTAL_AMOUNT) 
-                VALUES (%s, %s, %s, %s, %s, %s)
+                INSERT INTO ORDERS (CUS_CODE, ORD_DATE_COMPLETION, PROD_ID, ORD_QUANTITY, ORD_TOTAL_AMOUNT) 
+                VALUES (%s, %s, %s, %s, %s)
                 """
-                self.cur.execute(sql_orders, (cus_code, order_date, due_date, product_name, quantity, total_amount))
+                self.cur.execute(sql_orders, (cus_code, due_date, product_id, quantity, total_amount))
 
                 self.conn.commit()
                 self.show_message("Success", "Data saved successfully.")
@@ -88,7 +97,7 @@ class Ui_AddOrder(object):
     def set_current_date(self):
         current_date = datetime.date.today()
         qt_date = QtCore.QDate(current_date.year, current_date.month, current_date.day)
-        self.orderDateEdit.setDate(qt_date)
+        self.dueDateEdit.setDate(qt_date)
 
     def show_message(self, title, message):
         msg = QMessageBox()

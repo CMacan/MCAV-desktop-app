@@ -12,7 +12,6 @@ class Ui_AddPurchase(object):
         self.cur = self.conn.cursor()
 
     def save_data(self):
-        # Get data from UI elements
         sup_id = self.searchLineEdit.text().strip()
         pur_total = self.totalLineEdit.text().strip()
         pur_order_date = self.orderDateEdit.date().toString(QtCore.Qt.ISODate)
