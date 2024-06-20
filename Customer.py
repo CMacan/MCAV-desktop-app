@@ -126,19 +126,63 @@ class Ui_Customer_2(object):
             self.tableWidget.setCellWidget(row_number, 6, cell_widget)
 
     def delete_customer(self, row):
-        # Implement delete logic here
-        # Example of deleting the selected row's data
         customer_code = self.tableWidget.item(row, 0).text()
-        try:
-            sql = "DELETE FROM CUSTOMER WHERE CUS_CODE = %s"
-            self.cur.execute(sql, (customer_code,))
-            self.conn.commit()
-            QtWidgets.QMessageBox.information(None, 'Success', 'Customer deleted successfully!')
-            # Refresh table after deletion
-            customers = self.fetch_customers()
-            self.display_customers(customers)
-        except psycopg2.Error as e:
-            QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
+
+        msgBox = QtWidgets.QMessageBox()
+        msgBox.setWindowTitle('Confirmation')
+        msgBox.setText(f"Are you sure you want to delete product?")
+        msgBox.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+        msgBox.setDefaultButton(QtWidgets.QMessageBox.No)
+
+        yes_button = msgBox.button(QtWidgets.QMessageBox.Yes)
+        yes_button.setStyleSheet("""
+            QPushButton {
+                background-color: #4CAF50; /* Green */
+                color: white;
+                padding: 5px 10px;
+                border: 2px solid #4CAF50; /* Green border */
+                border-radius: 5px;
+                min-width: 30px;
+                min-height: 15px;                 
+                font-size: 16px;
+            }
+            QPushButton:hover {
+                background-color: #45a049; /* Darker Green on hover */
+            }
+        """)
+        
+        no_button = msgBox.button(QtWidgets.QMessageBox.No)
+        no_button.setStyleSheet("""
+            QPushButton {
+                background-color: #f44336; /* Red */
+                color: white;
+                padding: 5px 10px;
+                border: 2px solid #f44336; /* Red border */
+                border-radius: 5px;
+                min-width: 30px;
+                min-height: 15px;
+                font-size: 16px;
+            }
+            QPushButton:hover {
+                background-color: #d32f2f; /* Darker Red on hover */
+            }
+        """)
+
+        reply = msgBox.exec_()
+
+        if reply == QtWidgets.QMessageBox.Yes:
+            try:
+                sql = "DELETE FROM CUSTOMER WHERE CUS_CODE = %s"
+                self.cur.execute(sql, (customer_code,))
+                self.conn.commit()
+                QtWidgets.QMessageBox.information(None, 'Success', 'Customer deleted successfully!')
+                # Refresh table after deletion
+                customers = self.fetch_customers()
+                self.display_customers(customers)
+            except psycopg2.Error as e:
+                QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
+        else:
+            pass
     
     def update_customer(self, row):
         from UpdateCustomer import Ui_UpdateCustomer

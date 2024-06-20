@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QMessageBox
 import psycopg2
 
 class Ui_UpdateCustomer(QObject):
-    customer_info_updated = pyqtSignal(str, str, str, str, str)  # Define a signal with updated customer information
+    customer_info_updated = pyqtSignal(str, str, str, str, str)  
 
     def customer(self):
         from Customer import Ui_Customer_2
@@ -156,7 +156,6 @@ class Ui_UpdateCustomer(QObject):
         self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
         self.AddOrder_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.AddOrder_3.clicked.connect(self.update_customer_info)
-        self.AddOrder_3.clicked.connect(UpdateCustomer.close)
         self.AddOrder_3.setGeometry(QtCore.QRect(475, 360, 91, 31))
         self.AddOrder_3.setObjectName("AddOrder_3")
 

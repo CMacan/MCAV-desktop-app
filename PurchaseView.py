@@ -172,17 +172,62 @@ class Ui_PurchaseView(object):
 
     def delete_purchase(self, row):
         pur_id = self.tableWidget.item(row, 0).text()
-        try:
-            sql = "DELETE FROM PURCHASE WHERE PUR_ID = %s"
-            self.cur.execute(sql, (pur_id,))
-            self.conn.commit()
-            QtWidgets.QMessageBox.information(None, 'Success', 'Purchase deleted successfully!')
-            # Refresh table after deletion
-            purchases = self.fetch_purchases()
-            self.display_purchases(purchases)
-        except psycopg2.Error as e:
-            QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
+        msgBox = QtWidgets.QMessageBox()
+        msgBox.setWindowTitle('Confirmation')
+        msgBox.setText(f"Are you sure you want to delete product?")
+        msgBox.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+        msgBox.setDefaultButton(QtWidgets.QMessageBox.No)
 
+        yes_button = msgBox.button(QtWidgets.QMessageBox.Yes)
+        yes_button.setStyleSheet("""
+            QPushButton {
+                background-color: #4CAF50; /* Green */
+                color: white;
+                padding: 5px 10px;
+                border: 2px solid #4CAF50; /* Green border */
+                border-radius: 5px;
+                min-width: 30px;
+                min-height: 15px;                 
+                font-size: 16px;
+            }
+            QPushButton:hover {
+                background-color: #45a049; /* Darker Green on hover */
+            }
+        """)
+        
+        no_button = msgBox.button(QtWidgets.QMessageBox.No)
+        no_button.setStyleSheet("""
+            QPushButton {
+                background-color: #f44336; /* Red */
+                color: white;
+                padding: 5px 10px;
+                border: 2px solid #f44336; /* Red border */
+                border-radius: 5px;
+                min-width: 30px;
+                min-height: 15px;
+                font-size: 16px;
+            }
+            QPushButton:hover {
+                background-color: #d32f2f; /* Darker Red on hover */
+            }
+        """)
+
+        reply = msgBox.exec_()
+
+        if reply == QtWidgets.QMessageBox.Yes:
+            try:
+                sql = "DELETE FROM PURCHASE WHERE PUR_ID = %s"
+                self.cur.execute(sql, (pur_id,))
+                self.conn.commit()
+                QtWidgets.QMessageBox.information(None, 'Success', 'Purchase deleted successfully!')
+                # Refresh table after deletion
+                purchases = self.fetch_purchases()
+                self.display_purchases(purchases)
+            except psycopg2.Error as e:
+                QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
+        else:
+            pass
+        
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
         self.window2 = QtWidgets.QMainWindow()
@@ -200,7 +245,7 @@ class Ui_PurchaseView(object):
     def add_purchase(self):
         from AddPurchase import Ui_AddPurchase
         self.window2 = QtWidgets.QDialog()
-        self.ui = Ui_AddPurchase(self)
+        self.ui = Ui_AddPurchase()
         self.ui.setupUi(self.window2)
         self.window2.setModal(True)
         self.window2.exec_() 

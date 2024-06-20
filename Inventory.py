@@ -144,9 +144,48 @@ class Ui_Inventory_2(object):
 
     def delete_product(self, row):
         product_code = self.tableWidget.item(row, 0).text()
-        reply = QtWidgets.QMessageBox.question(self.tableWidget, 'Confirmation', 
-            f"Are you sure you want to delete product with code {product_code}?",
-            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No, QtWidgets.QMessageBox.No)
+
+        msgBox = QtWidgets.QMessageBox()
+        msgBox.setWindowTitle('Confirmation')
+        msgBox.setText(f"Are you sure you want to delete product?")
+        msgBox.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+        msgBox.setDefaultButton(QtWidgets.QMessageBox.No)
+
+        yes_button = msgBox.button(QtWidgets.QMessageBox.Yes)
+        yes_button.setStyleSheet("""
+            QPushButton {
+                background-color: #4CAF50; /* Green */
+                color: white;
+                padding: 5px 10px;
+                border: 2px solid #4CAF50; /* Green border */
+                border-radius: 5px;
+                min-width: 30px;
+                min-height: 15px;                 
+                font-size: 16px;
+            }
+            QPushButton:hover {
+                background-color: #45a049; /* Darker Green on hover */
+            }
+        """)
+        
+        no_button = msgBox.button(QtWidgets.QMessageBox.No)
+        no_button.setStyleSheet("""
+            QPushButton {
+                background-color: #f44336; /* Red */
+                color: white;
+                padding: 5px 10px;
+                border: 2px solid #f44336; /* Red border */
+                border-radius: 5px;
+                min-width: 30px;
+                min-height: 15px;
+                font-size: 16px;
+            }
+            QPushButton:hover {
+                background-color: #d32f2f; /* Darker Red on hover */
+            }
+        """)
+
+        reply = msgBox.exec_()
 
         if reply == QtWidgets.QMessageBox.Yes:
             try:

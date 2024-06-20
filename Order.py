@@ -143,17 +143,63 @@ class Ui_Order_2(object):
     def delete_order(self, row):
         # Implement delete logic here
         order_id = self.tableWidget.item(row, 0).text()
-        try:
-            sql = 'DELETE FROM ORDERS WHERE ORD_ID = %s'
-            self.cur.execute(sql, (order_id,))
-            self.conn.commit()
-            QtWidgets.QMessageBox.information(None, 'Success', 'Product deleted successfully!')
-            # Refresh table after deletion
-            orders = self.fetch_orders_with_details()
-            self.display_orders(orders)
-        except psycopg2.Error as e:
-            QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
-    
+
+        msgBox = QtWidgets.QMessageBox()
+        msgBox.setWindowTitle('Confirmation')
+        msgBox.setText(f"Are you sure you want to delete product?")
+        msgBox.setStandardButtons(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+        msgBox.setDefaultButton(QtWidgets.QMessageBox.No)
+
+        yes_button = msgBox.button(QtWidgets.QMessageBox.Yes)
+        yes_button.setStyleSheet("""
+            QPushButton {
+                background-color: #4CAF50; /* Green */
+                color: white;
+                padding: 5px 10px;
+                border: 2px solid #4CAF50; /* Green border */
+                border-radius: 5px;
+                min-width: 30px;
+                min-height: 15px;                 
+                font-size: 16px;
+            }
+            QPushButton:hover {
+                background-color: #45a049; /* Darker Green on hover */
+            }
+        """)
+        
+        no_button = msgBox.button(QtWidgets.QMessageBox.No)
+        no_button.setStyleSheet("""
+            QPushButton {
+                background-color: #f44336; /* Red */
+                color: white;
+                padding: 5px 10px;
+                border: 2px solid #f44336; /* Red border */
+                border-radius: 5px;
+                min-width: 30px;
+                min-height: 15px;
+                font-size: 16px;
+            }
+            QPushButton:hover {
+                background-color: #d32f2f; /* Darker Red on hover */
+            }
+        """)
+
+        reply = msgBox.exec_()
+
+        if reply == QtWidgets.QMessageBox.Yes:
+            try:
+                sql = 'DELETE FROM ORDERS WHERE ORD_ID = %s'
+                self.cur.execute(sql, (order_id,))
+                self.conn.commit()
+                QtWidgets.QMessageBox.information(None, 'Success', 'Product deleted successfully!')
+                # Refresh table after deletion
+                orders = self.fetch_orders_with_details()
+                self.display_orders(orders)
+            except psycopg2.Error as e:
+                QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
+        else:
+            pass
+        
     def update_order(self, row):
         from UpdateOrder import Ui_UpdateOrder
         # Get data from the selected row
