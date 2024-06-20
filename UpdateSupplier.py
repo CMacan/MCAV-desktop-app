@@ -59,6 +59,7 @@ class Ui_UpdateSupplier(QDialog):
             self.conn.commit()
 
             self.show_message("Success", "Supplier updated successfully.")
+            
         except psycopg2.Error as e:
             self.conn.rollback()  # Roll back transaction on error
             error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"

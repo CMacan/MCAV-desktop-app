@@ -148,7 +148,7 @@ class Ui_Inventory_2(object):
         self.update_product_ui.lineEdit_14.setText(product_data[6])
 
         self.dialog.exec_()
-
+        self.dialog.close()
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
