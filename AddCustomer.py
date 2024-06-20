@@ -52,7 +52,7 @@ class Ui_AddCustomer(QDialog):
         if result == QMessageBox.Yes:
             # Insert customer into database
             sql = """
-                INSERT INTO CUSTOMER (CUS_FNAME, CUS_LNAME, CUS_EMAIL, CUS_CONTACT, CUS_ADDRESS)
+                INSERT INTO CUSTOMER (CUS_FNAME, CUS_LNAME, CUS_EMAIL, CUS_PHONE, CUS_ADDRESS)
                 VALUES (%s, %s, %s, %s, %s)
                 """
             try:
