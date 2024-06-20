@@ -52,19 +52,26 @@ class Ui_AddSupplier(QDialog):
         if result == QMessageBox.Yes:
             # Insert supplier into database
             sql = """
-                INSERT INTO SUPPLIER (SUP_NAME, SUPPLIER_EMAIL, SUP_CONTACT, SUP_ADDRESS, SUP_COUNTRY)
+                INSERT INTO SUPPLIER (SUP_NAME, SUP_EMAIL, SUP_CONTACT, SUP_ADDRESS, SUP_COUNTRY)
                 VALUES (%s, %s, %s, %s, %s)
                 """
             try:
                 self.cur.execute(sql, (sup_name, sup_email, sup_contact, sup_address, sup_country))
                 self.conn.commit()
                 self.show_message("Success", "Data saved successfully.")
-                
+                self.clear_input_fields
 
             except psycopg2.Error as e:
                 self.conn.rollback()  # Roll back transaction on error
                 error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
-                self.show_message("Error", error_message)  
+                self.show_message("Error", error_message) 
+
+    def clear_input_fields(self):
+        self.lineEdit.clear()
+        self.emailLineEdit.clear()
+        self.contactLineEdit.clear()
+        self.addressLineEdit.clear()
+        self.countryComboBox.setCurrentIndex(0) 
 
     def show_message(self, title, message):
         msg = QMessageBox()

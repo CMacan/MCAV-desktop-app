@@ -82,11 +82,22 @@ class Ui_AddProduct(QDialog):
                 self.cur.execute(sql, (product_name, price, quantity, category, thickness, roll_size, self.image_data))
                 self.conn.commit()
                 self.show_message("Success", "Data saved successfully.")
+                self.clear_input_fields()
                 
             except psycopg2.Error as e:
                 self.conn.rollback()  # Roll back transaction on error
                 error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
                 self.show_message("Error", error_message)
+
+    def clear_input_fields(self):
+        self.lineEdit.clear()
+        self.priceLineEdit.clear()
+        self.quantityLineEdit.clear()
+        self.thickness_lineEdit.clear()
+        self.rollsize_input_width.clear()
+        self.rollsize_input_length.clear()
+        self.comboBox.setCurrentIndex(0)  
+        self.image_label.clear()
 
     def add_new_image(self):
         options = QFileDialog.Options()
@@ -105,7 +116,7 @@ class Ui_AddProduct(QDialog):
         msg.setText(message)
         msg.setIcon(QMessageBox.Information)
         msg.exec_()
-
+        QtCore.QTimer.singleShot(0, self.close)
     
     def load_categories(self):
         try:

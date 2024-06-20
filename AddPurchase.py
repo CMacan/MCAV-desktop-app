@@ -1,16 +1,15 @@
 import psycopg2
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMessageBox
-
+from PyQt5.QtWidgets import QMessageBox,  QDialogButtonBox
+import datetime
 
 class Ui_AddPurchase(object):
 
-    def __init__(self, dialog):
+    def __init__(self):
         # PostgreSQL connection
         self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj",
                                      password="Milliondollarbaby123", port=6543)
         self.cur = self.conn.cursor()
-        self.dialog = dialog
 
     def save_data(self):
         # Get data from UI elements
@@ -66,11 +65,36 @@ class Ui_AddPurchase(object):
                 self.cur.execute(sql_purchase, (sup_id, pur_total, pur_order_date, pur_product_name, pur_quantity, pur_thickness, pur_roll_size))
                 self.conn.commit()
                 self.show_message("Success", "Data saved successfully.")
+                self.clear_input_fields()
+                self.set_current_date()
 
             except psycopg2.Error as e:
                 self.conn.rollback()  # Roll back transaction on error
                 error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
                 self.show_message("Error", error_message)
+
+    def clear_input_fields(self):
+        self.searchLineEdit.clear()
+        self.lineEdit.clear()
+        self.quantityLineEdit.clear()
+        self.emailLineEdit.clear()
+        self.contactLineEdit.clear()
+        self.addressLineEdit.clear()
+        self.countryLineEdit.clear()
+        self.totalLineEdit.clear()
+        self.totalLineEdit.clear()
+        self.addressLineEdit.clear()
+        self.orderDateEdit.setDate(QtCore.QDate())
+        self.prodNameLineEdit.clear()
+        self.thicknessLineEdit.clear()
+        self.quantityLineEdit.clear()
+        self.rollsizeLineEdit1.clear()
+        self.rollsizeLineEdit2.clear()  
+
+    def set_current_date(self):
+        current_date = datetime.date.today()
+        qt_date = QtCore.QDate(current_date.year, current_date.month, current_date.day)
+        self.orderDateEdit.setDate(qt_date)
 
     def show_message(self, title, message):
         msg = QMessageBox()
@@ -323,7 +347,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     AddPurchase = QtWidgets.QDialog()
-    ui = Ui_AddPurchase(AddPurchase)
+    ui = Ui_AddPurchase()
     ui.setupUi(AddPurchase)
     AddPurchase.show()
     sys.exit(app.exec_())
