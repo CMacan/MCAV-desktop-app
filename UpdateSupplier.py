@@ -217,8 +217,9 @@ class Ui_UpdateSupplier(QDialog):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    sup_id = 1
     UpdateSupplier = QDialog()
-    ui = Ui_UpdateSupplier(UpdateSupplier)
+    ui = Ui_UpdateSupplier(sup_id)
     ui.setupUi(UpdateSupplier)
     UpdateSupplier.show()
     sys.exit(app.exec_())
