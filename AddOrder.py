@@ -310,9 +310,8 @@ class Ui_AddOrder(object):
                                                 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">X</span></p></body></html>"))
         self.comboBox_unitMeasure.setItemText(0, _translate("AddOrder", "ft"))
         self.comboBox_unitMeasure.setItemText(1, _translate("AddOrder", "inches"))
-        self.comboBox_unitMeasure.setItemText(2, _translate("AddOrder", "small"))
-        self.comboBox_unitMeasure.setItemText(3, _translate("AddOrder", "medium"))
-        self.comboBox_unitMeasure.setItemText(4, _translate("AddOrder", "large"))
+        self.comboBox_unitMeasure.setItemText(2, _translate("AddOrder", "cm"))
+        self.comboBox_unitMeasure.setItemText(3, _translate("AddOrder", "meters"))
 
 if __name__ == "__main__":
     import sys
