@@ -672,6 +672,7 @@ class Ui_Supplier(object):
         self.Inventory.setText(_translate("Supplier", "Inventory"))
         self.Order.setText(_translate("Supplier", "Orders"))
         self.Purchase.setText(_translate("Supplier", "Purchases"))
+        self.Customer.setText(_translate("Supplier", "Customer"))
         self.Profile.setText(_translate("Supplier", "Profile"))
         self.ProductLabel.setText(_translate("Supplier", "Supplier List"))
         self.manageLabel.setText(_translate("Supplier", "Manage your suppliers"))
