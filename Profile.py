@@ -54,14 +54,6 @@ class Ui_Profile_2(object):
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
 
-
-    def report(self):
-        from Report import Ui_Report_2
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Report_2()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
-
     def purchase(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
@@ -201,19 +193,6 @@ class Ui_Profile_2(object):
 "")
         self.Purchase.setObjectName("Purchase")
         self.horizontalLayout.addWidget(self.Purchase)
-        self.Report = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Report.clicked.connect(self.report)
-        self.Report.clicked.connect(Profile_2.close)
-        font = QtGui.QFont()
-        font.setPointSize(-1)
-        font.setBold(True)
-        font.setWeight(75)
-        self.Report.setFont(font)
-        self.Report.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Report.setStyleSheet("font-size:12px;\n"
-"")
-        self.Report.setObjectName("Report")
-        self.horizontalLayout.addWidget(self.Report)
         self.Customer = QtWidgets.QPushButton(self.NavbarFrame)
         self.Customer.clicked.connect(self.customer)
         self.Customer.clicked.connect(Profile_2.close)
@@ -469,7 +448,6 @@ class Ui_Profile_2(object):
         self.Inventory.setText(_translate("Profile_2", "Inventory"))
         self.Order.setText(_translate("Profile_2", "Orders"))
         self.Purchase.setText(_translate("Profile_2", "Purchases"))
-        self.Report.setText(_translate("Profile_2", "Reports"))
         self.Customer.setText(_translate("Profile_2", "Customers"))
         self.Profile.setText(_translate("Profile_2", "Profile"))
         self.Inventory_2.setText(_translate("Profile_2", "Logout"))

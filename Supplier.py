@@ -191,13 +191,6 @@ class Ui_Supplier(object):
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
 
-    def report(self):
-        from Report import Ui_Report_2
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Report_2()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
-
     def purchase(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
@@ -351,18 +344,6 @@ class Ui_Supplier(object):
 "background-color: #CD2E2E;")
         self.Purchase.setObjectName("Purchase")
         self.horizontalLayout.addWidget(self.Purchase)
-        self.Report = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Report.clicked.connect(self.report)
-        self.Report.clicked.connect(Supplier.close)
-        font = QtGui.QFont()
-        font.setPointSize(-1)
-        font.setBold(True)
-        font.setWeight(75)
-        self.Report.setFont(font)
-        self.Report.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Report.setStyleSheet("font-size:12px;")
-        self.Report.setObjectName("Report")
-        self.horizontalLayout.addWidget(self.Report)
         self.Customer = QtWidgets.QPushButton(self.NavbarFrame)
         self.Customer.clicked.connect(self.customer)
         self.Customer.clicked.connect(Supplier.close)
@@ -691,8 +672,6 @@ class Ui_Supplier(object):
         self.Inventory.setText(_translate("Supplier", "Inventory"))
         self.Order.setText(_translate("Supplier", "Orders"))
         self.Purchase.setText(_translate("Supplier", "Purchases"))
-        self.Report.setText(_translate("Supplier", "Reports"))
-        self.Customer.setText(_translate("Supplier", "Customers"))
         self.Profile.setText(_translate("Supplier", "Profile"))
         self.ProductLabel.setText(_translate("Supplier", "Supplier List"))
         self.manageLabel.setText(_translate("Supplier", "Manage your suppliers"))
