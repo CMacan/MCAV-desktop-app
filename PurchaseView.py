@@ -10,8 +10,10 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from clickable import ClickableLabel 
+from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import Qt
 import psycopg2
+from PyQt5.QtCore import QDate
 
 class Ui_PurchaseView(object):
     def __init__(self):
@@ -36,8 +38,8 @@ class Ui_PurchaseView(object):
 
     def display_purchases(self, purchases):
         self.tableWidget.setRowCount(len(purchases))
-        for row_number, customer in enumerate(purchases):
-            for column_number, data in enumerate(customer):
+        for row_number, purchase in enumerate(purchases):
+            for column_number, data in enumerate(purchase):
                 item = QtWidgets.QTableWidgetItem()
                 item.setTextAlignment(QtCore.Qt.AlignCenter)
                 item.setText(str(data))
@@ -61,7 +63,7 @@ class Ui_PurchaseView(object):
                     background-color: #45a049;
                 }
             """)
-            edit_button.clicked.connect(lambda checked, row=row_number: self.update_customer(row))
+            edit_button.clicked.connect(lambda checked, row=row_number: self.update_purchase(row))
             layout.addWidget(edit_button)
 
             delete_button = QtWidgets.QPushButton('Delete')
@@ -83,6 +85,47 @@ class Ui_PurchaseView(object):
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
             self.tableWidget.setCellWidget(row_number, 10, cell_widget)
+
+    def update_purchase(self, row):
+        from UpdatePurchase import Ui_UpdatePurchase
+        
+        # Get data from the selected row
+        purchase_data = []
+        for column_number in range(9):  
+            item = self.tableWidget.item(row, column_number)
+            if item is not None:
+                purchase_data.append(item.text())
+            else:
+                purchase_data.append("")
+
+        # Retrieve the purchase ID from the database
+        purchase_id = purchase_data[0]  # Assuming PUR_ID is in the first column
+        sql_get_purchase_id = "SELECT PUR_ID FROM PURCHASE WHERE PUR_ID = %s"
+        self.cur.execute(sql_get_purchase_id, (purchase_id,))
+        pur_id_result = self.cur.fetchone()
+
+        if pur_id_result is None:
+            self.show_message("Error", "Selected purchase does not exist.")
+            return
+
+        pur_id = pur_id_result[0]
+        sup_id = purchase_data[1]
+
+        # Open the UpdatePurchase dialog window
+        self.dialog = QDialog()
+        self.update_purchase_ui = Ui_UpdatePurchase(pur_id)
+        self.update_purchase_ui.setupUi(self.dialog)
+
+        # Populate the QLineEdit fields with data from the database
+        self.update_purchase_ui.searchLineEdit.setText(sup_id)   
+        self.update_purchase_ui.totalLineEdit.setText(purchase_data[4])   
+        self.update_purchase_ui.orderDateEdit.setDate(QDate.fromString(purchase_data[6], "yyyy-MM-dd")) 
+        self.update_purchase_ui.prodNameLineEdit.setText(purchase_data[3])  
+        self.update_purchase_ui.thicknessLineEdit.setText(purchase_data[7])
+        self.update_purchase_ui.quantityLineEdit.setText(purchase_data[5]) 
+        self.update_purchase_ui.rollsizeLineEdit1.setText(purchase_data[8]) 
+
+        self.dialog.exec_()
 
     def delete_purchase(self, row):
         pur_id = self.tableWidget.item(row, 0).text()

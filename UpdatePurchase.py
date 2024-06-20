@@ -3,74 +3,50 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 
-class Ui_AddPurchase(object):
+class Ui_UpdatePurchase(object):
 
-    def __init__(self, dialog):
+    def __init__(self, pur_id):
         # PostgreSQL connection
         self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj",
                                      password="Milliondollarbaby123", port=6543)
         self.cur = self.conn.cursor()
-        self.dialog = dialog
+        self.pur_id = pur_id
 
     def save_data(self):
         # Get data from UI elements
         sup_id = self.searchLineEdit.text().strip()
-        pur_total = self.totalLineEdit.text().strip()
+        pur_amount = self.totalLineEdit.text().strip()
         pur_order_date = self.orderDateEdit.date().toString(QtCore.Qt.ISODate)
-        pur_product_name = self.prodNameLineEdit.text().strip()
-        pur_quantity = self.quantityLineEdit.text().strip()
+        pur_prod_name = self.prodNameLineEdit.text().strip()
         pur_thickness = self.thicknessLineEdit.text().strip()
-        rollsize_width = self.rollsizeLineEdit1.text().strip()
-        rollsize_length = self.rollsizeLineEdit2.text().strip()
-
-        pur_roll_size = f"{rollsize_width} x {rollsize_length}"
+        pur_quantity = self.quantityLineEdit.text().strip()
+        pur_rollsize_width = self.rollsizeLineEdit1.text()
+        pur_rollsize_height = self.rollsizeLineEdit2.text()
+        pur_roll_size = f"{pur_rollsize_width} X {pur_rollsize_height}"
 
         # Validate input data
-        if not all([sup_id, pur_order_date, pur_product_name, pur_quantity]):
-            missing_fields = []
-            if not sup_id:
-                missing_fields.append("Supplier ID")
-            if not pur_total:
-                missing_fields.append("Total Amount")
-            if not pur_order_date:
-                missing_fields.append("Order Date")
-            if not pur_product_name:
-                missing_fields.append("Product Name")
-            if not pur_quantity:
-                missing_fields.append("Quantity")
-
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Warning)
-            msg.setText(f"Please input all required fields:\n{', '.join(missing_fields)}")
-            msg.setWindowTitle("Required Fields")
-            msg.exec_()
+        if not (sup_id and pur_amount and pur_order_date and pur_prod_name and pur_quantity):
+            self.show_message("Error", "Please fill all the fields.")
             return
 
-        confirm_msg = QMessageBox()
-        confirm_msg.setIcon(QMessageBox.Question)
-        confirm_msg.setText("Add to Purchase list?")
-        confirm_msg.setWindowTitle("Confirmation")
-        confirm_msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        try:
+            # Update purchase details using the stored purchase ID
+            sql_update_purchase = """
+            UPDATE PURCHASE 
+            SET SUP_ID = %s, PUR_AMOUNT = %s, PUR_ORDER_DATE = %s, PUR_PRODUCT_NAME = %s,
+            PUR_THICKNESS = %s, PUR_QUANTITY = %s, PUR_ROLL_SIZE = %s
+            WHERE PUR_ID = %s
+            """
 
-        result = confirm_msg.exec_()
+            self.cur.execute(sql_update_purchase, (sup_id, pur_amount, pur_order_date, pur_prod_name, pur_thickness, pur_quantity, pur_roll_size, self.pur_id))
+            self.conn.commit()
 
-        if result == QMessageBox.Yes:
-            # Insert into SUPPLIER table
-            try:
-                # Insert into PURCHASE table
-                sql_purchase = """
-                INSERT INTO PURCHASE (SUP_ID, PUR_AMOUNT, PUR_ORDER_DATE, PUR_PRODUCT_NAME, PUR_QUANTITY, PUR_THICKNESS, PUR_ROLL_SIZE)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-                """
-
-                self.cur.execute(sql_purchase, (sup_id, pur_total, pur_order_date, pur_product_name, pur_quantity, pur_thickness, pur_roll_size))
-                self.conn.commit()
-                self.show_message("Success", "Data saved successfully.")
-
-            except psycopg2.Error as e:
-                self.conn.rollback()  # Roll back transaction on error
-                error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
-                self.show_message("Error", error_message)
+            self.show_message("Success", "Purchase updated successfully.")
+            
+        except psycopg2.Error as e:
+            self.conn.rollback()  # Roll back transaction on error
+            error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
+            self.show_message("Error", error_message) 
 
     def show_message(self, title, message):
         msg = QMessageBox()
@@ -101,16 +77,16 @@ class Ui_AddPurchase(object):
             error_message = f"Error fetching data: {e.pgcode} - {e.pgerror}"
             self.show_message("Error", error_message)
 
-    def setupUi(self, AddPurchase):
-        AddPurchase.setObjectName("AddPurchase")
-        AddPurchase.resize(640, 480)
-        self.frame = QtWidgets.QFrame(AddPurchase)
+    def setupUi(self, UpdatePurchase):
+        UpdatePurchase.setObjectName("UpdatePurchase")
+        UpdatePurchase.resize(640, 480)
+        self.frame = QtWidgets.QFrame(UpdatePurchase)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
         self.frame.setStyleSheet("""
             QFrame {
                 background-color: rgb(255, 255, 255);
             }
-            QLabel#AddOrder {
+            QLabel#UpdatePurchase {
                 font-size: 25px;
             }
             QLineEdit {
@@ -129,6 +105,7 @@ class Ui_AddPurchase(object):
                 color: rgb(255, 255, 255);
                 background-color: #202020;
             }
+                              
             QPushButton {
                 color: rgb(255, 255, 255);
                 background-color: #CD2E2E;
@@ -137,9 +114,14 @@ class Ui_AddPurchase(object):
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
-        self.AddOrder = QtWidgets.QLabel(self.frame)
-        self.AddOrder.setGeometry(QtCore.QRect(35, 30, 161, 26))
-        self.AddOrder.setObjectName("AddOrder")
+        self.UpdatePurchase = QtWidgets.QLabel(self.frame)
+        self.UpdatePurchase.setGeometry(QtCore.QRect(35, 20, 250, 50))
+        self.UpdatePurchase.setObjectName("UpdatePurchase")
+        font_UpdatePurchase = QtGui.QFont()
+        font_UpdatePurchase.setFamily("Arial")
+        font_UpdatePurchase.setPointSize(15)
+        font_UpdatePurchase.setBold(True)
+        self.UpdatePurchase.setFont(font_UpdatePurchase)
 
         self.searchLineEdit = QtWidgets.QLineEdit(self.frame)
         self.searchLineEdit.setGeometry(QtCore.QRect(80, 90, 111, 20))
@@ -257,7 +239,7 @@ class Ui_AddPurchase(object):
         self.thicknessLabel.setObjectName("thicknessLabel")
 
         self.Cancel = QtWidgets.QPushButton(self.frame)
-        self.Cancel.clicked.connect(AddPurchase.close)
+        self.Cancel.clicked.connect(UpdatePurchase.close)
         self.Cancel.setGeometry(QtCore.QRect(370, 410, 96, 31))
         self.Cancel.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Cancel.setObjectName("Cancel")
@@ -267,63 +249,63 @@ class Ui_AddPurchase(object):
         font_Cancel.setBold(True)
         self.Cancel.setFont(font_Cancel)
 
-        self.AddOrder_3 = QtWidgets.QPushButton(self.frame)
-        self.AddOrder_3.clicked.connect(self.save_data)
-        self.AddOrder_3.setGeometry(QtCore.QRect(480, 410, 100, 31))
-        self.AddOrder_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.AddOrder_3.setObjectName("AddOrder_3")
+        self.UpdatePurchase_3 = QtWidgets.QPushButton(self.frame)
+        self.UpdatePurchase_3.clicked.connect(self.save_data)
+        self.UpdatePurchase_3.setGeometry(QtCore.QRect(480, 410, 120, 31))
+        self.UpdatePurchase_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.UpdatePurchase_3.setObjectName("UpdatePurchase_3")
         font_add = QtGui.QFont()
         font_add.setFamily("Arial")
         font_add.setPointSize(9)
         font_add.setBold(True)
-        self.AddOrder_3.setFont(font_add)
+        self.UpdatePurchase_3.setFont(font_add)
 
-        self.retranslateUi(AddPurchase)
-        QtCore.QMetaObject.connectSlotsByName(AddPurchase)
+        self.retranslateUi(UpdatePurchase)
+        QtCore.QMetaObject.connectSlotsByName(UpdatePurchase)
 
         # Set tab order
-        AddPurchase.setTabOrder(self.searchLineEdit, self.searchButton)
-        AddPurchase.setTabOrder(self.searchButton, self.lineEdit)
-        AddPurchase.setTabOrder(self.lineEdit, self.emailLineEdit)
-        AddPurchase.setTabOrder(self.emailLineEdit, self.contactLineEdit)
-        AddPurchase.setTabOrder(self.contactLineEdit, self.addressLineEdit)
-        AddPurchase.setTabOrder(self.addressLineEdit, self.countryLineEdit)
-        AddPurchase.setTabOrder(self.countryLineEdit, self.totalLineEdit)
-        AddPurchase.setTabOrder(self.totalLineEdit, self.orderDateEdit)
-        AddPurchase.setTabOrder(self.orderDateEdit, self.prodNameLineEdit)
-        AddPurchase.setTabOrder(self.prodNameLineEdit, self.thicknessLineEdit)
-        AddPurchase.setTabOrder(self.thicknessLineEdit, self.quantityLineEdit)
-        AddPurchase.setTabOrder(self.quantityLineEdit, self.rollsizeLineEdit1)
-        AddPurchase.setTabOrder(self.rollsizeLineEdit1, self.rollsizeLineEdit2)
-        AddPurchase.setTabOrder(self.rollsizeLineEdit2, self.Cancel)
-        AddPurchase.setTabOrder(self.Cancel, self.AddOrder_3)
+        UpdatePurchase.setTabOrder(self.searchLineEdit, self.searchButton)
+        UpdatePurchase.setTabOrder(self.searchButton, self.lineEdit)
+        UpdatePurchase.setTabOrder(self.lineEdit, self.emailLineEdit)
+        UpdatePurchase.setTabOrder(self.emailLineEdit, self.contactLineEdit)
+        UpdatePurchase.setTabOrder(self.contactLineEdit, self.addressLineEdit)
+        UpdatePurchase.setTabOrder(self.addressLineEdit, self.countryLineEdit)
+        UpdatePurchase.setTabOrder(self.countryLineEdit, self.totalLineEdit)
+        UpdatePurchase.setTabOrder(self.totalLineEdit, self.orderDateEdit)
+        UpdatePurchase.setTabOrder(self.orderDateEdit, self.prodNameLineEdit)
+        UpdatePurchase.setTabOrder(self.prodNameLineEdit, self.thicknessLineEdit)
+        UpdatePurchase.setTabOrder(self.thicknessLineEdit, self.quantityLineEdit)
+        UpdatePurchase.setTabOrder(self.quantityLineEdit, self.rollsizeLineEdit1)
+        UpdatePurchase.setTabOrder(self.rollsizeLineEdit1, self.rollsizeLineEdit2)
+        UpdatePurchase.setTabOrder(self.rollsizeLineEdit2, self.Cancel)
+        UpdatePurchase.setTabOrder(self.Cancel, self.UpdatePurchase_3)
 
-    def retranslateUi(self, AddPurchase):
+    def retranslateUi(self, UpdatePurchase):
         _translate = QtCore.QCoreApplication.translate
-        AddPurchase.setWindowTitle(_translate("AddPurchase", "Add Purchase"))
-        self.AddOrder.setText(_translate("AddPurchase", "Add Purchase"))
-        self.searchLabel.setText(_translate("AddPurchase", "Search Supplier ID"))
-        self.searchButton.setText(_translate("AddPurchase", "Search"))
-        self.label.setText(_translate("AddPurchase", "Supplier Name"))
-        self.emailLabel.setText(_translate("AddPurchase", "Email Address"))
-        self.contactLabel.setText(_translate("AddPurchase", "Contact Number"))
-        self.addressLabel.setText(_translate("AddPurchase", "Address"))
-        self.countryLabel.setText(_translate("AddPurchase", "Country"))
-        self.totalLabel.setText(_translate("AddPurchase", "Total Amount"))
-        self.orderDateLabel.setText(_translate("AddPurchase", "Ordered Date"))
-        self.product_Label.setText(_translate("AddPurchase", "Product Name"))
-        self.rollsizeLabel.setText(_translate("AddPurchase", "Roll Size"))
-        self.quantityLabel.setText(_translate("AddPurchase", "Quantity"))
-        self.thicknessLabel.setText(_translate("AddPurchase", "Thickness"))
-        self.Cancel.setText(_translate("AddPurchase", "Cancel"))
-        self.AddOrder_3.setText(_translate("AddPurchase", "Add Purchase"))
+        UpdatePurchase.setWindowTitle(_translate("UpdatePurchase", "Update Purchase"))
+        self.UpdatePurchase.setText(_translate("UpdatePurchase", "Update Purchase"))
+        self.searchLabel.setText(_translate("UpdatePurchase", "Search Supplier ID"))
+        self.searchButton.setText(_translate("UpdatePurchase", "Search"))
+        self.label.setText(_translate("UpdatePurchase", "Supplier Name"))
+        self.emailLabel.setText(_translate("UpdatePurchase", "Email Address"))
+        self.contactLabel.setText(_translate("UpdatePurchase", "Contact Number"))
+        self.addressLabel.setText(_translate("UpdatePurchase", "Address"))
+        self.countryLabel.setText(_translate("UpdatePurchase", "Country"))
+        self.totalLabel.setText(_translate("UpdatePurchase", "Total Amount"))
+        self.orderDateLabel.setText(_translate("UpdatePurchase", "Ordered Date"))
+        self.product_Label.setText(_translate("UpdatePurchase", "Product Name"))
+        self.rollsizeLabel.setText(_translate("UpdatePurchase", "Roll Size"))
+        self.quantityLabel.setText(_translate("UpdatePurchase", "Quantity"))
+        self.thicknessLabel.setText(_translate("UpdatePurchase", "Thickness"))
+        self.Cancel.setText(_translate("UpdatePurchase", "Cancel"))
+        self.UpdatePurchase_3.setText(_translate("UpdatePurchase", "Update Purchase"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    AddPurchase = QtWidgets.QDialog()
-    ui = Ui_AddPurchase(AddPurchase)
-    ui.setupUi(AddPurchase)
-    AddPurchase.show()
+    UpdatePurchase = QtWidgets.QDialog()
+    ui = Ui_UpdatePurchase(UpdatePurchase)
+    ui.setupUi(UpdatePurchase)
+    UpdatePurchase.show()
     sys.exit(app.exec_())
