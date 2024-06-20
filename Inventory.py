@@ -143,20 +143,25 @@ class Ui_Inventory_2(object):
             self.tableWidget.setCellWidget(row_number, 9, cell_widget)
 
     def delete_product(self, row):
-        # Implement delete logic here
-        # Example of deleting the selected row's data
         product_code = self.tableWidget.item(row, 0).text()
-        try:
-            sql = "DELETE FROM PRODUCT WHERE PROD_ID = %s"
-            self.cur.execute(sql, (product_code,))
-            self.conn.commit()
-            QtWidgets.QMessageBox.information(None, 'Success', 'Product deleted successfully!')
-            # Refresh table after deletion
-            products = self.fetch_products()
-            self.display_products(products)
-        except psycopg2.Error as e:
-            QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
+        reply = QtWidgets.QMessageBox.question(self.tableWidget, 'Confirmation', 
+            f"Are you sure you want to delete product with code {product_code}?",
+            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No, QtWidgets.QMessageBox.No)
 
+        if reply == QtWidgets.QMessageBox.Yes:
+            try:
+                sql = "DELETE FROM PRODUCT WHERE PROD_ID = %s"
+                self.cur.execute(sql, (product_code,))
+                self.conn.commit()
+                QtWidgets.QMessageBox.information(None, 'Success', 'Product deleted successfully!')
+                # Refresh table after deletion
+                products = self.fetch_products()
+                self.display_products(products)
+            except psycopg2.Error as e:
+                QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
+        else:
+            pass
+        
     def update_product(self, row):
         from UpdateProduct import Ui_UpdateProduct 
         # Get data from the selected row
@@ -176,10 +181,10 @@ class Ui_Inventory_2(object):
 
         # Populate the QLineEdit fields with data from the database
         self.update_product_ui.lineEdit.setText(product_data[2]) 
-        self.update_product_ui.lineEdit_2.setText(product_data[4]) 
-        self.update_product_ui.lineEdit_3.setText(product_data[5]) 
-        self.update_product_ui.lineEdit_4.setText(product_data[7])  
-        self.update_product_ui.lineEdit_14.setText(product_data[6])
+        self.update_product_ui.priceLineEdit.setText(product_data[4]) 
+        self.update_product_ui.quantityLineEdit.setText(product_data[5]) 
+        self.update_product_ui.rollsizeLineEdit.setText(product_data[7])  
+        self.update_product_ui.thicknessLineEdit.setText(product_data[6])
 
         self.dialog.exec_()
         self.dialog.close()
