@@ -206,16 +206,29 @@ class Ui_Inventory_2(object):
         # Get data from the selected row
         product_data = []
         # for column_number in range(self.tableWidget.columnCount() - 1):  # Exclude the last column (Actions)
-        for column_number in range(10):    
+        for column_number in range(9):    
             item = self.tableWidget.item(row, column_number)
             if item is not None:
                 product_data.append(item.text())
             else:
-                product_data.append("")  # Handle empty cells if needed
+                product_data.append("")  
+
+        # Retrieve the supplier ID from the database
+        product_name = product_data[2]
+        sql_get_product_id = "SELECT PROD_ID FROM PRODUCT WHERE PROD_NAME = %s"
+        self.cur.execute(sql_get_product_id, (product_name,))
+        prod_id_result = self.cur.fetchone()
+
+        if prod_id_result is None:
+            self.show_message("Error", "Selected product does not exist.")
+            print(f"Selected product name: {product_name}")
+            return
+
+        prod_id = prod_id_result[0]
 
         # Open the UpdateProduct dialog window
         self.dialog = QDialog()
-        self.update_product_ui = Ui_UpdateProduct()
+        self.update_product_ui = Ui_UpdateProduct(prod_id)
         self.update_product_ui.setupUi(self.dialog)
 
         # Populate the QLineEdit fields with data from the database
@@ -226,7 +239,6 @@ class Ui_Inventory_2(object):
         self.update_product_ui.thicknessLineEdit.setText(product_data[6])
 
         self.dialog.exec_()
-        self.dialog.close()
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard

@@ -4,11 +4,13 @@ import psycopg2
 
 class Ui_UpdateProduct(object):
 
-    def __init__(self):
-        # PostgreSQL connection        
+    def __init__(self, prod_id):
+        # PostgreSQL connection   
+        super(Ui_UpdateProduct, self).__init__()     
         self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
                                      password="Milliondollarbaby123", port=6543)
         self.cur = self.conn.cursor()
+        self.prod_id = prod_id
 
     def save_data(self):
         # Get data from UI elements
@@ -24,24 +26,13 @@ class Ui_UpdateProduct(object):
             return
 
         try:
-            # Check if product exists and get its ID
-            sql_get_product_id = "SELECT PROD_ID FROM PRODUCT WHERE PROD_NAME = %s"
-            self.cur.execute(sql_get_product_id, (prod_name,))
-            product_id_result = self.cur.fetchone()
-
-            if product_id_result is None:
-                self.show_message("Error", "Selected product does not exist.")
-                return
-
-            product_id = product_id_result[0]
-
             # Update product details
             sql_update_product = """
             UPDATE PRODUCT 
             SET PROD_PRICE = %s, PROD_QUANTITY = %s, PROD_ROLL_SIZE = %s, PROD_THICKNESS = %s
             WHERE PROD_ID = %s
             """
-            self.cur.execute(sql_update_product, (prod_price, prod_quantity, prod_rollSize, prod_thickness, product_id))
+            self.cur.execute(sql_update_product, (prod_price, prod_quantity, prod_rollSize, prod_thickness, self.prod_id))
             self.conn.commit()
 
             self.show_message("Success", "Product updated successfully.")
@@ -188,8 +179,9 @@ class Ui_UpdateProduct(object):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
+    prod_id = 1
     UpdateProduct = QtWidgets.QDialog()
-    ui = Ui_UpdateProduct()
+    ui = Ui_UpdateProduct(prod_id)
     ui.setupUi(UpdateProduct)
     UpdateProduct.show()
     sys.exit(app.exec_())
