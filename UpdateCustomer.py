@@ -113,24 +113,24 @@ class Ui_UpdateCustomer(QObject):
         self.UpdateCusLabel.setObjectName("UpdateCusLabel")
 
         self.firstNameLineEdit = QtWidgets.QLineEdit(self.frame)
-        self.firstNameLineEdit.setGeometry(QtCore.QRect(80, 120, 113, 25))
+        self.firstNameLineEdit.setGeometry(QtCore.QRect(80, 120, 200, 25))
         self.firstNameLineEdit.setObjectName("firstNameLineEdit")
         self.firstNameLabel = QtWidgets.QLabel(self.frame)
         self.firstNameLabel.setGeometry(QtCore.QRect(80, 100, 76, 16))
         self.firstNameLabel.setObjectName("firstNameLabel")
 
         self.lastNameLineEdit = QtWidgets.QLineEdit(self.frame)
-        self.lastNameLineEdit.setGeometry(QtCore.QRect(80, 175, 113, 25))
+        self.lastNameLineEdit.setGeometry(QtCore.QRect(80, 175, 200, 25))
         self.lastNameLineEdit.setObjectName("lineEdit_3")
         self.lastNameLabel = QtWidgets.QLabel(self.frame)
         self.lastNameLabel.setGeometry(QtCore.QRect(80, 155, 81, 16))
         self.lastNameLabel.setObjectName("lastNameLabel")
 
         self.emailLabel = QtWidgets.QLabel(self.frame)
-        self.emailLabel.setGeometry(QtCore.QRect(80, 205, 76, 16))
+        self.emailLabel.setGeometry(QtCore.QRect(80, 205, 200, 16))
         self.emailLabel.setObjectName("emailLabel")
         self.emailLineEdit = QtWidgets.QLineEdit(self.frame)
-        self.emailLineEdit.setGeometry(QtCore.QRect(80, 225, 113, 25))
+        self.emailLineEdit.setGeometry(QtCore.QRect(80, 225, 200, 25))
         self.emailLineEdit.setObjectName("emailLineEdit")
 
         self.phoneNumLineEdit = QtWidgets.QLineEdit(self.frame)
@@ -144,7 +144,7 @@ class Ui_UpdateCustomer(QObject):
         self.addressLabel.setGeometry(QtCore.QRect(354, 100, 86, 16))
         self.addressLabel.setObjectName("addressLabel")
         self.addressLineEdit = QtWidgets.QLineEdit(self.frame)
-        self.addressLineEdit.setGeometry(QtCore.QRect(354, 120, 113, 25))
+        self.addressLineEdit.setGeometry(QtCore.QRect(354, 120, 220, 25))
         self.addressLineEdit.setObjectName("addressLineEdit")
 
         self.Cancel = QtWidgets.QPushButton(self.frame)

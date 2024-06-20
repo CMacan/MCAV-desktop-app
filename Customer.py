@@ -157,11 +157,11 @@ class Ui_Customer_2(object):
         self.update_customer_ui.setupUi(self.dialog)
 
         # Populate the QLineEdit fields with data from the database
-        self.update_customer_ui.lineEdit_2.setText(customer_data[1])  # First Name
-        self.update_customer_ui.lineEdit_3.setText(customer_data[2])  # Last Name
-        self.update_customer_ui.lineEdit_4.setText(customer_data[4])  # Phone #
-        self.update_customer_ui.lineEdit_13.setText(customer_data[5])  # Address
-        self.update_customer_ui.lineEdit_14.setText(customer_data[3])  # Email Address
+        self.update_customer_ui.firstNameLineEdit.setText(customer_data[1])  # First Name
+        self.update_customer_ui.lastNameLineEdit.setText(customer_data[2])  # Last Name
+        self.update_customer_ui.phoneNumLineEdit.setText(customer_data[4])  # Phone #
+        self.update_customer_ui.addressLineEdit.setText(customer_data[5])  # Address
+        self.update_customer_ui.emailLineEdit.setText(customer_data[3])  # Email Address
 
         self.dialog.exec_()
 
