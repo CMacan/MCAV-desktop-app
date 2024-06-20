@@ -47,9 +47,9 @@ class Ui_Order_2(object):
     def display_orders(self, orders):
         self.tableWidget.setRowCount(len(orders))
         self.tableWidget.setRowCount(len(orders))
-        self.tableWidget.setColumnCount(11)  # Ensure you have the correct number of columns
+        self.tableWidget.setColumnCount(10)  # Ensure you have the correct number of columns
         headers = ['Ord_ID', 'Cus_Code', 'Prod_Category', 'Prod_Name', 'Ord_Size', 'Ord_Quantity', 
-                   'Ord_total_Amount', 'Ord_date', 'Ord_Date_Completion', 'Status', 'Actions']
+                   'Ord_total_Amount', 'Ord_date', 'Ord_Date_Completion', 'Actions']
         self.tableWidget.setHorizontalHeaderLabels(headers)
         
         for row_number, order in enumerate(orders):
@@ -58,19 +58,6 @@ class Ui_Order_2(object):
                 item.setTextAlignment(QtCore.Qt.AlignCenter)
                 item.setText(str(data))
                 self.tableWidget.setItem(row_number, column_number, item)
-
-            button_widget = QtWidgets.QWidget()
-            layout = QtWidgets.QHBoxLayout(button_widget)
-            layout.setContentsMargins(0, 0, 0, 0)
-            layout.setSpacing(10)  # Adjust spacing between buttons if needed
-
-            status_button = QtWidgets.QPushButton('Ongoing')
-            status_button.clicked.connect(lambda checked, row=row_number: self.status_order(row))
-            layout.addWidget(status_button)
-
-            cell_widget = QtWidgets.QWidget()
-            cell_widget.setLayout(layout)
-            self.tableWidget.setCellWidget(row_number, 9, cell_widget)
 
             # Create a widget to hold both edit and delete buttons
             button_widget = QtWidgets.QWidget()
@@ -113,10 +100,7 @@ class Ui_Order_2(object):
             # Set the widget containing the buttons into the table cell
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
-            self.tableWidget.setCellWidget(row_number, 10, cell_widget)  # Place in the last column
-
-    def status_order(self, row):
-        pass
+            self.tableWidget.setCellWidget(row_number, 9, cell_widget)  # Place in the last column
 
     def delete_order(self, row):
         # Implement delete logic here
@@ -657,29 +641,17 @@ class Ui_Order_2(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         item.setForeground(brush)
         self.tableWidget.setColumnCount(10)
-        item = QtWidgets.QTableWidgetItem()
-        font = QtGui.QFont()
-        font.setFamily("Bahnschrift SemiBold")
-        font.setPointSize(9)
-        font.setBold(True)
-        font.setWeight(75)
-        item.setFont(font)
-        brush = QtGui.QBrush(QtGui.QColor(71, 71, 71))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        item.setForeground(brush)
-        self.tableWidget.setColumnCount(11)
         # Set specific column widths
-        self.tableWidget.setColumnWidth(0, 100)  
+        self.tableWidget.setColumnWidth(0, 80)  
         self.tableWidget.setColumnWidth(1, 100) 
-        self.tableWidget.setColumnWidth(2, 100) 
+        self.tableWidget.setColumnWidth(2, 150) 
         self.tableWidget.setColumnWidth(3, 100) 
         self.tableWidget.setColumnWidth(4, 100)  
         self.tableWidget.setColumnWidth(5, 100)  
         self.tableWidget.setColumnWidth(6, 100) 
-        self.tableWidget.setColumnWidth(7, 100)  
-        self.tableWidget.setColumnWidth(8, 100)  
+        self.tableWidget.setColumnWidth(7, 150)  
+        self.tableWidget.setColumnWidth(8, 150)  
         self.tableWidget.setColumnWidth(9, 20)
-        self.tableWidget.setColumnWidth(10, 20)
         self.tableWidget.horizontalHeader().setCascadingSectionResizes(False)
         self.tableWidget.horizontalHeader().setSortIndicatorShown(False)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
@@ -726,8 +698,6 @@ class Ui_Order_2(object):
         item = self.tableWidget.horizontalHeaderItem(8)
         item.setText(_translate("Order_2", "Date Completion"))
         item = self.tableWidget.horizontalHeaderItem(9)
-        item.setText(_translate("Order_2", "Status"))
-        item = self.tableWidget.horizontalHeaderItem(10)
         item.setText(_translate("Order_2", "Actions"))
 
 import font_rc
