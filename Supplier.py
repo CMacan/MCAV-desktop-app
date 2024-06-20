@@ -83,9 +83,8 @@ class Ui_Supplier(object):
                     background-color: #da190b;
                 }
             """)
-            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
+            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_supplier(row))
             layout.addWidget(delete_button)
-
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
             self.tableWidget.setCellWidget(row_number, 6, cell_widget)
@@ -104,7 +103,6 @@ class Ui_Supplier(object):
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
     
-        
     def order(self):
         from Order import Ui_Order_2
         self.window2 = QtWidgets.QMainWindow()
@@ -112,40 +110,18 @@ class Ui_Supplier(object):
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
 
-    def inventory(self):
-        from Inventory import Ui_Inventory_2
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Inventory_2()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
-
-    def report(self):
-        from Report import Ui_Report_2
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Report_2()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
-
-    def purchase(self):
-        from PurchaseView import Ui_PurchaseView
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_PurchaseView()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
-
-    def customer(self):
-        from Customer import Ui_Customer_2
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Customer_2()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
-
-    def profile(self):
-        from Profile import Ui_Profile_2
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Profile_2()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
+    def delete_supplier(self, row):
+        SUP_ID = self.tableWidget.item(row, 0).text()
+        try:
+            sql = "DELETE FROM SUPPLIER WHERE SUP_ID = %s"
+            self.cur.execute(sql, (SUP_ID,))
+            self.conn.commit()
+            QtWidgets.QMessageBox.information(None, 'Success', 'Supplier deleted successfully!')
+            # Refresh table after deletion
+            products = self.fetch_products()
+            self.display_products(products)
+        except psycopg2.Error as e:
+            QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
 
     def update_supplier(self, row):
         from UpdateSupplier import Ui_UpdateSupplier
@@ -191,6 +167,41 @@ class Ui_Supplier(object):
         self.ui.setupUi(self.window2)
         self.window2.setModal(True)  
         self.window2.exec_() 
+
+    def inventory(self):
+        from Inventory import Ui_Inventory_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Inventory_2()
+        self.ui.setupUi(self.window2)
+        self.window2.showMaximized()
+
+    def report(self):
+        from Report import Ui_Report_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Report_2()
+        self.ui.setupUi(self.window2)
+        self.window2.showMaximized()
+
+    def purchase(self):
+        from PurchaseView import Ui_PurchaseView
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_PurchaseView()
+        self.ui.setupUi(self.window2)
+        self.window2.showMaximized()
+
+    def customer(self):
+        from Customer import Ui_Customer_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Customer_2()
+        self.ui.setupUi(self.window2)
+        self.window2.showMaximized()
+
+    def profile(self):
+        from Profile import Ui_Profile_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Profile_2()
+        self.ui.setupUi(self.window2)
+        self.window2.showMaximized()
 
     def setupUi(self, Supplier):
         Supplier.setObjectName("Supplier")
