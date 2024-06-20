@@ -111,16 +111,32 @@ class Ui_Supplier(object):
         self.window2.showMaximized()
 
     def delete_supplier(self, row):
-        SUP_ID = self.tableWidget.item(row, 0).text()
+        sup_id = self.tableWidget.item(row, 0).text()
         try:
-            sql = "DELETE FROM SUPPLIER WHERE SUP_ID = %s"
-            self.cur.execute(sql, (SUP_ID,))
+            # Check if there are any purchases associated with the supplier
+            self.cur.execute("SELECT COUNT(*) FROM PURCHASE WHERE SUP_ID = %s", (sup_id,))
+            count = self.cur.fetchone()[0]
+            
+            if count > 0:
+                reply = QtWidgets.QMessageBox.question(None, 'Warning', 'This supplier has associated purchases. Do you want to delete them?',
+                                                    QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No, QtWidgets.QMessageBox.No)
+                if reply == QtWidgets.QMessageBox.No:
+                    return
+            
+            # Delete associated purchases first
+            self.cur.execute("DELETE FROM PURCHASE WHERE SUP_ID = %s", (sup_id,))
             self.conn.commit()
+            
+            # Then delete the supplier
+            self.cur.execute("DELETE FROM SUPPLIER WHERE SUP_ID = %s", (sup_id,))
+            self.conn.commit()
+
             QtWidgets.QMessageBox.information(None, 'Success', 'Supplier deleted successfully!')
             # Refresh table after deletion
-            products = self.fetch_products()
-            self.display_products(products)
+            suppliers = self.fetch_suppliers()
+            self.display_suppliers(suppliers)
         except psycopg2.Error as e:
+            self.conn.rollback()
             QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
 
     def update_supplier(self, row):

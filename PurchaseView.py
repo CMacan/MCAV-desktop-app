@@ -77,12 +77,25 @@ class Ui_PurchaseView(object):
                     background-color: #da190b;
                 }
             """)
-            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_customer(row))
+            delete_button.clicked.connect(lambda checked, row=row_number: self.delete_purchase(row))
             layout.addWidget(delete_button)
 
             cell_widget = QtWidgets.QWidget()
             cell_widget.setLayout(layout)
             self.tableWidget.setCellWidget(row_number, 10, cell_widget)
+
+    def delete_purchase(self, row):
+        pur_id = self.tableWidget.item(row, 0).text()
+        try:
+            sql = "DELETE FROM PURCHASE WHERE PUR_ID = %s"
+            self.cur.execute(sql, (pur_id,))
+            self.conn.commit()
+            QtWidgets.QMessageBox.information(None, 'Success', 'Purchase deleted successfully!')
+            # Refresh table after deletion
+            purchases = self.fetch_purchases()
+            self.display_purchases(purchases)
+        except psycopg2.Error as e:
+            QtWidgets.QMessageBox.warning(None, 'Error', f'Database error: {e}')
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
