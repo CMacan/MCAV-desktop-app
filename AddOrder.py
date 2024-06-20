@@ -73,6 +73,8 @@ class Ui_AddOrder(object):
 
                 self.conn.commit()
                 self.show_message("Success", "Data saved successfully.")
+                self.clear_input_fields()
+                
             except psycopg2.Error as e:
                 self.conn.rollback()  # Roll back transaction on error
                 error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"

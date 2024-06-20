@@ -59,7 +59,7 @@ class Ui_AddCustomer(QDialog):
                 self.cur.execute(sql, (cus_fname, cus_lname, cus_email, cus_contact, cus_address))
                 self.conn.commit()
                 self.show_message("Success", "Data saved successfully.")
-                self.clear_input_fields
+                self.clear_input_fields()
 
             except psycopg2.Error as e:
                 self.conn.rollback()  # Roll back transaction on error

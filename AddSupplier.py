@@ -59,7 +59,7 @@ class Ui_AddSupplier(QDialog):
                 self.cur.execute(sql, (sup_name, sup_email, sup_contact, sup_address, sup_country))
                 self.conn.commit()
                 self.show_message("Success", "Data saved successfully.")
-                self.clear_input_fields
+                self.clear_input_fields()
 
             except psycopg2.Error as e:
                 self.conn.rollback()  # Roll back transaction on error

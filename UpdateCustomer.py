@@ -39,7 +39,7 @@ class Ui_UpdateCustomer(QObject):
                 cur.execute(sql, (new_first_name, new_last_name, new_phone, new_address, new_email))
                 conn.commit()
 
-                print("Customer information updated successfully!")
+                self.show_message("Customer information updated despite duplicate email.")
 
                 # Close the cursor and connection
                 cur.close()
@@ -60,7 +60,7 @@ class Ui_UpdateCustomer(QObject):
                 cur.execute(update_sql, (new_first_name, new_last_name, new_phone, new_address, new_email))
                 conn.commit()
 
-                print("Customer information updated despite duplicate email.")
+                self.show_message("Customer information updated despite duplicate email.")
 
                 # Close the cursor and connection
                 cur.close()
@@ -73,6 +73,14 @@ class Ui_UpdateCustomer(QObject):
             print("No changes made. Retaining current customer information.")
 
         self.customer_info_updated.emit(new_first_name, new_last_name, new_phone, new_address, new_email)
+    
+    def show_message(self, title, message):
+        msg = QMessageBox()
+        msg.setWindowTitle(title)
+        msg.setText(message)
+        msg.setIcon(QMessageBox.Information)
+        msg.exec_()
+
 
     def setupUi(self, UpdateCustomer):
         UpdateCustomer.setObjectName("UpdateCustomer")
