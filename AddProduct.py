@@ -82,7 +82,6 @@ class Ui_AddProduct(QDialog):
                 self.cur.execute(sql, (product_name, price, quantity, category, thickness, roll_size, self.image_data))
                 self.conn.commit()
                 self.show_message("Success", "Data saved successfully.")
-                self.dialog.accept()
                 
             except psycopg2.Error as e:
                 self.conn.rollback()  # Roll back transaction on error
