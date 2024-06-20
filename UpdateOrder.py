@@ -25,6 +25,7 @@ class Ui_UpdateOrder(object):
 "}\n"
 "QLineEdit{\n"
 "    width: 200px;\n"
+"    font-size: 15px;\n"
 "}\n"
 "QPushButton#Cancel{    \n"
 "    color: rgb(255, 255, 255);\n"
@@ -41,19 +42,19 @@ class Ui_UpdateOrder(object):
         self.AddOrder.setGeometry(QtCore.QRect(35, 30, 156, 26))
         self.AddOrder.setObjectName("AddOrder")
         self.lineEdit_2 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_2.setGeometry(QtCore.QRect(80, 120, 113, 20))
+        self.lineEdit_2.setGeometry(QtCore.QRect(80, 120, 113, 25))
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.label_2 = QtWidgets.QLabel(self.frame)
         self.label_2.setGeometry(QtCore.QRect(80, 100, 76, 16))
         self.label_2.setObjectName("label_2")
         self.lineEdit_3 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_3.setGeometry(QtCore.QRect(80, 175, 113, 20))
+        self.lineEdit_3.setGeometry(QtCore.QRect(80, 175, 113, 25))
         self.lineEdit_3.setObjectName("lineEdit_3")
         self.label_3 = QtWidgets.QLabel(self.frame)
         self.label_3.setGeometry(QtCore.QRect(80, 155, 81, 16))
         self.label_3.setObjectName("label_3")
         self.lineEdit_4 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_4.setGeometry(QtCore.QRect(80, 280, 113, 20))
+        self.lineEdit_4.setGeometry(QtCore.QRect(80, 280, 113, 25))
         self.lineEdit_4.setObjectName("lineEdit_4")
         self.label_4 = QtWidgets.QLabel(self.frame)
         self.label_4.setGeometry(QtCore.QRect(80, 260, 76, 16))
@@ -62,13 +63,13 @@ class Ui_UpdateOrder(object):
         self.label_10.setGeometry(QtCore.QRect(405, 145, 86, 16))
         self.label_10.setObjectName("label_10")
         self.lineEdit_11 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_11.setGeometry(QtCore.QRect(405, 235, 113, 20))
+        self.lineEdit_11.setGeometry(QtCore.QRect(405, 235, 113, 25))
         self.lineEdit_11.setObjectName("lineEdit_11")
         self.label_12 = QtWidgets.QLabel(self.frame)
-        self.label_12.setGeometry(QtCore.QRect(405, 215, 47, 14))
+        self.label_12.setGeometry(QtCore.QRect(405, 215, 47, 16))
         self.label_12.setObjectName("label_12")
         self.lineEdit_13 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_13.setGeometry(QtCore.QRect(405, 165, 113, 20))
+        self.lineEdit_13.setGeometry(QtCore.QRect(405, 165, 113, 25))
         self.lineEdit_13.setObjectName("lineEdit_13")
         self.Cancel = QtWidgets.QPushButton(self.frame)
         self.Cancel.setGeometry(QtCore.QRect(354, 360, 96, 31))
