@@ -52,7 +52,6 @@ class Ui_AddOrder(object):
 
             product_id = product_id_result[0]
 
-            # Insert into CUSTOMER table
             sql_customer = """
             INSERT INTO CUSTOMER (CUS_FNAME, CUS_LNAME, CUS_EMAIL, CUS_PHONE, CUS_ADDRESS) 
             VALUES (%s, %s, %s, %s, %s) RETURNING CUS_CODE
@@ -81,6 +80,28 @@ class Ui_AddOrder(object):
         msg.setIcon(QMessageBox.Information)
         msg.exec_()
 
+    def search_customer(self):
+        cus_code = self.searchLineEdit.text().strip()
+        if not cus_code:
+            self.show_message("Error", "Please enter a Customer ID to search.")
+            return
+
+        try:
+            self.cur.execute("SELECT CUS_FNAME, CUS_LNAME, CUS_EMAIL, CUS_PHONE, CUS_ADDRESS FROM CUSTOMER WHERE CUS_CODE = %s", (cus_code,))
+            customer_data = self.cur.fetchone()
+            if customer_data:
+                cus_fname, cus_lname, cus_email, cus_contact, cus_address = customer_data
+                self.lineEdit.setText(cus_fname)
+                self.LnamelineEdit.setText(cus_lname)
+                self.emailLineEdit.setText(cus_email)
+                self.phonelineEdit.setText(cus_contact)
+                self.AddressLineEdit.setText(cus_address)
+            else:
+                self.show_message("Not Found", "Customer ID not found.")
+        except psycopg2.Error as e:
+            error_message = f"Error fetching data: {e.pgcode} - {e.pgerror}"
+            self.show_message("Error", error_message)    
+
     def setupUi(self, AddOrder):
         AddOrder.setObjectName("AddOrder")
         AddOrder.resize(641, 481)
@@ -90,29 +111,58 @@ class Ui_AddOrder(object):
         self.frame = QtWidgets.QFrame(AddOrder)
         self.frame.setEnabled(True)
         self.frame.setGeometry(QtCore.QRect(0, 0, 641, 481))
-        self.frame.setStyleSheet("QFrame{\n"
-                                "    background-color: rgb(255, 255, 255);\n"
-                                "}\n"
-                                "QLabel#AddOrder{\n"
-                                "    font-size: 25px;\n"
-                                "}\n"
-                                "QLineEdit{\n"
-                                "    width: 200px;\n"
-                                "}\n"
-                                "QPushButton#Cancel{    \n"
-                                "    color: rgb(255, 255, 255);\n"
-                                "    background-color: #202020;\n"
-                                "}\n"
-                                "QPushButton{    \n"
-                                "    color: rgb(255, 255, 255);\n"
-                                "    background-color: #CD2E2E;\n"
-                                "}")
+        self.frame.setStyleSheet("""
+            QFrame {
+                background-color: rgb(255, 255, 255);
+            }
+            QLabel#AddOrder {
+                font-size: 25px;
+            }
+            QLineEdit {
+                width: 200px;
+            }
+            QLineEdit#lineEdit,                      
+            QLineEdit#LnamelineEdit, 
+            QLineEdit#emailLineEdit, 
+            QLineEdit#phonelineEdit,
+            QLineEdit#AddressLineEdit {
+                background-color: #e3e1e1;
+                color: black;
+            }
+            QPushButton#Cancel {    
+                color: rgb(255, 255, 255);
+                background-color: #202020;
+            }
+            QPushButton {    
+                color: rgb(255, 255, 255);
+                background-color: #CD2E2E;
+            }
+        """)
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.AddOrder = QtWidgets.QLabel(self.frame)
         self.AddOrder.setGeometry(QtCore.QRect(240, 10, 126, 26))
         self.AddOrder.setObjectName("AddOrder")
+
+
+        self.searchLineEdit = QtWidgets.QLineEdit(self.frame)
+        self.searchLineEdit.setGeometry(QtCore.QRect(80, 80, 111, 20))
+        self.searchLineEdit.setObjectName("searchLineEdit")
+        self.searchLabel = QtWidgets.QLabel(self.frame)
+        self.searchLabel.setGeometry(QtCore.QRect(80, 60, 111, 16))
+        self.searchLabel.setObjectName("searchLabel")
+
+        self.searchButton = QtWidgets.QPushButton(self.frame)
+        self.searchButton.setGeometry(QtCore.QRect(200, 80, 75, 23))
+        self.searchButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.searchButton.setObjectName("searchButton")
+        font_search = QtGui.QFont()
+        font_search.setFamily("Arial")
+        font_search.setPointSize(8)
+        font_search.setBold(True)
+        self.searchButton.setFont(font_search)
+        self.searchButton.clicked.connect(self.search_customer) 
 
         self.Cancel = QtWidgets.QPushButton(self.frame)
         self.Cancel.clicked.connect(AddOrder.close)
@@ -145,55 +195,52 @@ class Ui_AddOrder(object):
         self.AddOrder_3.raise_()
 
         self.lineEdit = QtWidgets.QLineEdit(self.frame_2)
-        self.lineEdit.setGeometry(QtCore.QRect(30, 30, 111, 20))
+        self.lineEdit.setGeometry(QtCore.QRect(30, 80, 111, 20))
         self.lineEdit.setMaxLength(300)
         self.lineEdit.setObjectName("lineEdit")
         self.label = QtWidgets.QLabel(self.frame_2)
-        self.label.setGeometry(QtCore.QRect(30, 10, 101, 16))
+        self.label.setGeometry(QtCore.QRect(30, 60, 101, 16))
         self.label.setObjectName("label")
+        self.lineEdit.setReadOnly(True)
 
         self.LnamelineEdit = QtWidgets.QLineEdit(self.frame_2)
-        self.LnamelineEdit.setGeometry(QtCore.QRect(30, 80, 111, 20))
+        self.LnamelineEdit.setGeometry(QtCore.QRect(30, 130, 111, 20))
         self.LnamelineEdit.setMaxLength(300)
         self.LnamelineEdit.setObjectName("LnamelineEdit")
-        self.label_5 = QtWidgets.QLabel(self.frame_2)
-        self.label_5.setGeometry(QtCore.QRect(30, 60, 101, 16))
-        self.label_5.setObjectName("label_5")
+        self.lnameLabel = QtWidgets.QLabel(self.frame_2)
+        self.lnameLabel.setGeometry(QtCore.QRect(30, 110, 101, 16))
+        self.lnameLabel.setObjectName("lnameLabel")
+        self.LnamelineEdit.setReadOnly(True)
 
         self.emailLineEdit = QtWidgets.QLineEdit(self.frame_2)
-        self.emailLineEdit.setGeometry(QtCore.QRect(30, 130, 113, 20))
+        self.emailLineEdit.setGeometry(QtCore.QRect(30, 180, 113, 20))
         self.emailLineEdit.setObjectName("emailLineEdit")
-        self.label_2 = QtWidgets.QLabel(self.frame_2)
-        self.label_2.setGeometry(QtCore.QRect(30, 110, 76, 16))
-        self.label_2.setObjectName("label_2")
+        self.emailLabel = QtWidgets.QLabel(self.frame_2)
+        self.emailLabel.setGeometry(QtCore.QRect(30, 160, 76, 16))
+        self.emailLabel.setObjectName("emailLabel")
+        self.emailLineEdit.setReadOnly(True)
 
         self.phonelineEdit = QtWidgets.QLineEdit(self.frame_2)
-        self.phonelineEdit.setGeometry(QtCore.QRect(30, 180, 113, 20))
+        self.phonelineEdit.setGeometry(QtCore.QRect(30, 230, 113, 20))
         self.phonelineEdit.setObjectName("phonelineEdit")
         self.phoneLineLabel = QtWidgets.QLabel(self.frame_2)
-        self.phoneLineLabel.setGeometry(QtCore.QRect(30, 160, 81, 16))
+        self.phoneLineLabel.setGeometry(QtCore.QRect(30, 210, 81, 16))
         self.phoneLineLabel.setObjectName("phoneLineLabel")
+        self.phonelineEdit.setReadOnly(True)
 
         self.AddressLineEdit = QtWidgets.QLineEdit(self.frame_2)
-        self.AddressLineEdit.setGeometry(QtCore.QRect(30, 230, 113, 20))
+        self.AddressLineEdit.setGeometry(QtCore.QRect(30, 280, 113, 20))
         self.AddressLineEdit.setObjectName("AddressLineEdit")
         self.addressLabel = QtWidgets.QLabel(self.frame_2)
-        self.addressLabel.setGeometry(QtCore.QRect(30, 210, 76, 16))
+        self.addressLabel.setGeometry(QtCore.QRect(30, 260, 76, 16))
         self.addressLabel.setObjectName("addressLabel")
-
-        self.priceLineEdit = QtWidgets.QLineEdit(self.frame_2)
-        self.priceLineEdit.setEnabled(False)
-        self.priceLineEdit.setGeometry(QtCore.QRect(30, 280, 113, 20))
-        self.priceLineEdit.setObjectName("priceLineEdit")
-        self.priceLabel = QtWidgets.QLabel(self.frame_2)
-        self.priceLabel.setGeometry(QtCore.QRect(30, 260, 76, 16))
-        self.priceLabel.setObjectName("priceLabel")
+        self.AddressLineEdit.setReadOnly(True)
 
         self.TotalLineEdit = QtWidgets.QLineEdit(self.frame_2)
-        self.TotalLineEdit.setGeometry(QtCore.QRect(30, 330, 113, 20))
+        self.TotalLineEdit.setGeometry(QtCore.QRect(330, 280, 113, 20))
         self.TotalLineEdit.setObjectName("TotalLineEdit")
         self.totalAmtLabel = QtWidgets.QLabel(self.frame_2)
-        self.totalAmtLabel.setGeometry(QtCore.QRect(30, 310, 76, 16))
+        self.totalAmtLabel.setGeometry(QtCore.QRect(330, 260, 76, 16))
         self.totalAmtLabel.setObjectName("totalAmtLabel")
 
         self.dueDateEdit = QtWidgets.QDateEdit(self.frame_2)
@@ -219,12 +266,16 @@ class Ui_AddOrder(object):
         self.categoryLabel.setGeometry(QtCore.QRect(330, 60, 81, 16))
         self.categoryLabel.setObjectName("categoryLabel")
 
-        self.prodNameLineEdit = QtWidgets.QLineEdit(self.frame_2)
-        self.prodNameLineEdit.setGeometry(QtCore.QRect(330, 130, 151, 22))
-        self.prodNameLineEdit.setObjectName("prodNameLineEdit")
-        self.prodNameLabel = QtWidgets.QLabel(self.frame_2)
-        self.prodNameLabel.setGeometry(QtCore.QRect(330, 110, 81, 16))
-        self.prodNameLabel.setObjectName("prodNameLabel")
+        self.comboBox_product = QtWidgets.QComboBox(self.frame_2)
+        self.comboBox_product.setGeometry(QtCore.QRect(330, 130, 151, 22))
+        self.comboBox_product.setObjectName("comboBox_product")
+        self.comboBox_product.addItem("")
+        self.comboBox_product.addItem("")
+        self.comboBox_product.addItem("")
+        self.comboBox_product.addItem("")
+        self.productLabel = QtWidgets.QLabel(self.frame_2)
+        self.productLabel.setGeometry(QtCore.QRect(330, 110, 81, 16))
+        self.productLabel.setObjectName("productLabel")
 
         self.QuantityLineEdit = QtWidgets.QLineEdit(self.frame_2)
         self.QuantityLineEdit.setGeometry(QtCore.QRect(330, 180, 113, 20))
@@ -261,17 +312,23 @@ class Ui_AddOrder(object):
         self.textEdit.setAcceptRichText(False)
         self.textEdit.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
         self.textEdit.setObjectName("textEdit")
-        
+
+        self.searchButton.raise_()
+        self.searchLabel.raise_()
+        self.searchLineEdit.raise_()
+        self.totalAmtLabel.raise_()
+
+        AddOrder.setTabOrder(self.searchLineEdit, self.searchButton)
+        AddOrder.setTabOrder(self.searchButton, self.lineEdit)
         AddOrder.setTabOrder(self.lineEdit, self.LnamelineEdit)
         AddOrder.setTabOrder(self.LnamelineEdit, self.emailLineEdit)
         AddOrder.setTabOrder(self.emailLineEdit, self.phonelineEdit)
         AddOrder.setTabOrder(self.phonelineEdit, self.AddressLineEdit)
-        AddOrder.setTabOrder(self.AddressLineEdit, self.priceLineEdit)
-        AddOrder.setTabOrder(self.priceLineEdit, self.TotalLineEdit)
+        AddOrder.setTabOrder(self.AddressLineEdit, self.TotalLineEdit)
         AddOrder.setTabOrder(self.TotalLineEdit, self.dueDateEdit)
         AddOrder.setTabOrder(self.dueDateEdit, self.comboBox)
-        AddOrder.setTabOrder(self.comboBox, self.prodNameLineEdit)
-        AddOrder.setTabOrder(self.prodNameLineEdit, self.QuantityLineEdit)
+        AddOrder.setTabOrder(self.comboBox, self.comboBox_product)
+        AddOrder.setTabOrder(self.comboBox_product, self.QuantityLineEdit)
         AddOrder.setTabOrder(self.QuantityLineEdit, self.sizeLineEdit1)
         AddOrder.setTabOrder(self.sizeLineEdit1, self.sizeLineEdit2)
         AddOrder.setTabOrder(self.sizeLineEdit2, self.comboBox_unitMeasure)
@@ -285,23 +342,24 @@ class Ui_AddOrder(object):
         _translate = QtCore.QCoreApplication.translate
         AddOrder.setWindowTitle(_translate("AddOrder", "Dialog"))
         self.AddOrder.setText(_translate("AddOrder", "Add Order"))
+        self.searchLabel.setText(_translate("AddOrder", "Search Customer ID"))
+        self.searchButton.setText(_translate("AddOrder", "Search"))
         self.Cancel.setText(_translate("AddOrder", "Cancel"))
         self.AddOrder_3.setText(_translate("AddOrder", "Add Order"))
         self.addressLabel.setText(_translate("AddOrder", "Address"))
-        self.priceLabel.setText(_translate("AddOrder", "Price"))
         self.sizeLabel.setText(_translate("AddOrder", "Size"))
         self.quantityLabel.setText(_translate("AddOrder", "Quantity"))
         self.categoryLabel.setText(_translate("AddOrder", "Category"))
+        self.productLabel.setText(_translate("AddOrder", "Product Name"))
         self.dueDateLabel.setText(_translate("AddOrder", "Due Date"))
         self.comboBox.setItemText(0, _translate("AddOrder", "Large Format Tarpaulin"))
         self.comboBox.setItemText(1, _translate("AddOrder", "Vinyl Sticker Printing"))
         self.comboBox.setItemText(2, _translate("AddOrder", "Laser Printing Stickers"))
         self.comboBox.setItemText(3, _translate("AddOrder", "T-shirt Printing"))
-        self.prodNameLabel.setText(_translate("AddOrder", "Type of Product"))
         self.phoneLineLabel.setText(_translate("AddOrder", "Contact Number"))
         self.label.setText(_translate("AddOrder", "Customer First Name"))
-        self.label_5.setText(_translate("AddOrder", "Customer Last Name"))
-        self.label_2.setText(_translate("AddOrder", "Email Address"))
+        self.lnameLabel.setText(_translate("AddOrder", "Customer Last Name"))
+        self.emailLabel.setText(_translate("AddOrder", "Email Address"))
         self.totalAmtLabel.setText(_translate("AddOrder", "Total Amount"))
         self.textEdit.setHtml(_translate("AddOrder", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                                 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
