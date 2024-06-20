@@ -99,13 +99,6 @@ class Ui_PurchaseView(object):
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
 
-    def report(self):
-        from Report import Ui_Report_2
-        self.window2 = QtWidgets.QMainWindow()
-        self.ui = Ui_Report_2()
-        self.ui.setupUi(self.window2)
-        self.window2.showMaximized()
-
     def purchase(self):
         from PurchaseView import Ui_PurchaseView
         self.window2 = QtWidgets.QMainWindow()
@@ -251,18 +244,6 @@ class Ui_PurchaseView(object):
 "background-color: #CD2E2E;")
         self.Purchase.setObjectName("Purchase")
         self.horizontalLayout.addWidget(self.Purchase)
-        self.Report = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Report.clicked.connect(self.report)
-        self.Report.clicked.connect(PurchaseView.close)
-        font = QtGui.QFont()
-        font.setPointSize(-1)
-        font.setBold(True)
-        font.setWeight(75)
-        self.Report.setFont(font)
-        self.Report.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Report.setStyleSheet("font-size:12px;")
-        self.Report.setObjectName("Report")
-        self.horizontalLayout.addWidget(self.Report)
         self.Customer = QtWidgets.QPushButton(self.NavbarFrame)
         self.Customer.clicked.connect(self.customer)
         self.Customer.clicked.connect(PurchaseView.close)
@@ -276,7 +257,6 @@ class Ui_PurchaseView(object):
         self.Customer.setObjectName("Customer")
         self.horizontalLayout.addWidget(self.Customer)
         self.Profile = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Profile.clicked.connect(self.report)
         self.Profile.clicked.connect(PurchaseView.close)
         font = QtGui.QFont()
         font.setPointSize(-1)
@@ -629,7 +609,6 @@ class Ui_PurchaseView(object):
         self.Inventory.setText(_translate("PurchaseView", "Inventory"))
         self.Order.setText(_translate("PurchaseView", "Orders"))
         self.Purchase.setText(_translate("PurchaseView", "Purchases"))
-        self.Report.setText(_translate("PurchaseView", "Reports"))
         self.Customer.setText(_translate("PurchaseView", "Customers"))
         self.Profile.setText(_translate("PurchaseView", "Profile"))
         self.ProductLabel.setText(_translate("PurchaseView", "Purchase List"))
