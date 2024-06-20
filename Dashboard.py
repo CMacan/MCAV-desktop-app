@@ -148,8 +148,8 @@ class Ui_Dasboard(object):
     def fetch_purchase(self):
         try:
             sql = """
-            SELECT PROD_NAME, PROD_PRICE
-            FROM PRODUCT
+            SELECT PUR_PRODUCT_NAME, PUR_AMOUNT
+            FROM PURCHASE
             """
             self.cur.execute(sql)
             return self.cur.fetchall()

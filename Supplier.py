@@ -40,6 +40,38 @@ class Ui_Supplier(object):
         msg_box.setText(message)
         msg_box.exec_()
 
+    def search(self):
+        search_text = self.SearchInput.text().strip()
+        
+        if not search_text:
+            try:
+                # Fetch all products from the PRODUCT table
+                sql_all_suppliers = """
+                SELECT SUP_ID, SUP_NAME, SUP_EMAIL, SUP_CONTACT, SUP_ADDRESS, SUP_COUNTRY
+                FROM SUPPLIER
+                """
+                self.cur.execute(sql_all_suppliers)
+                results = self.cur.fetchall()
+                self.display_suppliers(results)
+            except psycopg2.Error as e:
+                self.show_message("Database Error", f"Error fetching products: {e}")
+            
+            return
+
+        try:
+            sql_search = """
+            SELECT SUP_ID, SUP_NAME, SUP_EMAIL, SUP_CONTACT, SUP_ADDRESS, SUP_COUNTRY
+            FROM SUPPLIER
+            WHERE SUP_NAME ILIKE %s 
+            """
+            # Use search_pattern in execute instead of search_text
+            search_pattern = f"%{search_text}%"
+            self.cur.execute(sql_search, (search_pattern,))
+            results = self.cur.fetchall()
+            self.display_suppliers(results)
+        except psycopg2.Error as e:
+            self.show_message("Database Error", f"Error fetching search results: {e}")
+
     def display_suppliers(self, suppliers):
         self.tableWidget.setRowCount(len(suppliers))
         for row_number, customer in enumerate(suppliers):
@@ -529,50 +561,60 @@ class Ui_Supplier(object):
         self.SearchFrame.setObjectName("SearchFrame")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.SearchFrame)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+
         self.Search = QtWidgets.QLabel(self.SearchFrame)
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
         self.Search.setFont(font)
-        self.Search.setStyleSheet("font-weight: bold;\n"
-"")
+        self.Search.setStyleSheet("font-weight: bold;")
         self.Search.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Search.setObjectName("Search")
         self.horizontalLayout_2.addWidget(self.Search)
+
         self.SearchInput = QtWidgets.QLineEdit(self.SearchFrame)
         self.SearchInput.setMinimumSize(QtCore.QSize(0, 25))
         self.SearchInput.setMaximumSize(QtCore.QSize(200, 25))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.SearchInput.setFont(font)
-        self.SearchInput.setStyleSheet("background-color: #D9D9D9;\n"
-"border-radius: 5px;\n"
-"\n"
-"")
+        self.SearchInput.setStyleSheet("""
+            background-color: #D9D9D9; 
+            border-radius: 5px;
+            padding-left: 7px; 
+            font-size: 10.5pt; 
+        """)
+        self.SearchInput.setPlaceholderText("Enter Supplier Name...")
         self.SearchInput.setObjectName("SearchInput")
+        self.SearchInput.setFixedWidth(220)
         self.horizontalLayout_2.addWidget(self.SearchInput)
-        self.Filter = QtWidgets.QLabel(self.SearchFrame)
-        self.Filter.setMinimumSize(QtCore.QSize(25, 25))
-        self.Filter.setMaximumSize(QtCore.QSize(25, 25))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.Filter.setFont(font)
-        self.Filter.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.Filter.setText("")
-        self.Filter.setPixmap(QtGui.QPixmap("static/filter.png"))
-        self.Filter.setScaledContents(True)
-        self.Filter.setObjectName("Filter")
-        self.horizontalLayout_2.addWidget(self.Filter)
-        spacerItem1 = QtWidgets.QSpacerItem(610, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem1)
+
+        self.SearchBtn = QtWidgets.QPushButton(self.SearchFrame)
+        self.SearchBtn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.SearchBtn.setText("Search")
+        self.SearchBtn.setObjectName("SearchBtn")
+        self.SearchBtn.setStyleSheet("""
+            QPushButton {
+                background-color: #E08028; 
+                color: white; /* White text color */
+                border-radius: 5px; 
+                padding: 8px 16px; 
+                border: none; 
+                font-weight: bold;
+                width: 40px;
+                height:10px;
+            }
+            QPushButton:hover {
+                background-color: #ff8617; 
+            }
+        """)
+        self.SearchBtn.clicked.connect(self.search)
+        self.horizontalLayout_2.addWidget(self.SearchBtn)
         self.verticalLayout_4.addWidget(self.SearchFrame)
+        
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem)
 
         self.tableWidget = QtWidgets.QTableWidget(self.DataFrame)
         self.tableWidget.verticalHeader().setVisible(False)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.tableWidget.setFont(font)
         self.tableWidget.setColumnCount(7)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
