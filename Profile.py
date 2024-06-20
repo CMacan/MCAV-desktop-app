@@ -327,15 +327,15 @@ class Ui_Profile_2(object):
 
         self.frame_4.setMinimumSize(QtCore.QSize(100, 0))
         self.frame_4.setStyleSheet("QLabel{\n"
-"    font-size: 20px;\n"
+"    font-size: 15px;\n"
 "}")
         self.frame_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_4.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_4.setObjectName("frame_4")
         self.formLayout = QtWidgets.QFormLayout(self.frame_4)
-        self.formLayout.setContentsMargins(400, 100, 20, 20)
-        self.formLayout.setHorizontalSpacing(200)
-        self.formLayout.setVerticalSpacing(20)
+        self.formLayout.setContentsMargins(400, 50, 20, 20)
+        self.formLayout.setHorizontalSpacing(150)
+        self.formLayout.setVerticalSpacing(25)
         self.formLayout.setObjectName("formLayout")
         self.label_name = QtWidgets.QLabel(self.frame_4)
         self.label_name.setMinimumSize(QtCore.QSize(200, 0))
