@@ -54,7 +54,6 @@ class Ui_AddPurchase(object):
         result = confirm_msg.exec_()
 
         if result == QMessageBox.Yes:
-            # Insert into SUPPLIER table
             try:
                 # Insert into PURCHASE table
                 sql_purchase = """
