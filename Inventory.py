@@ -43,6 +43,7 @@ class Ui_Inventory_2(object):
 
     def search(self):
         search_text = self.SearchInput.text().strip()
+        
         if not search_text:
             try:
                 # Fetch all products from the PRODUCT table
@@ -64,16 +65,15 @@ class Ui_Inventory_2(object):
             SELECT PROD_ID, PROD_IMAGE, PROD_NAME, PROD_CATEGORY, PROD_PRICE, 
             PROD_QUANTITY, PROD_THICKNESS, PROD_ROLL_SIZE, PROD_LAST_UPDATED
             FROM PRODUCT
-            WHERE PROD_ID = %s OR PROD_NAME ILIKE %s OR PROD_CATEGORY ILIKE %s
+            WHERE PROD_NAME ILIKE %s 
             """
-            # Provide three parameters corresponding to the three placeholders in the query
+            # Use search_pattern in execute instead of search_text
             search_pattern = f"%{search_text}%"
-            self.cur.execute(sql_search, (search_text, search_pattern, search_pattern))
+            self.cur.execute(sql_search, (search_pattern,))
             results = self.cur.fetchall()
             self.display_products(results)
         except psycopg2.Error as e:
             self.show_message("Database Error", f"Error fetching search results: {e}")
-
 
     def display_products(self, products):
         self.tableWidget.setRowCount(len(products))
@@ -498,7 +498,7 @@ class Ui_Inventory_2(object):
             padding-left: 7px; 
             font-size: 10.5pt; 
         """)
-        self.SearchInput.setPlaceholderText("Enter ID or Name or Category...")
+        self.SearchInput.setPlaceholderText("Enter Product Name...")
         self.SearchInput.setObjectName("SearchInput")
         self.SearchInput.setFixedWidth(220)
         self.horizontalLayout_2.addWidget(self.SearchInput)
