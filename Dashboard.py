@@ -126,9 +126,9 @@ class Ui_Dasboard(object):
     def fetch_customer(self):
         try:
             sql = """
-            SELECT CUSTOMER.CUS_FNAME,CUSTOMER.CUS_LNAME, ORDERS.ORD_TYPE_PRODUCT, ORDERS.ORD_TOTAL_AMOUNT
+            SELECT CUSTOMER.CUS_FNAME, CUSTOMER.CUS_LNAME, ORDERS.ORD_TYPE_PRODUCT, ORDERS.ORD_TOTAL_AMOUNT
             FROM CUSTOMER
-            NATURAL JOIN ORDERS
+            INNER JOIN ORDERS ON CUSTOMER.CUS_CODE = ORDERS.CUS_CODE
             """
             self.cur.execute(sql)
             return self.cur.fetchall()
@@ -824,8 +824,8 @@ class Ui_Dasboard(object):
         self.verticalLayout.addWidget(self.TableContainer)
         Dasboard.setCentralWidget(self.centralwidget)
 
-        purchase = self.fetch_customer()
-        self.display_recent_customer(purchase)
+        customer = self.fetch_customer()
+        self.display_recent_customer(customer)
 
         purchase = self.fetch_purchase()
         self.display_recent_purchase(purchase)
@@ -853,11 +853,11 @@ class Ui_Dasboard(object):
         self.label_8.setText(_translate("Dasboard", "Sales Count"))
         self.label_15.setText(_translate("Dasboard", "Last Transactions"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("Dasboard", "Customer Name"))
+        item.setText(_translate("Dasboard", "First Name"))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("Dasboard", "Type"))
+        item.setText(_translate("Dasboard", "Last Name"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("Dasboard", "Status"))
+        item.setText(_translate("Dasboard", "Type"))
         item = self.tableWidget.horizontalHeaderItem(3)
         item.setText(_translate("Dasboard", "Amount"))
         self.label_10.setText(_translate("Dasboard", "Total Sales"))
