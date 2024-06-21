@@ -230,13 +230,14 @@ class Ui_Order_2(object):
 
         product_rollsize = order_data[4]
 
-        dimensions = product_rollsize.split('x')
+        if product_rollsize:
+            dimensions = product_rollsize.split('x') if 'x' in product_rollsize else product_rollsize.split('X')
 
-        # Trim any leading or trailing spaces from each dimension
-        dimension1 = dimensions[0].strip()
-        dimension2 = dimensions[1].strip()
-        self.update_order_ui.rollsizeLineEdit1.setText(dimension1) 
-        self.update_order_ui.rollsizeLineEdit2.setText(dimension2)
+            # Trim any leading or trailing spaces from each dimension
+            dimension1 = dimensions[0].strip()
+            dimension2 = dimensions[1].strip()
+            self.update_order_ui.rollsizeLineEdit1.setText(dimension1) 
+            self.update_order_ui.rollsizeLineEdit2.setText(dimension2)
 
         self.dialog.exec_()
 
