@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import psycopg2
 
 class Ui_UpdateProduct(object):
-
+    
     def __init__(self, prod_id):
         # PostgreSQL connection   
         super(Ui_UpdateProduct, self).__init__()     
@@ -29,10 +29,10 @@ class Ui_UpdateProduct(object):
             # Update product details
             sql_update_product = """
             UPDATE PRODUCT 
-            SET PROD_PRICE = %s, PROD_QUANTITY = %s, PROD_ROLL_SIZE = %s, PROD_THICKNESS = %s
+            SET PROD_NAME = %s, PROD_PRICE = %s, PROD_QUANTITY = %s, PROD_ROLL_SIZE = %s, PROD_THICKNESS = %s
             WHERE PROD_ID = %s
             """
-            self.cur.execute(sql_update_product, (prod_price, prod_quantity, prod_rollSize, prod_thickness, self.prod_id))
+            self.cur.execute(sql_update_product, (prod_name, prod_price, prod_quantity, prod_rollSize, prod_thickness, self.prod_id))
             self.conn.commit()
 
             self.show_message("Success", "Product updated successfully.")

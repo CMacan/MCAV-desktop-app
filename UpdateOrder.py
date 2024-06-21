@@ -14,7 +14,7 @@ class Ui_UpdateOrder(object):
         # Get data from UI elements
         cus_code = self.searchLineEdit.text().strip()
         order_total = self.totalLineEdit.text()
-        order_product = self.prodNameLineEdit.text()
+        order_product = self.comboBox_product.currentText()
         order_quantity = self.quantityLineEdit.text()
         order_date = self.orderDateEdit.date().toString(QtCore.Qt.ISODate)
         order_complete_date = self.orderDateEdit.date().toString(QtCore.Qt.ISODate)
@@ -31,7 +31,7 @@ class Ui_UpdateOrder(object):
             # Update order details using the stored order ID
             sql_update_order = """
             UPDATE ORDER 
-            SET SUP_ID = %s, ORD_AMOUNT = %s, ORD_ORDER_DATE = %s, ORD_PRODUCT_NAME = %s,
+            SET CUS_CODE = %s, ORD_AMOUNT = %s, ORD_ORDER_DATE = %s, ORD_PRODUCT_NAME = %s,
             PUR_THICKNESS = %s, ORD_QUANTITY = %s, ORD_ROLL_SIZE = %s
             WHERE ORD_ID = %s
             """
@@ -75,6 +75,24 @@ class Ui_UpdateOrder(object):
             error_message = f"Error fetching data: {e.pgcode} - {e.pgerror}"
             self.show_message("Error", error_message)    
 
+    def populate_product_combo_box(self):
+        try:
+            self.cur.execute("SELECT PROD_NAME FROM PRODUCT")
+            product_names = [item[0] for item in self.cur.fetchall()]
+            self.comboBox_product.clear()
+            self.comboBox_product.addItems(product_names)
+        except psycopg2.Error as e:
+            error_message = f"Error fetching product names: {e.pgcode} - {e.pgerror}"
+            self.show_message("Error", error_message) 
+
+        try:
+            self.cur.execute("SELECT CAT_NAME FROM CATEGORY")
+            cat_names = [item[0] for item in self.cur.fetchall()]
+            self.comboBox.clear()
+            self.comboBox.addItems(cat_names)
+        except psycopg2.Error as e:
+            error_message = f"Error fetching product names: {e.pgcode} - {e.pgerror}"
+            self.show_message("Error", error_message)
 
     def setupUi(self, UpdateOrder):
         UpdateOrder.setObjectName("UpdateOrder")
@@ -141,7 +159,7 @@ class Ui_UpdateOrder(object):
         self.searchButton.clicked.connect(self.search_customer) 
 
         self.label = QtWidgets.QLabel(self.frame)
-        self.label.setGeometry(QtCore.QRect(80, 120, 81, 16))
+        self.label.setGeometry(QtCore.QRect(80, 120, 150, 16))
         self.label.setObjectName("label")
         self.lineEdit = QtWidgets.QLineEdit(self.frame)
         self.lineEdit.setGeometry(QtCore.QRect(80, 140, 111, 20))
@@ -154,7 +172,7 @@ class Ui_UpdateOrder(object):
         self.lnameLineEdit.setObjectName("lnameLineEdit")
         self.lnameLineEdit.setReadOnly(True)  
         self.lnameLabel = QtWidgets.QLabel(self.frame)
-        self.lnameLabel.setGeometry(QtCore.QRect(80, 175, 76, 16))
+        self.lnameLabel.setGeometry(QtCore.QRect(80, 175, 150, 16))
         self.lnameLabel.setObjectName("lnameLabel")
 
         self.emailLineEdit = QtWidgets.QLineEdit(self.frame)
@@ -197,11 +215,15 @@ class Ui_UpdateOrder(object):
         self.orderDateLabel.setGeometry(QtCore.QRect(405, 120, 66, 16))
         self.orderDateLabel.setObjectName("orderDateLabel")
 
-        self.prodNameLineEdit = QtWidgets.QLineEdit(self.frame)
-        self.prodNameLineEdit.setGeometry(QtCore.QRect(405, 195, 113, 20))
-        self.prodNameLineEdit.setObjectName("prodNameLineEdit")
+        self.comboBox_product = QtWidgets.QComboBox(self.frame)
+        self.comboBox_product.setGeometry(QtCore.QRect(405, 190, 151, 22))
+        self.comboBox_product.setObjectName("comboBox_product")
+        self.comboBox_product.addItem("")
+        self.comboBox_product.addItem("")
+        self.comboBox_product.addItem("")
+        self.comboBox_product.addItem("")
         self.product_Label = QtWidgets.QLabel(self.frame)
-        self.product_Label.setGeometry(QtCore.QRect(405, 175, 81, 16))
+        self.product_Label.setGeometry(QtCore.QRect(405, 170, 81, 16))
         self.product_Label.setObjectName("product_Label")
 
         self.quantityLineEdit = QtWidgets.QLineEdit(self.frame)
@@ -229,11 +251,15 @@ class Ui_UpdateOrder(object):
         self.label_times.setFont(font)
         self.label_times.setText("X")
 
-        self.categoryLineEdit = QtWidgets.QLineEdit(self.frame)
-        self.categoryLineEdit.setGeometry(QtCore.QRect(405, 250, 113, 20))
-        self.categoryLineEdit.setObjectName("categoryLineEdit")
+        self.comboBox = QtWidgets.QComboBox(self.frame)
+        self.comboBox.setGeometry(QtCore.QRect(405, 245, 145, 22))
+        self.comboBox.setObjectName("comboBox_product")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
         self.categoryLabel = QtWidgets.QLabel(self.frame)
-        self.categoryLabel.setGeometry(QtCore.QRect(405, 230, 81, 16))
+        self.categoryLabel.setGeometry(QtCore.QRect(405, 225, 81, 16))
         self.categoryLabel.setObjectName("categoryLabel")
 
         self.Cancel = QtWidgets.QPushButton(self.frame)
@@ -270,9 +296,9 @@ class Ui_UpdateOrder(object):
         UpdateOrder.setTabOrder(self.contactLineEdit, self.addressLineEdit)
         UpdateOrder.setTabOrder(self.addressLineEdit, self.totalLineEdit)
         UpdateOrder.setTabOrder(self.totalLineEdit, self.orderDateEdit)
-        UpdateOrder.setTabOrder(self.orderDateEdit, self.prodNameLineEdit)
-        UpdateOrder.setTabOrder(self.prodNameLineEdit, self.categoryLineEdit)
-        UpdateOrder.setTabOrder(self.categoryLineEdit, self.quantityLineEdit)
+        UpdateOrder.setTabOrder(self.orderDateEdit, self.comboBox_product)
+        UpdateOrder.setTabOrder(self.comboBox_product, self.comboBox)
+        UpdateOrder.setTabOrder(self.comboBox, self.quantityLineEdit)
         UpdateOrder.setTabOrder(self.quantityLineEdit, self.rollsizeLineEdit1)
         UpdateOrder.setTabOrder(self.rollsizeLineEdit1, self.rollsizeLineEdit2)
         UpdateOrder.setTabOrder(self.rollsizeLineEdit2, self.Cancel)
@@ -297,7 +323,7 @@ class Ui_UpdateOrder(object):
         self.categoryLabel.setText(_translate("UpdateOrder", "Category"))
         self.Cancel.setText(_translate("UpdateOrder", "Cancel"))
         self.UpdateOrder_3.setText(_translate("UpdateOrder", "Update Order"))
-
+        self.populate_product_combo_box()
 
 if __name__ == "__main__":
     import sys

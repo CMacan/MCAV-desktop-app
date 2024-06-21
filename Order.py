@@ -224,8 +224,8 @@ class Ui_Order_2(object):
         self.update_order_ui.searchLineEdit.setText(cus_code)   
         self.update_order_ui.totalLineEdit.setText(order_data[4])   
         self.update_order_ui.orderDateEdit.setDate(QDate.fromString(order_data[6], "yyyy-MM-dd")) 
-        self.update_order_ui.prodNameLineEdit.setText(order_data[3])  
-        self.update_order_ui.categoryLineEdit.setText(order_data[7])
+        self.update_order_ui.comboBox_product.setCurrentText(order_data[3])  
+        self.update_order_ui.comboBox.setCurrentText(order_data[7])
         self.update_order_ui.quantityLineEdit.setText(order_data[5]) 
         self.update_order_ui.rollsizeLineEdit1.setText(order_data[8]) 
 
