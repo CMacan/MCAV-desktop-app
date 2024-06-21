@@ -341,15 +341,6 @@ class Ui_AddOrder(object):
         self.sizeLineEdit2 = QtWidgets.QLineEdit(self.frame_2)
         self.sizeLineEdit2.setGeometry(QtCore.QRect(400, 230, 41, 20))
         self.sizeLineEdit2.setObjectName("sizeLineEdit2")
-        
-        self.comboBox_unitMeasure = QtWidgets.QComboBox(self.frame_2)
-        self.comboBox_unitMeasure.setGeometry(QtCore.QRect(450, 230, 61, 22))
-        self.comboBox_unitMeasure.setObjectName("comboBox_unitMeasure")
-        self.comboBox_unitMeasure.addItem("")
-        self.comboBox_unitMeasure.addItem("")
-        self.comboBox_unitMeasure.addItem("")
-        self.comboBox_unitMeasure.addItem("")
-        self.comboBox_unitMeasure.addItem("")
 
         self.textEdit = QtWidgets.QTextEdit(self.frame_2)
         self.textEdit.setEnabled(True)
@@ -378,8 +369,7 @@ class Ui_AddOrder(object):
         AddOrder.setTabOrder(self.comboBox_product, self.QuantityLineEdit)
         AddOrder.setTabOrder(self.QuantityLineEdit, self.sizeLineEdit1)
         AddOrder.setTabOrder(self.sizeLineEdit1, self.sizeLineEdit2)
-        AddOrder.setTabOrder(self.sizeLineEdit2, self.comboBox_unitMeasure)
-        AddOrder.setTabOrder(self.comboBox_unitMeasure, self.AddOrder_3)
+        AddOrder.setTabOrder(self.sizeLineEdit2, self.AddOrder_3)
         AddOrder.setTabOrder(self.AddOrder_3, self.Cancel)
 
         self.retranslateUi(AddOrder)
@@ -409,10 +399,6 @@ class Ui_AddOrder(object):
                                                 "p, li { white-space: pre-wrap; }\n"
                                                 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
                                                 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">X</span></p></body></html>"))
-        self.comboBox_unitMeasure.setItemText(0, _translate("AddOrder", "ft"))
-        self.comboBox_unitMeasure.setItemText(1, _translate("AddOrder", "inches"))
-        self.comboBox_unitMeasure.setItemText(2, _translate("AddOrder", "cm"))
-        self.comboBox_unitMeasure.setItemText(3, _translate("AddOrder", "meters"))
         self.populate_product_combo_box()
 if __name__ == "__main__":
     import sys
