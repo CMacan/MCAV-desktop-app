@@ -411,7 +411,7 @@ class Ui_PurchaseView(object):
         font.setPointSize(-1)
         font.setBold(True)
         font.setWeight(75)
-        self.Purchase.clicked.connect(self.inventory)
+        self.Purchase.clicked.connect(self.purchase)
         self.Purchase.clicked.connect(PurchaseView.close)
         self.Purchase.setFont(font)
         self.Purchase.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))

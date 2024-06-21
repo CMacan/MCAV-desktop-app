@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QDialog, QLabel, QLineEdit, QPushButton, QMessageBox, QVBoxLayout
 from PyQt5 import QtCore, QtGui, QtWidgets
 import psycopg2
+import re
 
 class Ui_AddSupplier(QDialog):
     def __init__(self):
@@ -40,6 +41,21 @@ class Ui_AddSupplier(QDialog):
             msg.setWindowTitle("Required Fields")
             msg.exec_()
             return
+        
+        pat = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+        if re.match(pat,sup_email):
+            pass
+        else:
+            self.show_message("Invalid", "Invalid Email. Please try again.")
+            return
+        
+        digits_only = re.sub(r'\D', '', sup_contact)
+    
+        if len(digits_only) == 11:
+            pass
+        else:
+            self.show_message("Invalid","Please enter Eleven(11) digits only starting with 09-")
+            return
 
         confirm_msg = QMessageBox()
         confirm_msg.setIcon(QMessageBox.Question)
@@ -48,7 +64,7 @@ class Ui_AddSupplier(QDialog):
         confirm_msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
 
         result = confirm_msg.exec_()
-
+    
         if result == QMessageBox.Yes:
             # Insert supplier into database
             sql = """
