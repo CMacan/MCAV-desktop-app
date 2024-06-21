@@ -20,7 +20,7 @@ class Ui_UpdateOrder(object):
         order_complete_date = self.orderDateEdit.date().toString(QtCore.Qt.ISODate)
         order_rollsize_width = self.rollsizeLineEdit1.text()
         order_rollsize_height = self.rollsizeLineEdit2.text()
-        order_rollsize = order_rollsize_width * order_rollsize_height
+        order_rollsize = int(order_rollsize_width) * int(order_rollsize_height)
 
         # Validate input data
         if not (cus_code and order_total and order_product and order_quantity and order_date):
