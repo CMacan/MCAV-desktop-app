@@ -19,6 +19,9 @@ class Ui_AddOrder(object):
         product_name = self.comboBox_product.currentText()
         quantity = self.QuantityLineEdit.text()
         total_amount = self.TotalLineEdit.text()
+        rollsize_width = self.sizeLineEdit1.text()
+        rollsize_height = self.sizeLineEdit2.text()
+        rollsize = (f'{rollsize_width} X {rollsize_height}')
 
         # Validate input data
         if not all([cus_code, due_date, product_category, product_name, quantity, total_amount]):
@@ -66,10 +69,10 @@ class Ui_AddOrder(object):
                 
                 # Insert into ORDERS table
                 sql_orders = """
-                INSERT INTO ORDERS (CUS_CODE, ORD_DATE_COMPLETION, PROD_ID, ORD_QUANTITY, ORD_TOTAL_AMOUNT) 
-                VALUES (%s, %s, %s, %s, %s)
+                INSERT INTO ORDERS (CUS_CODE, ORD_DATE_COMPLETION, PROD_ID, ORD_QUANTITY, ORD_TOTAL_AMOUNT, ORD_SIZE) 
+                VALUES (%s, %s, %s, %s, %s, %s)
                 """
-                self.cur.execute(sql_orders, (cus_code, due_date, product_id, quantity, total_amount))
+                self.cur.execute(sql_orders, (cus_code, due_date, product_id, quantity, total_amount, rollsize))
 
                 self.conn.commit()
                 self.show_message("Success", "Data saved successfully.")
