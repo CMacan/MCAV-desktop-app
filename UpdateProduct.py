@@ -18,8 +18,8 @@ class Ui_UpdateProduct(object):
         prod_price = self.priceLineEdit.text().strip()
         prod_quantity = self.quantityLineEdit.text().strip()
         prod_thickness = self.thicknessLineEdit.text().strip()
-        rollsize_width = self.rollsizeLineEdit1.text()
-        rollsize_length = self.rollsizeLineEdit2.text()
+        rollsize_width = self.rollsizeLineEdit1.text().strip()
+        rollsize_length = self.rollsizeLineEdit2.text().strip()
     
         # Validate input data
         if not all([prod_name, prod_price, prod_quantity]):
@@ -37,6 +37,14 @@ class Ui_UpdateProduct(object):
             msg.exec_()
             return
         
+
+        thickness = prod_thickness
+        price = float(prod_price)  
+        quantity = int(prod_quantity)
+        if thickness:
+            thickness = int(prod_thickness) 
+        else:
+            thickness = None
         if (rollsize_width and not rollsize_length) or (rollsize_length and not rollsize_width):
             self.show_message("Error"," Both rollsize_width and rollsize_length must have data.")
         elif not rollsize_width and not rollsize_length:
@@ -47,10 +55,10 @@ class Ui_UpdateProduct(object):
             # Update product details
             sql_update_product = """
             UPDATE PRODUCT 
-            SET PROD_NAME = %s, PROD_PRICE = %s, PROD_QUANTITY = %s, PROD_ROLL_SIZE = %s, PROD_THICKNESS = %s
+            SET PROD_ROLL_SIZE = %s, PROD_NAME = %s, PROD_PRICE = %s, PROD_QUANTITY = %s, PROD_THICKNESS = %s
             WHERE PROD_ID = %s
             """
-            self.cur.execute(sql_update_product, (prod_name, prod_price, prod_quantity, roll_size, prod_thickness, self.prod_id))
+            self.cur.execute(sql_update_product, (roll_size, prod_name, price, quantity, thickness, self.prod_id))
             self.conn.commit()
 
             self.show_message("Success", "Product updated successfully.")
