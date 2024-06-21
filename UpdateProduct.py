@@ -17,9 +17,10 @@ class Ui_UpdateProduct(object):
         prod_name = self.lineEdit.text().strip()
         prod_price = self.priceLineEdit.text().strip()
         prod_quantity = self.quantityLineEdit.text().strip()
-        prod_rollSize = self.rollsizeLineEdit.text().strip()
         prod_thickness = self.thicknessLineEdit.text().strip()
-
+        rollsize_width = self.rollsizeLineEdit1.text()
+        rollsize_height = self.rollsizeLineEdit2.text()
+        prod_rollSize = (f'{rollsize_width} X {rollsize_height}')
         # Validate input data
         if not (prod_name and prod_price and prod_quantity):
             self.show_message("Error", "Please fill all the fields.")
@@ -84,14 +85,15 @@ class Ui_UpdateProduct(object):
         self.AddOrder = QtWidgets.QLabel(self.frame)
         self.AddOrder.setGeometry(QtCore.QRect(35, 30, 191, 26))
         self.AddOrder.setObjectName("AddOrder")
+
         self.label = QtWidgets.QLabel(self.frame)
         self.label.setGeometry(QtCore.QRect(80, 100, 81, 16))
         self.label.setObjectName("label")
         self.lineEdit = QtWidgets.QLineEdit(self.frame)
         self.lineEdit.setGeometry(QtCore.QRect(80, 120, 111, 20))
         self.lineEdit.setMaxLength(300)
-
         self.lineEdit.setObjectName("lineEdit")
+        
         self.priceLineEdit = QtWidgets.QLineEdit(self.frame)
         self.priceLineEdit.setGeometry(QtCore.QRect(80, 175, 113, 20))
         self.priceLineEdit.setObjectName("priceLineEdit")
@@ -106,12 +108,23 @@ class Ui_UpdateProduct(object):
         self.quantityLabel.setGeometry(QtCore.QRect(80, 210, 81, 16))
         self.quantityLabel.setObjectName("quantityLabel")
 
-        self.rollsizeLineEdit = QtWidgets.QLineEdit(self.frame)
-        self.rollsizeLineEdit.setGeometry(QtCore.QRect(80, 335, 113, 20))
-        self.rollsizeLineEdit.setObjectName("rollsizeLineEdit")
+        self.rollsizeLineEdit1 = QtWidgets.QLineEdit(self.frame)
+        self.rollsizeLineEdit1.setGeometry(QtCore.QRect(80, 335, 40, 20))
+        self.rollsizeLineEdit1.setObjectName("rollsizeLineEdit1")
+        self.rollsizeLineEdit2 = QtWidgets.QLineEdit(self.frame)
+        self.rollsizeLineEdit2.setGeometry(QtCore.QRect(155, 335, 40, 20))
+        self.rollsizeLineEdit2.setObjectName("rollsizeLineEdit2")
         self.rollsizeLabel = QtWidgets.QLabel(self.frame)
         self.rollsizeLabel.setGeometry(QtCore.QRect(80, 315, 76, 16))
         self.rollsizeLabel.setObjectName("rollsizeLabel")
+
+        self.label_times = QtWidgets.QLabel(self.frame)
+        self.label_times.setGeometry(QtCore.QRect(135, 335, 10, 20))  
+        self.label_times.setObjectName("label_times")
+        font = QtGui.QFont()
+        font.setBold(True) 
+        self.label_times.setFont(font)
+        self.label_times.setText("X")
 
         self.Cancel = QtWidgets.QPushButton(self.frame)
         self.Cancel.clicked.connect(UpdateProduct.close)

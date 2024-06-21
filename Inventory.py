@@ -234,11 +234,27 @@ class Ui_Inventory_2(object):
         # Populate the QLineEdit fields with data from the database
         self.update_product_ui.lineEdit.setText(product_data[2]) 
         self.update_product_ui.priceLineEdit.setText(product_data[4]) 
-        self.update_product_ui.quantityLineEdit.setText(product_data[5]) 
-        self.update_product_ui.rollsizeLineEdit.setText(product_data[7])  
+        self.update_product_ui.quantityLineEdit.setText(product_data[5])  
         self.update_product_ui.thicknessLineEdit.setText(product_data[6])
 
+        product_rollsize = product_data[7]
+
+        dimensions = product_rollsize.split('x')
+
+        # Trim any leading or trailing spaces from each dimension
+        dimension1 = dimensions[0].strip()
+        dimension2 = dimensions[1].strip()
+        self.update_product_ui.rollsizeLineEdit1.setText(dimension1) 
+        self.update_product_ui.rollsizeLineEdit2.setText(dimension2)
+
         self.dialog.exec_()
+    
+    def inventory(self):
+        from Inventory import Ui_Inventory_2
+        self.window2 = QtWidgets.QMainWindow()
+        self.ui = Ui_Inventory_2()
+        self.ui.setupUi(self.window2)
+        self.window2.showMaximized()
 
     def back_dashboard(self):
         from Dashboard import Ui_Dasboard
@@ -378,6 +394,8 @@ class Ui_Inventory_2(object):
 "background-color: #CD2E2E;\n"
 "")
         self.Inventory.setObjectName("Inventory")
+        self.Inventory.clicked.connect(self.inventory)
+        self.Inventory.clicked.connect(Inventory_2.close)
         self.horizontalLayout.addWidget(self.Inventory)
         self.Order = QtWidgets.QPushButton(self.NavbarFrame)
         self.Order.clicked.connect(self.order)

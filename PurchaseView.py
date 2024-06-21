@@ -166,7 +166,17 @@ class Ui_PurchaseView(object):
         self.update_purchase_ui.prodNameLineEdit.setText(purchase_data[3])  
         self.update_purchase_ui.thicknessLineEdit.setText(purchase_data[7])
         self.update_purchase_ui.quantityLineEdit.setText(purchase_data[5]) 
-        self.update_purchase_ui.rollsizeLineEdit1.setText(purchase_data[8]) 
+        
+        purchase_rollsize = purchase_data[8]
+
+        # Split the string based on 'x'
+        dimensions = purchase_rollsize.split('x')
+
+        # Trim any leading or trailing spaces from each dimension
+        dimension1 = dimensions[0].strip()
+        dimension2 = dimensions[1].strip()
+        self.update_purchase_ui.rollsizeLineEdit1.setText(dimension1) 
+        self.update_purchase_ui.rollsizeLineEdit2.setText(dimension2)
 
         self.dialog.exec_()
 

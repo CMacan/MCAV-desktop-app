@@ -1,5 +1,6 @@
+import sys
 from PyQt5 import QtCore, QtWidgets, QtGui
-from PyQt5.QtCore import  pyqtSignal, QObject
+from PyQt5.QtCore import pyqtSignal, QObject
 from PyQt5.QtWidgets import QMessageBox
 import psycopg2
 
@@ -39,7 +40,7 @@ class Ui_UpdateCustomer(QObject):
                 cur.execute(sql, (new_first_name, new_last_name, new_phone, new_address, new_email))
                 conn.commit()
 
-                self.show_message("Customer information updated despite duplicate email.")
+                self.show_message("Success", "Customer information updated despite duplicate email.")
 
                 # Close the cursor and connection
                 cur.close()
@@ -60,7 +61,7 @@ class Ui_UpdateCustomer(QObject):
                 cur.execute(update_sql, (new_first_name, new_last_name, new_phone, new_address, new_email))
                 conn.commit()
 
-                self.show_message("Customer information updated despite duplicate email.")
+                self.show_message("Success", "Customer information updated despite duplicate email.")
 
                 # Close the cursor and connection
                 cur.close()
@@ -80,7 +81,6 @@ class Ui_UpdateCustomer(QObject):
         msg.setText(message)
         msg.setIcon(QMessageBox.Information)
         msg.exec_()
-
 
     def setupUi(self, UpdateCustomer):
         UpdateCustomer.setObjectName("UpdateCustomer")
@@ -183,7 +183,6 @@ class Ui_UpdateCustomer(QObject):
         self.emailLabel.setText(_translate("UpdateCustomer", "Email Address"))
 
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
     UpdateCustomer = QtWidgets.QDialog()
     ui = Ui_UpdateCustomer()

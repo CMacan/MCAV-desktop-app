@@ -435,6 +435,8 @@ class Ui_Customer_2(object):
         self.manageLabel.setObjectName("manageLabel")
         self.verticalLayout_3.addWidget(self.manageLabel)
         self.horizontalLayout_4.addWidget(self.ProductList)
+
+        
         self.BtnContainer = QtWidgets.QFrame(self.Label)
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -478,9 +480,8 @@ class Ui_Customer_2(object):
         self.horizontalLayout_3.addWidget(self.AddCustomer)
         self.horizontalLayout_4.addWidget(self.BtnContainer)
         self.verticalLayout_2.addWidget(self.Label)
-   
         self.horizontalLayout_4.addWidget(self.BtnContainer)
-        self.verticalLayout_2.addWidget(self.Label)
+  
         self.DataFrame = QtWidgets.QFrame(self.TableContainer)
 
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
