@@ -248,7 +248,7 @@ class Ui_Inventory_2(object):
         self.update_product_ui.rollsizeLineEdit2.setText(dimension2)
 
         self.dialog.exec_()
-    
+
     def inventory(self):
         from Inventory import Ui_Inventory_2
         self.window2 = QtWidgets.QMainWindow()

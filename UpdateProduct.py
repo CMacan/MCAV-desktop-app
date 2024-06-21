@@ -37,6 +37,7 @@ class Ui_UpdateProduct(object):
             self.conn.commit()
 
             self.show_message("Success", "Product updated successfully.")
+
         except psycopg2.Error as e:
             self.conn.rollback()  # Roll back transaction on error
             error_message = f"Error saving data: {e.pgcode} - {e.pgerror}"
