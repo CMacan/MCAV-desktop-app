@@ -241,7 +241,7 @@ class Ui_Inventory_2(object):
 
         product_rollsize = product_data[7]
         if product_rollsize:
-            dimensions = product_rollsize.split('x')
+            dimensions = product_rollsize.split('x') if 'x' in product_rollsize else product_rollsize.split('X')
 
             # Trim any leading or trailing spaces from each dimension
             dimension1 = dimensions[0].strip()
