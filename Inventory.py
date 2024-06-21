@@ -79,11 +79,13 @@ class Ui_Inventory_2(object):
         self.tableWidget.setRowCount(len(products))
         for row_number, product in enumerate(products):
             for column_number, data in enumerate(product):
+                if data is None:  
+                    continue
                 item = QtWidgets.QTableWidgetItem()
                 item.setTextAlignment(QtCore.Qt.AlignCenter)
                 item.setText(str(data))
                 self.tableWidget.setItem(row_number, column_number, item)
-                if column_number == 1:  # Assuming the image is in the 2nd column
+                if column_number == 1: 
                     image_data = data
                     pixmap = QtGui.QPixmap()
                     pixmap.loadFromData(image_data)
@@ -238,14 +240,14 @@ class Ui_Inventory_2(object):
         self.update_product_ui.thicknessLineEdit.setText(product_data[6])
 
         product_rollsize = product_data[7]
+        if product_rollsize:
+            dimensions = product_rollsize.split('x')
 
-        dimensions = product_rollsize.split('x')
-
-        # Trim any leading or trailing spaces from each dimension
-        dimension1 = dimensions[0].strip()
-        dimension2 = dimensions[1].strip()
-        self.update_product_ui.rollsizeLineEdit1.setText(dimension1) 
-        self.update_product_ui.rollsizeLineEdit2.setText(dimension2)
+            # Trim any leading or trailing spaces from each dimension
+            dimension1 = dimensions[0].strip()
+            dimension2 = dimensions[1].strip()
+            self.update_product_ui.rollsizeLineEdit1.setText(dimension1) 
+            self.update_product_ui.rollsizeLineEdit2.setText(dimension2)
 
         self.dialog.exec_()
 

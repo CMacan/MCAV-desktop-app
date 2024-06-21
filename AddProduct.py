@@ -27,8 +27,6 @@ class Ui_AddProduct(QDialog):
         rollsize_width = self.rollsize_input_width.text()
         rollsize_length = self.rollsize_input_length.text()
         product_image = self.image_data
-
-        roll_size = f"{rollsize_width} x {rollsize_length}"
             
         if not all([product_name, price, quantity, category, product_image]):
             missing_fields = []
@@ -54,12 +52,15 @@ class Ui_AddProduct(QDialog):
         if thickness:
             thickness = int(thickness) 
         else:
-            thickness = ""
-        if roll_size:
-            pass
+            thickness = None
+            
+        if (rollsize_width and not rollsize_length) or (rollsize_length and not rollsize_width):
+            self.show_message("Error"," Both rollsize_width and rollsize_length must have data.")
+        elif not rollsize_width and not rollsize_length:
+            roll_size = None      
         else:
-            roll_size = ""
-
+            roll_size = f"{rollsize_width} x {rollsize_length}"
+        
         confirm_msg = QMessageBox()
         confirm_msg.setIcon(QMessageBox.Question)
         confirm_msg.setText("Add to product list?")
@@ -170,6 +171,13 @@ class Ui_AddProduct(QDialog):
                 except psycopg2.Error as e:
                     QMessageBox.warning(self, "Database Error", f"Error deleting category: {e}")
                     self.conn.rollback()
+    
+    def show_message(self, title, message):
+        msg = QMessageBox()
+        msg.setWindowTitle(title)
+        msg.setText(message)
+        msg.setIcon(QMessageBox.Information)
+        msg.exec_()
 
     def edit_category(self):
         msg = QMessageBox()
@@ -367,10 +375,12 @@ class Ui_AddProduct(QDialog):
         self.rollsize_label.setText(_translate("AddProduct", "Rollsize"))
         self.optional_label.setText(_translate("AddProduct", "(optional)"))
         self.optional_label2.setText(_translate("AddProduct", "(optional)"))
-        self.comboBox.setItemText(0, _translate("AddProduct", "Large Format Tarpulin "))
-        self.comboBox.setItemText(1, _translate("AddProduct", "Vinyl Sticker Printin"))
-        self.comboBox.setItemText(2, _translate("AddProduct", "Laser Printing for papers and Stickers"))
-        self.comboBox.setItemText(3, _translate("AddProduct", "T-shirt printing "))
+        self.comboBox.setItemText(0, _translate("AddProduct", "Tarpaulin "))
+        self.comboBox.setItemText(1, _translate("AddProduct", "Large Format Tarpaulin "))
+        self.comboBox.setItemText(2, _translate("AddProduct", "Business Card"))
+        self.comboBox.setItemText(3, _translate("AddProduct", "Laser Printing for Papers and Stickers"))
+        self.comboBox.setItemText(4, _translate("AddProduct", "T-shirt printing "))
+        self.comboBox.setItemText(5, _translate("AddProduct", "Brochure"))
         self.edit_cat.setText(_translate("AddProduct", "Modify"))
         self.Image.setText(_translate("AddProduct", "Select Image"))
 

@@ -19,13 +19,30 @@ class Ui_UpdateProduct(object):
         prod_quantity = self.quantityLineEdit.text().strip()
         prod_thickness = self.thicknessLineEdit.text().strip()
         rollsize_width = self.rollsizeLineEdit1.text()
-        rollsize_height = self.rollsizeLineEdit2.text()
-        prod_rollSize = (f'{rollsize_width} X {rollsize_height}')
+        rollsize_length = self.rollsizeLineEdit2.text()
+    
         # Validate input data
-        if not (prod_name and prod_price and prod_quantity):
-            self.show_message("Error", "Please fill all the fields.")
+        if not all([prod_name, prod_price, prod_quantity]):
+            missing_fields = []
+            if not prod_name:
+                missing_fields.append("Product Name")
+            if not prod_price:
+                missing_fields.append("Price")
+            if not prod_quantity:
+                missing_fields.append("Quantity")
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText(f"Please input all required fields:\n{', '.join(missing_fields)}")
+            msg.setWindowTitle("Required Fields")
+            msg.exec_()
             return
-
+        
+        if (rollsize_width and not rollsize_length) or (rollsize_length and not rollsize_width):
+            self.show_message("Error"," Both rollsize_width and rollsize_length must have data.")
+        elif not rollsize_width and not rollsize_length:
+            roll_size = None      
+        else:
+            roll_size = f"{rollsize_width} x {rollsize_length}"
         try:
             # Update product details
             sql_update_product = """
@@ -33,7 +50,7 @@ class Ui_UpdateProduct(object):
             SET PROD_NAME = %s, PROD_PRICE = %s, PROD_QUANTITY = %s, PROD_ROLL_SIZE = %s, PROD_THICKNESS = %s
             WHERE PROD_ID = %s
             """
-            self.cur.execute(sql_update_product, (prod_name, prod_price, prod_quantity, prod_rollSize, prod_thickness, self.prod_id))
+            self.cur.execute(sql_update_product, (prod_name, prod_price, prod_quantity, roll_size, prod_thickness, self.prod_id))
             self.conn.commit()
 
             self.show_message("Success", "Product updated successfully.")
