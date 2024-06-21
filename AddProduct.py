@@ -56,7 +56,7 @@ class Ui_AddProduct(QDialog):
         else:
             thickness = ""
         if roll_size:
-            roll_size = int(thickness) 
+            pass
         else:
             roll_size = ""
 
