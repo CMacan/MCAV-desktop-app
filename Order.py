@@ -10,7 +10,7 @@ class Ui_Order_2(object):
         self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
                                      password="Milliondollarbaby123", port=6543)
         self.cur = self.conn.cursor()
-
+        
 
     def fetch_orders_with_details(self):
         try:
@@ -222,12 +222,12 @@ class Ui_Order_2(object):
 
         # Populate the QLineEdit fields with data from the database
         self.update_order_ui.searchLineEdit.setText(cus_code)   
-        self.update_order_ui.totalLineEdit.setText(order_data[4])   
-        self.update_order_ui.orderDateEdit.setDate(QDate.fromString(order_data[6], "yyyy-MM-dd")) 
+        self.update_order_ui.totalLineEdit.setText(order_data[6])   
+        self.update_order_ui.orderDateEdit.setDate(QDate.fromString(order_data[7], "yyyy-MM-dd")) 
         self.update_order_ui.comboBox_product.setCurrentText(order_data[3])  
-        self.update_order_ui.comboBox.setCurrentText(order_data[7])
+        self.update_order_ui.comboBox.setCurrentText(order_data[2])
         self.update_order_ui.quantityLineEdit.setText(order_data[5]) 
-        self.update_order_ui.rollsizeLineEdit1.setText(order_data[8]) 
+        self.update_order_ui.rollsizeLineEdit1.setText(order_data[4]) 
 
         self.dialog.exec_()
 
@@ -786,7 +786,7 @@ class Ui_Order_2(object):
         item = self.tableWidget.horizontalHeaderItem(3)
         item.setText(_translate("Order_2", "Product Name"))
         item = self.tableWidget.horizontalHeaderItem(4)
-        item.setText(_translate("Order_2", "Size"))
+        item.setText(_translate("Order_2", "Roll Size"))
         item = self.tableWidget.horizontalHeaderItem(5)
         item.setText(_translate("Order_2", "Quantity"))
         item = self.tableWidget.horizontalHeaderItem(6)

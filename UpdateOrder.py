@@ -20,7 +20,7 @@ class Ui_UpdateOrder(object):
         order_complete_date = self.orderDateEdit.date().toString(QtCore.Qt.ISODate)
         order_rollsize_width = self.rollsizeLineEdit1.text()
         order_rollsize_height = self.rollsizeLineEdit2.text()
-        order_rollsize = (f'{order_rollsize_width} X {order_rollsize_height}')
+        order_rollsize = order_rollsize_width * order_rollsize_height
 
         # Validate input data
         if not (cus_code and order_total and order_product and order_quantity and order_date):
@@ -30,13 +30,12 @@ class Ui_UpdateOrder(object):
         try:
             # Update order details using the stored order ID
             sql_update_order = """
-            UPDATE ORDER 
-            SET CUS_CODE = %s, ORD_AMOUNT = %s, ORD_ORDER_DATE = %s, ORD_PRODUCT_NAME = %s,
-            PUR_THICKNESS = %s, ORD_QUANTITY = %s, ORD_ROLL_SIZE = %s
+            UPDATE ORDERS 
+            SET CUS_CODE = %s, ORD_TOTAL_AMOUNT = %s, ORD_TYPE_PRODUCT = %s, ORD_QUANTITY = %s, ORD_DATE = %s, ORD_SIZE = %s 
             WHERE ORD_ID = %s
             """
 
-            self.cur.execute(sql_update_order, (cus_code, order_total, order_product, order_quantity, order_date, order_rollsize, self.order_id))
+            self.cur.execute(sql_update_order, (cus_code, order_total, order_product, order_quantity, order_date, order_rollsize,  self.order_id))
             self.conn.commit()
 
             self.show_message("Success", "Order updated successfully.")
