@@ -366,6 +366,8 @@ class Ui_Customer_2(object):
 "color: white;\n"
 "border: 2px solid #CD2E2E;\n"
 "background-color: #CD2E2E;")
+        self.Customer.clicked.connect(self.customer)
+        self.Customer.clicked.connect(Customer_2.close)
         self.Customer.setObjectName("Customer")
         self.horizontalLayout.addWidget(self.Customer)
         self.Profile = QtWidgets.QPushButton(self.NavbarFrame)

@@ -389,11 +389,11 @@ class Ui_Order_2(object):
         self.Inventory.setObjectName("Inventory")
         self.horizontalLayout.addWidget(self.Inventory)
         self.Order = QtWidgets.QPushButton(self.NavbarFrame)
-        self.Order.clicked.connect(self.order)
-        self.Order.clicked.connect(Order_2.close)
         self.Order.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.Order.setStyleSheet("font-size:12px;")
         self.Order.setObjectName("Order")
+        self.Order.clicked.connect(self.order)
+        self.Order.clicked.connect(Order_2.close)
         self.Order.setStyleSheet("font-size:12px;\n"
         "color: white;\n"
         "border: 2px solid #CD2E2E;\n"

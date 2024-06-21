@@ -221,6 +221,8 @@ class Ui_Profile_2(object):
 "background-color: #CD2E2E;")
         
         self.Profile.setObjectName("Profile")
+        self.Profile.clicked.connect(self.profile)
+        self.Profile.clicked.connect(Profile_2.close)
         self.horizontalLayout.addWidget(self.Profile)
         self.verticalLayout.addWidget(self.NavbarFrame)
         self.TableContainer = QtWidgets.QFrame(self.centralwidget)

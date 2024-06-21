@@ -375,6 +375,8 @@ class Ui_Supplier(object):
 "border: 2px solid #CD2E2E;\n"
 "background-color: #CD2E2E;")
         self.Purchase.setObjectName("Purchase")
+        self.Purchase.clicked.connect(self.purchase)
+        self.Purchase.clicked.connect(Supplier.close)
         self.horizontalLayout.addWidget(self.Purchase)
         self.Customer = QtWidgets.QPushButton(self.NavbarFrame)
         self.Customer.clicked.connect(self.customer)
