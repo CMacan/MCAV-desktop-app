@@ -91,10 +91,6 @@ class Ui_AddOrder(object):
         self.TotalLineEdit.clear()
         self.dueDateEdit.setDate(QtCore.QDate())
         self.QuantityLineEdit.clear()
-        self.thicknessLineEdit.clear()
-        self.quantityLineEdit.clear()
-        self.rollsizeLineEdit1.clear()
-        self.rollsizeLineEdit2.clear()  
 
     def set_current_date(self):
         current_date = datetime.date.today()

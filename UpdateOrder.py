@@ -16,14 +16,13 @@ class Ui_UpdateOrder(object):
         order_total = self.totalLineEdit.text()
         order_product = self.comboBox_product.currentText()
         order_quantity = self.quantityLineEdit.text()
-        order_date = self.orderDateEdit.date().toString(QtCore.Qt.ISODate)
         order_complete_date = self.orderDateEdit.date().toString(QtCore.Qt.ISODate)
         order_rollsize_width = self.rollsizeLineEdit1.text()
         order_rollsize_height = self.rollsizeLineEdit2.text()
-        order_rollsize = int(order_rollsize_width) * int(order_rollsize_height)
+        order_rollsize = (f'{order_rollsize_width} X {order_rollsize_height}')
 
         # Validate input data
-        if not (cus_code and order_total and order_product and order_quantity and order_date):
+        if not (cus_code and order_total and order_product and order_quantity and order_complete_date):
             self.show_message("Error", "Please fill all the fields.")
             return
 
@@ -35,7 +34,7 @@ class Ui_UpdateOrder(object):
             WHERE ORD_ID = %s
             """
 
-            self.cur.execute(sql_update_order, (cus_code, order_total, order_product, order_quantity, order_date, order_rollsize,  self.order_id))
+            self.cur.execute(sql_update_order, (cus_code, order_total, order_product, order_quantity, order_complete_date, order_rollsize,  self.order_id))
             self.conn.commit()
 
             self.show_message("Success", "Order updated successfully.")

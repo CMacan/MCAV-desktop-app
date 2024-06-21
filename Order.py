@@ -223,11 +223,20 @@ class Ui_Order_2(object):
         # Populate the QLineEdit fields with data from the database
         self.update_order_ui.searchLineEdit.setText(cus_code)   
         self.update_order_ui.totalLineEdit.setText(order_data[6])   
-        self.update_order_ui.orderDateEdit.setDate(QDate.fromString(order_data[7], "yyyy-MM-dd")) 
+        self.update_order_ui.orderDateEdit.setDate(QDate.fromString(order_data[8], "yyyy-MM-dd")) 
         self.update_order_ui.comboBox_product.setCurrentText(order_data[3])  
         self.update_order_ui.comboBox.setCurrentText(order_data[2])
         self.update_order_ui.quantityLineEdit.setText(order_data[5]) 
-        self.update_order_ui.rollsizeLineEdit1.setText(order_data[4]) 
+
+        product_rollsize = order_data[4]
+
+        dimensions = product_rollsize.split('x')
+
+        # Trim any leading or trailing spaces from each dimension
+        dimension1 = dimensions[0].strip()
+        dimension2 = dimensions[1].strip()
+        self.update_order_ui.rollsizeLineEdit1.setText(dimension1) 
+        self.update_order_ui.rollsizeLineEdit2.setText(dimension2)
 
         self.dialog.exec_()
 
