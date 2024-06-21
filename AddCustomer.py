@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtCore import  pyqtSignal, QObject
 from PyQt5.QtWidgets import QMessageBox, QDialog
 import psycopg2
+import re 
 
 class Ui_AddCustomer(QDialog):
     def __init__(self):
@@ -40,7 +41,21 @@ class Ui_AddCustomer(QDialog):
             msg.setWindowTitle("Required Fields")
             msg.exec_()
             return
-
+        
+        pat = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+        if re.match(pat,cus_email):
+            pass
+        else:
+            self.show_message("Invalid", "Invalid Email. Please try again.")
+            return
+        
+        digits_only = re.sub(r'\D', '', cus_contact)
+    
+        if len(digits_only) == 11:
+            pass
+        else:
+            self.show_message("Invalid","Please enter Eleven(11) digits only starting with 09-")
+            return
         confirm_msg = QMessageBox()
         confirm_msg.setIcon(QMessageBox.Question)
         confirm_msg.setText("Add this customer?")
@@ -144,7 +159,7 @@ class Ui_AddCustomer(QDialog):
         self.phoneNumLineEdit.setGeometry(QtCore.QRect(80, 280, 113, 25))
         self.phoneNumLineEdit.setObjectName("phoneNumLineEdit")
         self.phoneNumLabel = QtWidgets.QLabel(self.frame)
-        self.phoneNumLabel.setGeometry(QtCore.QRect(80, 260, 76, 16))
+        self.phoneNumLabel.setGeometry(QtCore.QRect(80, 260, 150, 16))
         self.phoneNumLabel.setObjectName("phoneNumLabel")
 
         self.addressLabel = QtWidgets.QLabel(self.frame)
@@ -175,7 +190,7 @@ class Ui_AddCustomer(QDialog):
         self.AddCusLabel.setText(_translate("AddCustomer", "Add Customer"))
         self.firstNameLabel.setText(_translate("AddCustomer", "First Name"))
         self.lastNameLabel.setText(_translate("AddCustomer", "Last Name"))
-        self.phoneNumLabel.setText(_translate("AddCustomer", "Phone Numer"))
+        self.phoneNumLabel.setText(_translate("AddCustomer", "Phone Number"))
         self.addressLabel.setText(_translate("AddCustomer", "Address"))
         self.Cancel.setText(_translate("AddCustomer", "Cancel"))
         self.AddOrder_3.setText(_translate("AddCustomer", "Add"))
