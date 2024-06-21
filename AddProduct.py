@@ -29,13 +29,6 @@ class Ui_AddProduct(QDialog):
         product_image = self.image_data
 
         roll_size = f"{rollsize_width} x {rollsize_length}"
-        
-        price = float(price)  
-        quantity = int(quantity)
-        if thickness:
-            thickness = int(thickness) 
-        else:
-            thickness = None
             
         if not all([product_name, price, quantity, category, product_image]):
             missing_fields = []
@@ -49,13 +42,23 @@ class Ui_AddProduct(QDialog):
                 missing_fields.append("Category")
             if not product_image:
                 missing_fields.append("Product Image")
-
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Warning)
             msg.setText(f"Please input all required fields:\n{', '.join(missing_fields)}")
             msg.setWindowTitle("Required Fields")
             msg.exec_()
             return
+
+        price = float(price)  
+        quantity = int(quantity)
+        if thickness:
+            thickness = int(thickness) 
+        else:
+            thickness = ""
+        if roll_size:
+            roll_size = int(thickness) 
+        else:
+            roll_size = ""
 
         confirm_msg = QMessageBox()
         confirm_msg.setIcon(QMessageBox.Question)
