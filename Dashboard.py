@@ -16,9 +16,14 @@ class Ui_Dasboard(object):
     
     def __init__(self):
         # PostgreSQL connection
-        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
-                                     password="Milliondollarbaby123", port=6543)
+        self.conn = psycopg2.connect(host="aws-1-ap-northeast-2.pooler.supabase.com", dbname="postgres", 
+                                     user="postgres.qtfyvvwktvfviudotoxh", password="isy9KwSEmgbTdbxi", 
+                                     port=6543)
         self.cur = self.conn.cursor()
+
+    def show_message(self, title, text):
+        """Display a modal error dialog."""
+        QtWidgets.QMessageBox.critical(None, title, text)
     
     def fetch_purchases(self):
         try:
@@ -208,6 +213,10 @@ class Ui_Dasboard(object):
         self.ui = Ui_Profile_2()
         self.ui.setupUi(self.window2)
         self.window2.showMaximized()
+        
+    def show_message(self, title, text):
+        """Display a modal error dialog."""
+        QtWidgets.QMessageBox.critical(None, title, text)
 
     def setupUi(self, Dasboard):
         Dasboard.setObjectName("Dasboard")

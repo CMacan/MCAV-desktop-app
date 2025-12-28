@@ -18,8 +18,9 @@ from PyQt5.QtCore import QDate
 class Ui_PurchaseView(object):
     def __init__(self):
         # PostgreSQL connection
-        self.conn = psycopg2.connect(host="aws-0-ap-southeast-1.pooler.supabase.com", dbname="postgres", user="postgres.oxzprkjuxnjgnfihweyj", 
-                                     password="Milliondollarbaby123", port=6543)
+        self.conn = psycopg2.connect(host="aws-1-ap-northeast-2.pooler.supabase.com", dbname="postgres", 
+                                     user="postgres.qtfyvvwktvfviudotoxh", password="isy9KwSEmgbTdbxi", 
+                                     port=6543)
         self.cur = self.conn.cursor()
 
     def fetch_purchases(self):
