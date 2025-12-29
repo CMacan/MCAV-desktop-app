@@ -24,7 +24,7 @@ class Ui_Login(object):
         password = self.lineEdit_2.text()
         
         try:
-            sql = "SELECT * FROM ADMIN WHERE ADMIN_USER = %s AND ADMIN_PASS = %s"
+            sql = "SELECT * FROM ADMIN_NEW WHERE ADMIN_USER = %s AND ADMIN_PASS = %s"
             self.cur.execute(sql, (username, password))
             result = self.cur.fetchone()  # Fetch one row
             

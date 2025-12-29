@@ -22,7 +22,7 @@ class Ui_Profile_2(object):
         self.cur = self.conn.cursor()
 
     def fetch_user_details(self, username):
-        sql = "SELECT ADMIN_NAME, ADMIN_EMAIL, ADMIN_USER, ADMIN_PMNT_ADD, ADMIN_ZIP, ADMIN_PRSNT_ADD, ADMIN_CITY, ADMIN_COUNTRY FROM ADMIN WHERE ADMIN_USER = %s"
+        sql = "SELECT ADMIN_NAME, ADMIN_EMAIL, ADMIN_USER, ADMIN_PMNT_ADD, ADMIN_ZIP, ADMIN_PRSNT_ADD, ADMIN_CITY, ADMIN_COUNTRY FROM ADMIN_NEW WHERE ADMIN_USER = %s"
         self.cur.execute(sql, (username,))
         return self.cur.fetchone()
     
